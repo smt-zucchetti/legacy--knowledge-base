@@ -1,0 +1,283 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-flow: column;
+  font-family: sans-serif;
+  overflow: auto;
+}
+body.fancybox-active {
+  height: 100%;
+}
+
+header .container, main .container, footer .container {
+  max-width: 960px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+main {
+  flex-grow: 1;
+}
+main textarea#tinyMCE {
+  flex-grow: 1;
+  min-height: 600px;
+}
+main .singleArticleBorder {
+  border: solid dimgray 1px;
+  padding: 2em;
+}
+main .singleArticleBorder .title {
+  margin-top: 0;
+}
+main .container {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  margin: 40px auto 60px;
+}
+main .container .addArticle,
+main .container .addCategory {
+  text-decoration: none;
+  margin-bottom: 16px;
+  color: dimgray;
+  transition: color 0.5s;
+}
+main .container .addArticle:hover,
+main .container .addCategory:hover {
+  color: black;
+}
+main .container form {
+  flex-grow: 1;
+  display: flex;
+  flex-flow: column;
+}
+main .container form input[type=submit] {
+  background-color: dodgerblue;
+  border: none;
+  background: dodgerblue;
+  border-radius: 0;
+  padding: 1em 2em;
+  font-size: 16px;
+  color: white;
+  margin-top: 25px;
+  float: right;
+  align-self: flex-end;
+}
+main .container form input[type=submit]:hover {
+  cursor: pointer;
+  background-color: #51a9ff;
+}
+main .container form textarea#textOnlyContent {
+  display: none;
+}
+main .container form input#title, main .container form #mceu_16 {
+  margin: 10px 0 20px;
+}
+main .container form input#title#title, main .container form #mceu_16#title {
+  font-size: 22px;
+  width: 100%;
+}
+main section.form-group {
+  margin-bottom: 20px;
+}
+main section.form-group h3 {
+  font-size: 20px;
+  margin-bottom: 0;
+  color: dimgray;
+}
+main .categoryList ul {
+  column-count: 4;
+  column-rule: solid dimgray 1px;
+  background: lightgray;
+  padding: 1.4em;
+}
+main .categoryList ul li {
+  list-style-type: none;
+  padding-right: 51px;
+}
+main .categoryList ul label {
+  display: inline-block;
+  margin-bottom: 10px;
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
+}
+main .categoryList ul label input[type=checkbox] {
+  margin-left: auto;
+}
+main a {
+  display: inline-block;
+}
+main a.seeMore {
+  color: orangeRed;
+}
+main a.seeMore:hover {
+  text-decoration: underline;
+}
+main .collatedGridHeader > div, main .collatedGrid > div {
+  height: 20px;
+  overflow: hidden;
+  padding: 1em;
+}
+main .collatedGridHeader {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+}
+main .collatedGridHeader.categories {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+main .collatedGridHeader > div {
+  background-color: dodgerblue;
+  display: flex;
+}
+main .collatedGridHeader > div .sortArrow {
+  margin-left: auto;
+  position: relative;
+  top: 8px;
+}
+main .collatedGridHeader > div .sortArrow:hover {
+  cursor: pointer;
+}
+main .collatedGridHeader > div .sortArrow i {
+  font-size: 26px;
+  line-height: 0px;
+  position: absolute;
+  color: gray;
+}
+main .collatedGridHeader > div .sortArrow i.active {
+  color: black;
+}
+main .collatedGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+}
+main .collatedGrid.categories {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+main .collatedGrid .actionItems > a {
+  color: dimgray;
+  text-decoration: none;
+  transition: color 0.5s;
+  margin-right: 16px;
+}
+main .collatedGrid .actionItems > a:hover {
+  color: black;
+}
+main .collatedGrid > div.row {
+  background: lightgray;
+}
+main .collatedGrid > div a#deleteArticle, main .collatedGrid > div a#editArticle {
+  color: dimgray;
+  text-decoration: none;
+  transition: color 0.5s;
+}
+main .collatedGrid > div a#deleteArticle:hover, main .collatedGrid > div a#editArticle:hover {
+  color: black;
+}
+main .collatedGrid > div a#editArticle {
+  margin-left: 10px;
+}
+main .collatedGrid > div ul.categories {
+  margin: 0;
+  padding: 0;
+}
+main .collatedGrid > div ul.categories li {
+  background: transparent;
+  list-style-type: none;
+}
+main .collatedGrid > div ul.categories li:nth-child(n+2) {
+  display: none;
+}
+main .collatedGrid > div ul.categories li a.seeMore::after {
+  content: " See More";
+  color: orangered;
+  margin-left: 8px;
+  font-size: 13px;
+}
+main .collatedGrid > div ul.categories.showAll {
+  position: absolute;
+  background: white;
+  padding: 16px 10px !important;
+  box-shadow: 3px 3px 3px 0px dimgray;
+  margin: -16px 0 0 -10px;
+}
+main .collatedGrid > div ul.categories.showAll li {
+  display: block;
+}
+main .collatedGrid > div ul.categories.showAll li a.seeMore::after {
+  content: "See Less";
+}
+
+header {
+  color: white;
+  background: orangered;
+}
+header ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+header ul li {
+  list-style-type: none;
+  flex-grow: 1;
+}
+header ul li:hover a {
+  background: CHARTREUSE;
+}
+header ul li a {
+  background: orangered;
+  text-decoration: none;
+  color: white;
+  padding: 1em 1.5em;
+  display: block;
+}
+header ul li form {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+footer {
+  background-color: orange;
+  min-height: 150px;
+}
+
+.fancybox-container input[type=text] {
+  width: 100%;
+  font-size: 20px;
+}
+.fancybox-container input[type=submit], .fancybox-container button.cancelButton {
+  color: white;
+  border: none;
+  font-size: 17px;
+  float: right;
+  margin-top: 20px;
+  padding: 0.4em 1em;
+}
+.fancybox-container input[type=submit]:hover, .fancybox-container button.cancelButton:hover {
+  cursor: pointer;
+}
+.fancybox-container input[type=submit] {
+  background: dodgerblue;
+}
+.fancybox-container input[type=submit]:hover {
+  background-color: #51a9ff;
+}
+.fancybox-container button.cancelButton {
+  background: orangered;
+  margin-right: 10px;
+}
+.fancybox-container button.cancelButton:hover {
+  background-color: #ff6a33;
+}
+.fancybox-container h2 {
+  margin-top: 0;
+}
+
+/*# sourceMappingURL=main.css.map */
