@@ -10,15 +10,27 @@
 </a>
 <div class="collatedGridHeader">
 	<div>
-		Title
-		<span class="sortArrow">
-			<i class="fas fa-sort-up active"></i>
-			<i class="fas fa-sort-down"></i>
+		Title 
+ 		<span class="sortArrow Title">
+			<a href="#" class="upArrow"></a>
+			<a href="#" class="downArrow"></a>
 		</span>
 	</div>
 	<div>Actions</div>
-	<div class="categoryMenuItem">Category</div>
-	<div class="dateCreatedMenuItem">Date Created</div>
+	<div class="categoryMenuItem">
+		Category
+		<span class="sortArrow categoryNames">
+			<a href="#" class="upArrow"></a>
+			<a href="#" class="downArrow"></a>
+		</span>
+	</div>
+	<div class="dateCreatedMenuItem">
+		Date Created
+		<span class="sortArrow down dateCreated">
+			<a href="#" class="upArrow"></a>
+			<a href="#" class="downArrow"></a>
+		</span>
+	</div>
 </div>
  <?php 
  	if(empty($sort)){
@@ -36,17 +48,17 @@
 			</a>
 		</div>
 		<div class="{{$row}} actionItems">
-			<div style="display: none;" id="deleteArticleTmp">
+			<div style="display: none;" id="delete-article-{{$article->ID}}">
 				<form method="post" action="<?php echo url('/deleteArticle/'.$article->ID);?>">
 					@csrf
-					<h2>Delete the Article?</h2>
+					<h2>Delete Article "{{$article->Title}}"?</h2>
 					<input type="submit" value="Delete" />
 					<button class="cancelButton" type="button" data-fancybox-close="" >
 						Cancel
 					</button>
 				</form>
 			</div>
-			<a data-fancybox data-src="#deleteArticleTmp" href="javascript:;">
+			<a data-fancybox data-src="#delete-article-{{$article->ID}}" href="javascript:;">
 				<i class="fas fa-trash-alt"></i> Delete 
 			</a>
 			<a href="<?php echo url('/updateArticle/'.$article->ID) ?>" >
@@ -58,10 +70,10 @@
 			<ul class="categories">
 				<?php 
 					$x = 0;
-					foreach($article->CategoryArr as $catArr){						 
+					foreach(explode(",",$article->categoryNames) as $categoryName){						 
 						echo "<li class='category'>";
-						echo 	$catArr['name']; 
-						echo (count($article->CategoryArr) > 1 && $x == 0)?'<a class="seeMore" href="#"></a>':'';
+						echo 	$categoryName; 
+						echo (count(explode(",",$article->categoryNames)) > 1 && $x == 0)?'<a class="seeMore" href="#"></a>':'';
 						echo "</li>";
 
 						$x++;
@@ -86,24 +98,8 @@
 			$(this).closest('ul.categories').toggleClass('showAll');
 		});
 
-		$('.sortArrow').click(function(e){
-			$(this).find('.fa-sort-up').toggleClass('active');
-			$(this).find('.fa-sort-down').toggleClass('active');
-		});
+		@include('partials/javaScriptSort', ['type' => 'articles'] );
 
-		$('.sortArrow').click(function(e){
-
-			$.ajax({
-	         	url : "{{URL::action('ArticleController@sortArticles')}}",
-	          	type : "GET",
-	          	//data : {action: 'refresh'}
-
-		        success: function(response){
-		            $('.collatedGrid.noSort').empty();
-		            $(response).find('.collatedGrid.sorted > *').appendTo('.collatedGrid.noSort');		            
-	        	},
-	    	});
-		});
 	});	
 </script>
 @stop

@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Input;
 
 use Illuminate\Support\Facades\DB;
 
-use App\ArticleData;
+use App\Articles;
 use App\Categories;
+use App\Articles_Categories;
 
 class ArticleController extends Controller
 {
@@ -31,104 +32,120 @@ class ArticleController extends Controller
 	 		 return view('createArticle', array('categories' => $categories));
 	 	}else{
 
-	 		 $CategoryIDs = !empty($_POST['CategoryIDs'])?implode(($_POST['CategoryIDs']), ","):"";
-
-			DB::table('ArticleData')->insert(array(
+			$articleId = DB::table('Articles')->insert(array(
 				'Title' => $_POST['title'], 
 				'Content' => $_POST['content'], 
-				'textOnlyContent' => $_POST['textOnlyContent'], 
-				'CategoryIDs' => $CategoryIDs, 
-				'dateCreated'	=> date('Y-m-d')
+				'textOnlyContent' => $_POST['textOnlyContent'],  
+				'dateCreated'	=> date('Y-m-d: H:i:s')
 			) );
 
-			$articles = ArticleData::all();
-			$articlesWithCats = self::__mergeArticleCatIdsWithCats($articles);
+			foreach(!empty($_POST['CategoryIDs'])?$_POST['CategoryIDs']:array() as $categoryId){
+				DB::table('Articles_Categories')->insert(array(
+					'articleId' => $articleId, 
+					'categoryId' => $categoryId			
+				));			
+			}
 
-			return view('readArticles')->with(array('articles' => $articlesWithCats));
+			return self::readArticles();
 		}
  	}   
 
- 	public function updateArticle($articleId){
-
- 		if(empty($_POST)){
-	 		$article = ArticleData::where('ID', $articleId)->first();
-			$categories = Categories::all(); 		
-
-			return view('updateArticle')->with(array('article' => $article, 'categories' => $categories)); 
-		}else{
-
-			$CategoryIDs = !empty($_POST['CategoryIDs'])?implode($_POST['CategoryIDs'],","):"";
-
-	 		DB::table('ArticleData')->where('id', $articleId)->update(array(
-	 			'Title' => $_POST['title'], 
-	 			'Content' => $_POST['content'], 
-	 			'textOnlyContent' => $_POST['textOnlyContent'], 
-	 			'CategoryIDs' => $CategoryIDs,
-	 			'lastUpdated'	=> date('Y-m-d')  
-	 		));
-
-	 		$articles = ArticleData::all();
-	 		$articlesWithCats = self::__mergeArticleCatIdsWithCats($articles);
-
-			return view('readArticles')->with(array('articles' => $articlesWithCats));
-		}
- 	}
-
-
  	public function readArticles(){
-		$articles = ArticleData::all();
-		$articlesWithCats = self::__mergeArticleCatIdsWithCats($articles);
+ 	
+		$articles = DB::table('Articles as a')
+	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
+	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
+	            ->select('a.*', 
+	            	DB::raw('group_concat(c.Name) as categoryNames'), 
+	            	DB::raw('group_concat(c.ID) as categoryIds'))
+	            ->orderBy('dateCreated', 'DESC')
+	           	->groupBy('a.ID')
+	            ->get();
+	    $articles->sortBy('dateCreated');
 
-		return view('readArticles')->with(array('articles' => $articlesWithCats));
- 	}
-
- 	public function sortArticles(){
-		$articles = ArticleData::all()->sortBy('Title');
-		$articlesWithCats = self::__mergeArticleCatIdsWithCats($articles);
-
-		return view('readArticles')->with(array('articles' => $articlesWithCats, 'sort' => 'sorted'));
+		return view('readArticles')->with(array('articles' => $articles));
  	}
 
  	public function readArticle($articleId){
 
- 		$article = DB::table('ArticleData')->where('ID', $articleId)->first();
+ 		$article = DB::table('Articles as a')
+	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
+	            ->leftJoin('Categories as c', 'a_c.categoryId', '=','c.ID')
+	            ->select('a.*', 
+	            	DB::raw('group_concat(c.Name) as categoryNames'), 
+	            	DB::raw('group_concat(c.ID) as categoryIds'))
+	            ->where('a.ID', '=', $articleId)
+	           	->groupBy('a.ID')
+	            ->first();
 
- 		return view('readArticle')->with(array('article' => $article));
+	    return view('readArticle')->with(array('article' => $article));
  	}
 
+ 	public function updateArticle($articleId){
 
- 	public function __mergeArticleCatIdsWithCats($articles){
+ 		if(empty($_POST)){
 
-		foreach($articles as $key => $article){
+	 		$article = DB::table('Articles as a')
+	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
+	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
+	            ->select('a.*', 
+	            	DB::raw('group_concat(c.Name) as categoryNames'), 
+	            	DB::raw('group_concat(c.ID) as categoryIds'))
+	            ->where('a.ID', '=', $articleId)
+	           	->groupBy('a.ID')
+	            ->first();
 
-			$CatIdArr = !empty($article->CategoryIDs)?explode(',', $article->CategoryIDs):NULL;
-			
-			$catArr = [];
-			if(!empty($CatIdArr)){
-				foreach ($CatIdArr as $catId) {				 
-					$category = Categories::where('ID', $catId)->first();
-					$catArr[] = array('id' => $category['ID'], 'name' => $category['Name']);
-				}
-			}
-			$articles[$key]['CategoryArr']  = $catArr;
+	        $categories = Categories::all();
 
+			return view('updateArticle')->with(array('article' => $article, 'categories' => $categories));
+
+		}else{
+
+	 		DB::table('Articles')->where('id', $articleId)->update(array(
+	 			'Title' => $_POST['title'], 
+	 			'Content' => $_POST['content'], 
+	 			'textOnlyContent' => $_POST['textOnlyContent'], 
+	 			'lastUpdated'	=> date('Y-m-d')  
+	 		));
+
+	 		Articles_Categories::where('articleId', $articleId)->delete();
+	 		foreach(!empty($_POST['CategoryIDs'])?$_POST['CategoryIDs']:array() as $categoryId){
+	 			Articles_Categories::insert(
+	 				['articleId' => $articleId, 'categoryId' => $categoryId]
+				);
+	 		}
+
+	 		return self::readArticles();
 		}
-
-		return $articles;
  	}
-
-
 
  	public function deleteArticle($articleId){
 
- 		ArticleData::where('ID', $articleId)->delete();
+ 		Articles::where('ID', $articleId)->delete();
+ 		Articles_Categories::where('articleId', $articleId)->delete();
 
-		$articles = ArticleData::all();
-		$articlesWithCats = self::__mergeArticleCatIdsWithCats($articles);
-
- 		return view('readArticles')->with(array('articles' => $articlesWithCats));
+		$articles = Articles::all();
+		
+		return self::readArticles();
  	}
 
+
+
+ 	public function sortArticles($param, $dir){
+ 		
+
+ 		$articles = DB::table('Articles as a')
+	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
+	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
+	            ->select('a.*', 
+	            	DB::raw('group_concat(c.Name) as categoryNames'), 
+	            	DB::raw('group_concat(c.ID) as categoryIds'))
+	           	->groupBy('a.ID')
+	           	->orderBy($param, $dir)
+	            ->get();
+
+		return view('readArticles')->with(array('articles' => $articles, 'sort' => 'sorted'));
+ 	}
 
 }
 

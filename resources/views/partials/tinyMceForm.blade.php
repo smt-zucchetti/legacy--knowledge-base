@@ -20,7 +20,7 @@
 						{{$category->Name}}
 						<?php 
 							if(!empty($article)){
-								if(in_array($category->ID, explode(",",$article->CategoryIDs))){
+								if(in_array($category->ID, explode(",",$article->categoryIds))){
 									echo '<input type="checkbox" name="CategoryIDs[]" value="'.$category->ID.'" id="'.$category->ID.'" checked />';
 								}else{
 									echo '<input type="checkbox" name="CategoryIDs[]" value="'.$category->ID.'" id="'.$category->ID.'"/>';

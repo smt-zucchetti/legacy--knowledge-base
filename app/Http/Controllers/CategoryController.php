@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Input;
 
 use Illuminate\Support\Facades\DB;
 
-use App\ArticleData;
+use App\Articles;
 use App\Categories;
+use App\Articles_Categories;
 
 class CategoryController extends Controller
 {
@@ -20,64 +21,56 @@ class CategoryController extends Controller
 
 		Featured Articles
 		Required fields on forms
-		Sort by category
+		Auto fill pop up update forms
 	*/
 
+	/* BUG
+		after create, update, and delete, the view returned is not sortable
+	*/
 
  	
- 	public function readCategories(){
- 		$categories = Categories::all();
-
- 		return view('readCategories', array('categories' => $categories));
- 	}
-
-
- 	public function createCategory(){
+	public function createCategory(){
  		DB::table('Categories')->insert(array(
  			'Name' => $_POST['name'], 
- 			'dateCreated' => date('Y-m-d')
+ 			'dateCreated' => date('Y-m-d H:i:s')
  		));
 
- 		$categories = Categories::all();
+ 		return self::readCategories();
+ 		//$categories = Categories::all();
+ 		//return view('readCategories', array('categories' => $categories));
+ 	}
 
- 		return view('readCategories', array('categories' => $categories));
+ 	public function readCategories(){
+ 		return view('readCategories', array('categories' => Categories::orderBy('dateCreated', 'DESC')->get() ));
  	}
 
  	public function updateCategory($categoryID){
- 		DB::table('Categories')->where('id', $categoryID)->update(array(
+ 		DB::table('Categories')
+ 		->where('id', $categoryID)
+ 		->update(array(
  			'Name' => $_POST['name'],
- 			'lastUpdated' => date('Y-m-d') 
+ 			'lastUpdated' => date('Y-m-d H:i:s') 
  		));
 
- 		$categories = Categories::all();
- 		return view('readCategories', array('categories' => $categories));
+ 		return self::readCategories();
+ 		//return view('readCategories', array('categories' => Categories::all()));
  	}
 
+ 	public function deleteCategory($categoryId){
+ 		Categories::where('ID', $categoryId)->delete();
+ 		Articles_Categories::where('categoryId', $categoryId)->delete();
 
- 	public function deleteCategory($categoryID){
- 		Categories::where('ID', $categoryID)->delete();
- 		$articlesWithCat = ArticleData::where('CategoryIDs', '=', $categoryID)
- 					->orWhere('CategoryIDs', 'like', '%,'.$categoryID.',%')
- 					->orWhere('CategoryIDs', 'like', $categoryID.',%')
- 					->orWhere('CategoryIDs', 'like', '%,'.$categoryID)
- 					->get();
-
- 		self::__removeCategoryFromArticles($articlesWithCat, $categoryID);
-
-
- 		$categories = Categories::all();
-
- 		return view('readCategories', array('categories' => $categories));
+ 		return self::readCategories();
+ 		//return view('readCategories', array('categories' => Categories::all()));
  	}
 
- 	public function __removeCategoryFromArticles($articlesWithCat, $categoryID){
+ 	public function sortCategories($param, $dir){
+ 		
 
- 		foreach($articlesWithCat as $article){
- 			$catIDArr = explode(",",$article->CategoryIDs);
- 			$curatedCatIDArr = array_diff($catIDArr, array($categoryID));
+ 		$categories = Categories::orderBy($param, $dir)->get();
+ 			
 
- 			DB::table('ArticleData')->where('ID', $article->ID)->update(['CategoryIDs' => implode(',',$curatedCatIDArr)]);
- 		}
+		return view('readCategories')->with(array('categories' => $categories, 'sort' => 'sorted'));
  	}
 }
 

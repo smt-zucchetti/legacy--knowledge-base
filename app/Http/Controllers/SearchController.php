@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Input;
 
 use Illuminate\Support\Facades\DB;
 
-use App\ArticleData;
+use App\Articles;
 use App\Categories;
 
 class SearchController extends Controller
@@ -26,7 +26,7 @@ class SearchController extends Controller
 
  	public function searchArticles(){
 
- 		$filteredArticles = DB::table('ArticleData')
+ 		$filteredArticles = DB::table('Articles')
                 ->where('Title', 'like', '%'.$_POST['search'].'%')
                 ->orWhere('textOnlyContent', 'like', '%'.$_POST['search'].'%')
                 ->get();

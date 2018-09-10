@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ArticleData extends Model
+class Articles extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'ArticleData';
+    protected $table = 'Articles';
 
     /**
 	 * Get the route key for the model.

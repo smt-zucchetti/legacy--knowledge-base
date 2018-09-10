@@ -20,14 +20,34 @@
 	<i class="fas fa-plus"></i> Add New 
 </a>
 
+
+
 <div class="collatedGridHeader categories">
-	<div>Name</div>
+	<div>
+		Name
+		<span class="sortArrow Name">
+			<a href="#" class="upArrow"></a>
+			<a href="#" class="downArrow"></a>
+		</span>
+	</div>
 	<div></div>
-	<div>Date Created</div>
+	<div>
+		Date Created
+		<span class="sortArrow down dateCreated">
+			<a href="#" class="upArrow"></a>
+			<a href="#" class="downArrow"></a>
+		</span>
+	</div>
 </div>
 
 <?php $i = 0; ?>
-<div class="collatedGrid categories">
+
+<?php 
+ 	if(empty($sort)){
+ 		$sort = 'noSort';
+ 	}
+ ?>
+<div class="collatedGrid categories <?php echo $sort; ?>">
 	@foreach($categories as $category)
 	<?php $row = ($i % 2 == 0)?"row":""; ?>
 	<div class="{{$row}}">{{$category->Name}}</div>
@@ -63,7 +83,6 @@
 			Delete
 		</a>
 	</div>
-
 	<div class="{{$row}}">
 		{{$category->dateCreated}}
 	</div>
@@ -72,7 +91,10 @@
 </div>
 
 <script>
-
+	$(document).ready(function(){
+		@include('partials/javaScriptSort', ['type' => 'categories']  );
+	});
+	
 </script>
 
 @stop

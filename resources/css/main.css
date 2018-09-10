@@ -118,39 +118,63 @@ main a.seeMore {
 main a.seeMore:hover {
   text-decoration: underline;
 }
-main .collatedGridHeader > div, main .collatedGrid > div {
-  height: 20px;
-  overflow: hidden;
+main .collatedGrid > div {
   padding: 1em;
 }
 main .collatedGridHeader {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
+  height: 40px;
 }
 main .collatedGridHeader.categories {
   grid-template-columns: 1fr 1fr 1fr;
 }
 main .collatedGridHeader > div {
+  padding: 0;
   background-color: dodgerblue;
   display: flex;
+  align-items: center;
+  padding: 0 1em;
 }
 main .collatedGridHeader > div .sortArrow {
   margin-left: auto;
-  position: relative;
-  top: 8px;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr;
+  width: 20px;
+  height: 40px;
+  z-index: 2;
 }
-main .collatedGridHeader > div .sortArrow:hover {
-  cursor: pointer;
+main .collatedGridHeader > div .sortArrow.down .upArrow {
+  border-bottom-color: gray;
 }
-main .collatedGridHeader > div .sortArrow i {
-  font-size: 26px;
-  line-height: 0px;
-  position: absolute;
-  color: gray;
+main .collatedGridHeader > div .sortArrow.down .downArrow {
+  border-top-color: black;
 }
-main .collatedGridHeader > div .sortArrow i.active {
-  color: black;
+main .collatedGridHeader > div .sortArrow.up .upArrow {
+  border-bottom-color: black;
+}
+main .collatedGridHeader > div .sortArrow.up .downArrow {
+  border-top-color: gray;
+}
+main .collatedGridHeader > div .sortArrow .upArrow, main .collatedGridHeader > div .sortArrow .downArrow {
+  height: 0;
+  width: 0;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-style: solid;
+  border-width: 9px;
+  width: 2px;
+}
+main .collatedGridHeader > div .sortArrow .upArrow {
+  border-top-color: transparent;
+  border-bottom-color: gray;
+  margin-bottom: 4px;
+}
+main .collatedGridHeader > div .sortArrow .downArrow {
+  border-bottom-color: transparent;
+  border-top-color: gray;
 }
 main .collatedGrid {
   display: grid;

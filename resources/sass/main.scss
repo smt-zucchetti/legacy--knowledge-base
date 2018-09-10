@@ -146,11 +146,8 @@ main{
       }
     }
 
-    .collatedGridHeader,.collatedGrid{
+    .collatedGrid{
         & > div{
-
-            height: 20px;
-            overflow: hidden;
             padding: 1em;
         }
     }
@@ -159,34 +156,65 @@ main{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-template-rows: auto;
+        height: 40px;
 
-         &.categories{
+        &.categories{
             grid-template-columns: 1fr 1fr 1fr;
         }
 
         & > div{
+            padding: 0;
             background-color: dodgerblue;
             display: flex;
+            align-items: center;
+            padding:0 1em;
 
             .sortArrow{
                 margin-left: auto;
-                position: relative;
-                top: 8px;
+                display: grid;
+                grid-template-rows: 1fr 1fr;
+                grid-template-columns: 1fr;
+                width: 20px;
+                height: 40px;
+                z-index: 2;
 
-                &:hover{
-                    cursor:pointer;
-                }
-
-                i{
-                    font-size: 26px;
-                    line-height: 0px;
-                    position: absolute;
-                    color:lighten(black,50%);
-                    
-                    &.active{
-                        color: black;
+                &.down{
+                    .upArrow{
+                        border-bottom-color:lighten(black,50%);
+                    }
+                    .downArrow{
+                        border-top-color:black;
                     }
                 }
+
+                &.up{
+                    .upArrow{
+                        border-bottom-color:black;
+                    }
+                    .downArrow{
+                        border-top-color:lighten(black,50%);
+                    }
+                }
+
+                .upArrow,.downArrow{
+                    height: 0;
+                    width: 0;
+                    border-right-color: transparent;
+                    border-left-color: transparent;
+                    border-style: solid;
+                    border-width: 9px;
+                    width: 2px;
+                }
+                .upArrow{
+                    border-top-color: transparent;
+                    border-bottom-color: lighten(black,50%);
+                    margin-bottom: 4px;
+                }
+                .downArrow{
+                    border-bottom-color: transparent;
+                    border-top-color: lighten(black,50%);
+                }
+                
             }
         }
     }

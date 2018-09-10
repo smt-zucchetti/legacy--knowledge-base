@@ -31,8 +31,18 @@
 			Edit
 		</a>
 	</div>
+	<div>
+		<h3>Categories:</h3>
+		<?php
+			foreach(explode(",",$article->categoryNames) as $categoryName){						 
+				echo "<li class='category'>";
+				echo 	$categoryName; 
+				echo "</li>";
+			}
+		?>
+	</div>
+	<h3 class="title">Title: {{$article->Title}}</h3>
 	<div class="singleArticleBorder">
-		<h1 class="title">{{$article->Title}}</h1>
 		{!! $article->Content !!}
 	</div>
 

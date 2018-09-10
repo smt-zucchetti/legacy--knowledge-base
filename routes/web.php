@@ -20,14 +20,14 @@ Route::get('/readArticle/{articleId}', 'ArticleController@readArticle');
 Route::post('/updateArticle/{articleId}', 'ArticleController@updateArticle');
 Route::get('/updateArticle/{articleId}', 'ArticleController@updateArticle');
 Route::post('/deleteArticle/{articleId}', 'ArticleController@deleteArticle');
-Route::get('/sortArticles', 'ArticleController@sortArticles');
+Route::get('/sortArticles/{param}/{dir}', 'ArticleController@sortArticles');
 
 
 Route::post('/createCategory', 'CategoryController@createCategory');
 Route::get('/readCategories', 'CategoryController@readCategories');
 Route::post('/updateCategory/{categoryID}', 'CategoryController@updateCategory');
 Route::post('/deleteCategory/{categoryID}', 'CategoryController@deleteCategory');
-
+Route::get('/sortCategories/{param}/{dir}', 'CategoryController@sortCategories');
 
 Route::post('/searchArticles', 'SearchController@searchArticles');
 
