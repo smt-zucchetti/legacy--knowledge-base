@@ -152,9 +152,16 @@ main{
         }
     }
 
+    .collatedGridHeader, .collatedGrid{
+        grid-template-columns: 1fr 1fr 1fr;
+
+        &.loggedIn{
+            grid-template-columns: 1fr 1fr 1fr 1fr;            
+        }
+    }
+
     .collatedGridHeader {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-template-rows: auto;
         height: 40px;
 
@@ -221,7 +228,6 @@ main{
 
     .collatedGrid {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-template-rows: auto;
 
         &.categories{

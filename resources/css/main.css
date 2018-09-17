@@ -121,9 +121,14 @@ main a.seeMore:hover {
 main .collatedGrid > div {
   padding: 1em;
 }
+main .collatedGridHeader, main .collatedGrid {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+main .collatedGridHeader.loggedIn, main .collatedGrid.loggedIn {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
 main .collatedGridHeader {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
   height: 40px;
 }
@@ -178,7 +183,6 @@ main .collatedGridHeader > div .sortArrow .downArrow {
 }
 main .collatedGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
 }
 main .collatedGrid.categories {
