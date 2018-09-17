@@ -38,8 +38,8 @@
 
 	<section class="form-group">
 	    <label for="content"><h3>Content:</h3> </label>
-	    <textarea id="tinyMCE" name="content" class="form-control my-editor"></textarea>
-	    <textarea id="textOnlyContent" name="textOnlyContent" >{{!empty($article)?$article->Content:''}}</textarea>
+	    <textarea id="tinyMCE" name="content" class="form-control my-editor">{{!empty($article)?$article->Content:''}}</textarea>
+	    <textarea id="textOnlyContent" name="textOnlyContent" >{{!empty($article)?$article->textOnlyContent:''}}</textarea>
 	</section>
 
     <input type="submit" value="Save" />

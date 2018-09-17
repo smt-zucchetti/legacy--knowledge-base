@@ -16,5 +16,12 @@
 
 
 
+<script>
+	$('#kbForm').submit(function() {
+		var rawText = tinyMCE.activeEditor.getContent({format : 'text'});
+		$('textarea#textOnlyContent').val(rawText);
+	});
+</script>
+
 
 @stop

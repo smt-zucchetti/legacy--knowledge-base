@@ -1,6 +1,8 @@
 <ul>
   <li><a href="<?php echo url('/readArticles');?>">Articles</a></li>
-  <li><a href="<?php echo url('/readCategories');?>">Categories</a></li>
+  @if (Auth::check())
+    <li><a href="<?php echo url('/readCategories');?>">Categories</a></li>
+  @endif
   <li>
       <form method="post" action="<?php echo url('/searchArticles') ?>" >
          @csrf
@@ -9,6 +11,10 @@
       </form>
   </li>
   <li>
-  		<a href="<?php echo url('/logIn'); ?>">Log In</a>
+      @if (Auth::check())
+        <a href="<?php echo url('/logout'); ?>">Log Out</a>  		
+      @else
+        <a href="<?php echo url('/login'); ?>">Log In</a>
+      @endif
   </li>
 </ul>

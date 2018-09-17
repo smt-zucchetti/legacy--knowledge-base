@@ -4,11 +4,18 @@
 
 @section('main')
 
+@if (Auth::check())
+	<a class="addArticle" href="<?php echo url('/createArticle') ?>">
+		<i class="fas fa-plus"></i> Add New 
+	</a>
+@endif
 
-<a class="addArticle" href="<?php echo url('/createArticle') ?>">
-	<i class="fas fa-plus"></i> Add New 
-</a>
-<div class="collatedGridHeader">
+@if (Auth::check())
+	<div class="collatedGridHeader loggedIn">
+@else
+	<div class="collatedGridHeader">
+@endif
+
 	<div>
 		Title 
  		<span class="sortArrow Title">
@@ -16,7 +23,9 @@
 			<a href="#" class="downArrow"></a>
 		</span>
 	</div>
-	<div>Actions</div>
+	@if (Auth::check())
+		<div>Actions</div>
+	@endif
 	<div class="categoryMenuItem">
 		Category
 		<span class="sortArrow categoryNames">
@@ -37,7 +46,12 @@
  		$sort = 'noSort';
  	}
  ?>
-<div class="collatedGrid <?php echo $sort; ?>">
+
+@if (Auth::check())
+	<div class="collatedGrid <?php echo $sort; ?> loggedIn">
+@else
+ 	<div class="collatedGrid <?php echo $sort; ?>">
+@endif
 	<?php $i = 0; ?>
 	@foreach($articles as $article)
 		<?php $row = ($i % 2 == 0)?"row":""; ?>
@@ -47,6 +61,7 @@
 				{{$article->Title}}
 			</a>
 		</div>
+		@if (Auth::check())
 		<div class="{{$row}} actionItems">
 			<div style="display: none;" id="delete-article-{{$article->ID}}">
 				<form method="post" action="<?php echo url('/deleteArticle/'.$article->ID);?>">
@@ -66,6 +81,7 @@
 				Edit
 			</a>
 		</div>
+		@endif
 		<div class="{{$row}}">
 			<ul class="categories">
 				<?php 
