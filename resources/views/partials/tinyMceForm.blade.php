@@ -43,14 +43,3 @@
 	</section>
 
     <input type="submit" value="Save" />
-
-<script>
-	/*$(document).ready(function(){
-		tinyMCE.activeEditor.setContent($('textarea#textOnlyContent').text());
-	});
-	$('form#kbForm').submit(function(){
-		$('#textOnlyContent').append(tinyMCE.activeEditor.getContent({ format: 'text' }));
-
-		return true;
-	});*/
-</script>

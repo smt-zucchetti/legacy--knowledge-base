@@ -41,6 +41,10 @@ $('.sortArrow').click(function(e){
       	//data: data,
       	data : {action: 'refresh'},
 
+      	failure: function(response){
+      		console.log(response);
+      	},
+
         success: function(response){
         	//alert('11');
         	console.log(response);

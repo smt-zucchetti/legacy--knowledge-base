@@ -92,6 +92,7 @@
 
 <script>
 	$(document).ready(function(){
+
 		$('a.seeMore').click(function(e){
 			e.preventDefault();
 			

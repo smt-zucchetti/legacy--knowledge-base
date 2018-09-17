@@ -8,4 +8,7 @@
         <input type="submit" value="Search" />
       </form>
   </li>
+  <li>
+  		<a href="<?php echo url('/logIn'); ?>">Log In</a>
+  </li>
 </ul>

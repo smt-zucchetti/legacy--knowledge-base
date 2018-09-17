@@ -31,4 +31,5 @@ Route::get('/sortCategories/{param}/{dir}', 'CategoryController@sortCategories')
 
 Route::post('/searchArticles', 'SearchController@searchArticles');
 
-
+Route::post('/logIn', 'UserController@logIn');
+Route::get('/logIn', 'UserController@logIn');
