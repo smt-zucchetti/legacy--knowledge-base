@@ -26,14 +26,25 @@ class SearchController extends Controller
 
  	public function searchArticles(){
 
- 		$filteredArticles = DB::table('Articles')
-                ->where('Title', 'like', '%'.$_POST['search'].'%')
-                ->orWhere('textOnlyContent', 'like', '%'.$_POST['search'].'%')
-                ->get();
+ 		$articles = DB::table('Articles as a')
+	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
+	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
+	            ->select('a.*', 
+	            	DB::raw('group_concat(c.Name) as categoryNames'), 
+	            	DB::raw('group_concat(c.ID) as categoryIds'))
 
-        $filteredArticlesWithCats = self::__mergeArticleCatIdsWithCats($filteredArticles);
+	            ->where('a.Title', 'like', '%'.$_POST['search'].'%')
+                ->orWhere('a.textOnlyContent', 'like', '%'.$_POST['search'].'%')
 
-        return view('listArticles')->with(array('articles' => $filteredArticlesWithCats));
+	            ->orderBy('dateCreated', 'DESC')
+	           	->groupBy('a.ID')
+	            ->get();
+
+
+
+        //$filteredArticlesWithCats = self::__mergeArticleCatIdsWithCats($filteredArticles);
+
+        return view('readArticles')->with(array('articles' => $articles));
  	}
 
 }

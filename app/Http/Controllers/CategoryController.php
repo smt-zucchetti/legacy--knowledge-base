@@ -6,10 +6,10 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
 use Illuminate\Support\Facades\Input;
-
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 use App\Articles;
 use App\Categories;
@@ -36,12 +36,14 @@ class CategoryController extends Controller
  		));
 
  		return self::readCategories();
- 		//$categories = Categories::all();
- 		//return view('readCategories', array('categories' => $categories));
  	}
 
  	public function readCategories(){
- 		return view('readCategories', array('categories' => Categories::orderBy('dateCreated', 'DESC')->get() ));
+ 		if (Auth::user()){
+ 			return view('readCategories', array('categories' => Categories::orderBy('dateCreated', 'DESC')->get() ));
+ 		}else{
+ 			return view('home');
+ 		}
  	}
 
  	public function updateCategory($categoryID){

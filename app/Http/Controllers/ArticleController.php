@@ -31,6 +31,8 @@ class ArticleController extends Controller
 
 	 		 return view('createArticle', array('categories' => $categories));
 	 	}else{
+	 		//print_r($_POST);
+	 		//die();
 
 			$articleId = DB::table('Articles')->insert(array(
 				'Title' => $_POST['title'], 
