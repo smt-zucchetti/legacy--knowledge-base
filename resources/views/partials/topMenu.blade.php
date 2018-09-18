@@ -12,6 +12,7 @@
   </li>
   <li>
       @if (Auth::check())
+        Logged in as {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}
         <a href="<?php echo url('/logout'); ?>">Log Out</a>  		
       @else
         <a href="<?php echo url('/login'); ?>">Log In</a>
