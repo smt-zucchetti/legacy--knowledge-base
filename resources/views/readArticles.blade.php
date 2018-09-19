@@ -1,4 +1,4 @@
-@extends('layouts.formMaster', ['bodyId'=>'listArticles'])
+@extends('layouts.formMaster')
 
 @section('title', 'New User')
 
@@ -9,6 +9,13 @@
 		<i class="fas fa-plus"></i> Add New 
 	</a>
 @endif
+
+<form class="searchForm" method="post" action="<?php echo url('/searchArticles') ?>" >
+   @csrf
+  Search: <input type="text" name="search" />
+  <input type="submit" value="Search" />
+</form>
+
 
 @if (Auth::check())
 	<div class="collatedGridHeader loggedIn">

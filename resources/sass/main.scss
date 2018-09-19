@@ -1,3 +1,6 @@
+$turquoise: #004A5D;
+$orange: #F48120;
+
 html,body{
     height:100%;
     margin:0;
@@ -6,7 +9,7 @@ html,body{
 body{
     display: flex;
     flex-flow: column;
-    font-family: sans-serif;
+    font-family: Cabin, sans-serif;
     overflow: auto;
 
     &.fancybox-active{
@@ -46,6 +49,25 @@ main{
         flex-flow: column;
         margin: 40px auto 60px;
 
+        .searchForm{
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            flex-flow: row;
+
+            input[type="text"] {
+                height: 27px;
+                width: 200px;
+                margin: 0 0 0 10px;
+            }
+
+            input[type=submit]{
+                padding: .5em .8em;
+                margin: 0;
+            }
+        }
+
         .addArticle,
         .addCategory  {
             text-decoration: none;
@@ -64,9 +86,9 @@ main{
             flex-flow: column;
 
             input[type=submit]{
-                background-color: dodgerblue;
+                background-color: $turquoise;
                 border: none;
-                background: dodgerblue;
+                background: $turquoise;
                 border-radius: 0;
                 padding: 1em 2em;
                 font-size: 16px;
@@ -77,7 +99,7 @@ main{
 
                 &:hover{
                     cursor:pointer;
-                    background-color:lighten(dodgerblue, 10%);
+                    background-color:lighten($turquoise, 10%);
                 }
             }
 
@@ -139,7 +161,7 @@ main{
       display: inline-block;
 
       &.seeMore{
-        color:orangeRed;
+        color:$orange;
         &:hover{
           text-decoration:underline;
         }
@@ -164,6 +186,7 @@ main{
         display: grid;
         grid-template-rows: auto;
         height: 40px;
+        color:white;
 
         &.categories{
             grid-template-columns: 1fr 1fr 1fr;
@@ -171,7 +194,7 @@ main{
 
         & > div{
             padding: 0;
-            background-color: dodgerblue;
+            background-color: $turquoise;
             display: flex;
             align-items: center;
             padding:0 1em;
@@ -281,7 +304,7 @@ main{
 
                     a.seeMore::after {
                         content: " See More";
-                        color: orangered;
+                        color: $orange;
                         margin-left: 8px;
                         font-size: 13px;
                     }
@@ -306,47 +329,150 @@ main{
             }
         }
     }
+
+
+    form.authForm {
+        width: 400px;
+        margin: 0 auto;
+        display: block;
+
+        label{
+            display: block;
+            color: dimgray;
+        }
+
+        input{
+            height: 50px;
+            font-size: 20px;
+            border: solid 1px dimgray;
+            border-radius: 5px;
+            padding: 0 0 0 8px;
+            width: 100%;
+            margin: 2px 0 20px;
+
+            &#password{
+                margin: 0;
+            }
+        }
+
+        .form-check{
+            display: flex;
+            align-items: center;
+
+            input{
+                width: auto;
+                margin: 0 4px 0 0;
+            }
+        }
+
+        button[type=submit] {
+            background: $turquoise;
+            border: none;
+            font-size: 1.5em;
+            color: white;
+            padding: .5em 1.5em;
+
+            &:hover{
+                background:lighten($turquoise, 10%);
+                cursor: pointer;
+            }
+        }
+
+        a{
+            text-decoration: none;
+            color: $turquoise;
+            margin-top: 30px;
+            display: block;
+
+            &:hover{
+                text-decoration:underline;
+            }
+        }
+    }
+
 }
 
 header{
     color: white;
-    background: orangered;
-
-    ul{
+    box-shadow: 5px 5px 5px #666;
+    
+    .flexContainer{
         display: flex;
-        margin:0; padding: 0;
+        max-width: 1100px;
+        margin: 0 auto;
+        align-items: center;
 
-        li{
-            list-style-type:none;
+        img.logo{
+            max-width: 273px;
+        }
+
+        ul.nav{
+            display: flex;
+            margin:0; padding: 0;
             flex-grow: 1;
 
-            &:hover a{
-              background:CHARTREUSE;
-            }
+            li{
+                list-style-type:none;
+                flex-grow: 1;
 
-            a{
-              background: orangered;
-              text-decoration: none;
-              color: white;
-              padding:1em 1.5em;
-              display: block;
+                &:hover{
+                  a{
+                        border-bottom:solid 2px $orange;
+                    }
+                }
+
+                a{
+                  text-decoration: none;
+                  color: $turquoise;
+                    padding: 0.6em 0;
+                    display: inline-block;
+                }
+                form{
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                }
             }
-            form{
-                height: 100%;
-                display: flex;
-                align-items: center;
+        }
+
+        a#youtube-popup{
+            display: flex;
+           align-items: center;
+           text-decoration: none;
+           color: #999;
+            text-transform: capitalize;
+            font-weight: 500;
+            margin-right: 20px;
+
+            img{
+                margin-right: 6px;
             }
+        }
+
+        i{
+            background: $turquoise;
+            border-radius: 50%;
+            color: white;
+            display: inline-flex;
+            height: 30px;
+            width: 30px;
+            align-items: center;
+            justify-content: center;
         }
     }
 }
 
 footer{
-    background-color: orange;
-    min-height: 150px;
+    color:white;
+    background: $turquoise;
 }
 
-
+header, footer{
+    text-transform: uppercase;
+    font-weight: 700;
+}
   
+
 
 .fancybox-container {
     input[type=text]{
@@ -367,16 +493,16 @@ footer{
         }
     }
     input[type=submit]{
-      background: dodgerblue;
+      background: $turquoise;
       &:hover{
-          background-color:lighten(dodgerblue, 10%);
+          background-color:lighten($turquoise, 10%);
       }
     }
     button.cancelButton{
-        background: orangered;
+        background: $orange;
         margin-right:10px;
         &:hover{
-            background-color:lighten(orangered, 10%);
+            background-color:lighten($orange, 10%);
         }
     }
 
