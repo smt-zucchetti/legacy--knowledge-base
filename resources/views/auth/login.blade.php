@@ -1,6 +1,8 @@
 @extends('layouts.formMaster')
 @section('main')
 
+<div class="authContainer">
+
     <form method="POST" action="{{ route('login') }}" class="authForm">
         <h2>{{ __('Login') }}</h2>
 
@@ -29,11 +31,13 @@
         </div>
                 
         <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
-        <a class="btn btn-link" href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a><br>
-        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+        <div class="optionLinks">
+            <a class="btn btn-link" href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
+            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+        </div>
 
     </form>
                 
-
+</div>
 
 @stop

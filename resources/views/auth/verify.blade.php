@@ -1,24 +1,18 @@
-@extends('layouts.app')
+@extends('layouts.formMaster')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Verify Your Email Address</div>
+@section('main')
 
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            A fresh verification link has been sent to your email address.
-                        </div>
-                    @endif
+    <div class="authContainer">
+        <h2>Verify Your Email Address</h2>
 
-                    Before proceeding, please check your email for a verification link.
-                    If you did not receive the email, <a href="{{ route('verification.resend') }}">click here to request another</a>.
-                </div>
+        @if (session('resent'))
+            <div class="alert" role="alert">
+                A fresh verification link has been sent to your email address.
             </div>
-        </div>
+        @endif
+
+        Before proceeding, please check your email for a verification link.
+        If you did not receive the email, <a href="{{ route('verification.resend') }}">click here to request another</a>.
     </div>
-</div>
+      
 @endsection
