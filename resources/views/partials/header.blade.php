@@ -11,15 +11,22 @@
 					  @endif
 					  <li>
 					      @if (Auth::check())
-					        <a href="<?php echo url('/logout'); ?>">Log Out</a>  		
+					        <a href="#">
+					        	Logged in as {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}
+					        </a>  		
 					      @else
 					        <a href="<?php echo url('/login'); ?>">Log In</a>
 					      @endif
+
+					      @if (Auth::check())
+					  		<ul>
+								<li>
+									 <a href="<?php echo url('/logout'); ?>">Logout</a>
+								</li>
+							</ul>
+						@endif
 					  </li>
 					</ul>
-			@if (Auth::check())
-				Logged in as {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}
-			@endif
 		     
 				    <a id="youtube-popup" href="#">
 					    <img src="http://www.verticalbookingusa.com/images/video-icon.png"> 
