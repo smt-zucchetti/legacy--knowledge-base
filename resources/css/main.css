@@ -19,6 +19,103 @@ header .container, main .container, footer .container {
   margin: 0 auto;
 }
 
+header {
+  color: white;
+  box-shadow: 2px 6px 11px #AAA;
+}
+header .flexContainer {
+  display: flex;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: center;
+}
+header .flexContainer img.logo {
+  max-width: 200px;
+}
+header .flexContainer ul.nav {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+  font-weight: 700;
+}
+header .flexContainer ul.nav li {
+  list-style-type: none;
+  font-size: 0.9em;
+  padding: 2em 2em 2em 2em;
+}
+header .flexContainer ul.nav li .welcomeMsg {
+  position: absolute;
+}
+header .flexContainer ul.nav li:last-of-type {
+  margin-left: auto;
+}
+header .flexContainer ul.nav li a {
+  text-decoration: none;
+  border-bottom: solid 2px transparent;
+  padding-bottom: 0.4em;
+  text-transform: uppercase;
+  color: #004A5D;
+}
+header .flexContainer ul.nav li form {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+header .flexContainer ul.nav li ul {
+  display: none;
+}
+header .flexContainer ul.nav li:hover a {
+  border-bottom: solid 2px #F48120;
+}
+header .flexContainer ul.nav li:hover ul {
+  display: block;
+  position: absolute;
+  padding: 0;
+  margin-top: 1.5em;
+}
+header .flexContainer ul.nav li:hover ul li {
+  background: #D6F1FC;
+  padding: 0;
+}
+header .flexContainer ul.nav li:hover ul li:hover {
+  background: #31B8EF;
+}
+header .flexContainer ul.nav li:hover ul li:hover a {
+  color: white;
+}
+header .flexContainer ul.nav li:hover ul li a {
+  border: none;
+  padding: 1em 2em;
+  display: block;
+}
+header .flexContainer a#youtube-popup {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #999;
+  text-transform: capitalize;
+  font-weight: 500;
+  margin-right: 20px;
+}
+header .flexContainer a#youtube-popup img {
+  margin-right: 6px;
+}
+header .flexContainer i {
+  background: #004A5D;
+  border-radius: 50%;
+  color: white;
+  display: inline-flex;
+  height: 30px;
+  width: 30px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 13px;
+}
+header .flexContainer i:hover {
+  background: #007390;
+}
+
 main {
   flex-grow: 1;
 }
@@ -35,16 +132,34 @@ main .singleArticleBorder .title {
 }
 main .container {
   height: 100%;
-  display: flex;
-  flex-flow: column;
-  margin: 40px auto 60px;
+  margin: 80px auto 60px;
+}
+main .container .validationAlerts {
+  width: 40%;
+  background: #ff581a;
+  color: white;
+  border-radius: 7px;
+  padding: 1em;
+  margin-top: 20px;
+}
+main .container .validationAlerts h3 {
+  margin: 0;
+}
+main .container .validationAlerts ul {
+  padding: 0;
+  margin: 10px 0 0;
+}
+main .container .validationAlerts ul li {
+  list-style-type: none;
+  line-height: 2em;
 }
 main .container .searchForm {
   flex-grow: 1;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  margin-left: auto;
+  float: right;
   flex-flow: row;
+  margin-bottom: 1.5em;
 }
 main .container .searchForm input[type=text] {
   height: 27px;
@@ -55,15 +170,17 @@ main .container .searchForm input[type=submit] {
   padding: 0.5em 0.8em;
   margin: 0;
 }
-main .container .addArticle,
-main .container .addCategory {
+main .container .actionItems {
+  display: inline-block;
+}
+main .container .actionItems a {
   text-decoration: none;
-  margin-bottom: 16px;
+  margin-right: 15px;
   color: dimgray;
   transition: color 0.5s;
+  display: inline-block;
 }
-main .container .addArticle:hover,
-main .container .addCategory:hover {
+main .container .actionItems a:hover {
   color: black;
 }
 main .container form {
@@ -76,7 +193,7 @@ main .container form input[type=submit] {
   border: none;
   background: #004A5D;
   border-radius: 0;
-  padding: 1em 2em;
+  padding: 0.5em 1.8em;
   font-size: 16px;
   color: white;
   margin-top: 25px;
@@ -96,6 +213,9 @@ main .container form input#title, main .container form #mceu_16 {
 main .container form input#title#title, main .container form #mceu_16#title {
   font-size: 22px;
   width: 100%;
+  padding: 6px 0 6px 8px;
+  border-radius: 4px;
+  border: solid 1px gray;
 }
 main section.form-group {
   margin-bottom: 20px;
@@ -105,25 +225,27 @@ main section.form-group h3 {
   margin-bottom: 0;
   color: dimgray;
 }
-main .categoryList ul {
-  column-count: 4;
-  column-rule: solid dimgray 1px;
+main ul.categoryList {
   background: lightgray;
   padding: 1.4em;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-radius: 3px;
 }
-main .categoryList ul li {
+main ul.categoryList li {
   list-style-type: none;
   padding-right: 51px;
 }
-main .categoryList ul label {
+main ul.categoryList label {
   display: inline-block;
   margin-bottom: 10px;
   display: flex;
   margin-bottom: 10px;
   width: 100%;
 }
-main .categoryList ul label input[type=checkbox] {
+main ul.categoryList label input[type=checkbox] {
   margin-left: auto;
+  transform: scale(1.4);
 }
 main a {
   display: inline-block;
@@ -148,6 +270,7 @@ main .collatedGridHeader {
   grid-template-rows: auto;
   height: 40px;
   color: white;
+  clear: both;
 }
 main .collatedGridHeader.categories {
   grid-template-columns: 1fr 1fr 1fr;
@@ -172,10 +295,10 @@ main .collatedGridHeader > div .sortArrow.down .upArrow {
   border-bottom-color: gray;
 }
 main .collatedGridHeader > div .sortArrow.down .downArrow {
-  border-top-color: black;
+  border-top-color: #F48120;
 }
 main .collatedGridHeader > div .sortArrow.up .upArrow {
-  border-bottom-color: black;
+  border-bottom-color: #F48120;
 }
 main .collatedGridHeader > div .sortArrow.up .downArrow {
   border-top-color: gray;
@@ -205,177 +328,143 @@ main .collatedGrid {
 main .collatedGrid.categories {
   grid-template-columns: 1fr 1fr 1fr;
 }
-main .collatedGrid .actionItems > a {
-  color: dimgray;
-  text-decoration: none;
-  transition: color 0.5s;
-  margin-right: 16px;
-}
-main .collatedGrid .actionItems > a:hover {
-  color: black;
-}
-main .collatedGrid > div.row {
+main .collatedGrid .oddRow {
   background: lightgray;
 }
-main .collatedGrid > div a#deleteArticle, main .collatedGrid > div a#editArticle {
+main .collatedGrid .titleRow a {
+  color: #F48120;
+}
+main .collatedGrid a#deleteArticle, main .collatedGrid a#editArticle {
   color: dimgray;
   text-decoration: none;
   transition: color 0.5s;
 }
-main .collatedGrid > div a#deleteArticle:hover, main .collatedGrid > div a#editArticle:hover {
+main .collatedGrid a#deleteArticle:hover, main .collatedGrid a#editArticle:hover {
   color: black;
 }
-main .collatedGrid > div a#editArticle {
+main .collatedGrid a#editArticle {
   margin-left: 10px;
 }
-main .collatedGrid > div ul.categories {
+main .collatedGrid ul.categories {
   margin: 0;
   padding: 0;
 }
-main .collatedGrid > div ul.categories li {
+main .collatedGrid ul.categories li {
   background: transparent;
   list-style-type: none;
 }
-main .collatedGrid > div ul.categories li:nth-child(n+2) {
+main .collatedGrid ul.categories li:nth-child(n+2) {
   display: none;
 }
-main .collatedGrid > div ul.categories li a.seeMore::after {
+main .collatedGrid ul.categories li a.seeMore::after {
   content: " See More";
   color: #F48120;
   margin-left: 8px;
   font-size: 13px;
 }
-main .collatedGrid > div ul.categories.showAll {
+main .collatedGrid ul.categories.showAll {
   position: absolute;
   background: white;
   padding: 16px 10px !important;
   box-shadow: 3px 3px 3px 0px dimgray;
   margin: -16px 0 0 -10px;
 }
-main .collatedGrid > div ul.categories.showAll li {
+main .collatedGrid ul.categories.showAll li {
   display: block;
+  margin-bottom: 10px;
 }
-main .collatedGrid > div ul.categories.showAll li a.seeMore::after {
+main .collatedGrid ul.categories.showAll li:last-of-type {
+  margin-bottom: 0;
+}
+main .collatedGrid ul.categories.showAll li a.seeMore::after {
   content: "See Less";
 }
-main form.authForm {
-  width: 400px;
+main .authContainer {
+  width: 80%;
   margin: 0 auto;
+  max-width: 500px;
+}
+main .authContainer h2 {
+  color: #444;
+}
+main .authContainer form.authForm {
   display: block;
 }
-main form.authForm label {
+main .authContainer form.authForm * {
+  box-sizing: border-box;
+}
+main .authContainer form.authForm label {
   display: block;
   color: dimgray;
 }
-main form.authForm input {
-  height: 50px;
-  font-size: 20px;
+main .authContainer form.authForm input {
+  font-size: 16px;
   border: solid 1px dimgray;
   border-radius: 5px;
-  padding: 0 0 0 8px;
+  padding: 7px 0 7px 9px;
   width: 100%;
-  margin: 2px 0 20px;
+  margin: 4px 0 20px;
 }
-main form.authForm input#password {
-  margin: 0;
-}
-main form.authForm .form-check {
+main .authContainer form.authForm .form-check {
   display: flex;
   align-items: center;
 }
-main form.authForm .form-check input {
+main .authContainer form.authForm .form-check input {
   width: auto;
   margin: 0 4px 0 0;
 }
-main form.authForm button[type=submit] {
+main .authContainer form.authForm button[type=submit] {
   background: #004A5D;
   border: none;
-  font-size: 1.5em;
+  font-size: 1.1em;
   color: white;
   padding: 0.5em 1.5em;
+  margin: 0.5em 0;
 }
-main form.authForm button[type=submit]:hover {
+main .authContainer form.authForm button[type=submit]:hover {
   background: #007390;
   cursor: pointer;
 }
-main form.authForm a {
+main .authContainer form.authForm .optionLinks {
+  margin-top: 10px;
+}
+main .authContainer form.authForm .optionLinks a {
   text-decoration: none;
   color: #004A5D;
-  margin-top: 30px;
-  display: block;
-}
-main form.authForm a:hover {
-  text-decoration: underline;
-}
-
-header {
-  color: white;
-  box-shadow: 5px 5px 5px #666;
-}
-header .flexContainer {
-  display: flex;
-  max-width: 1100px;
-  margin: 0 auto;
-  align-items: center;
-}
-header .flexContainer img.logo {
-  max-width: 273px;
-}
-header .flexContainer ul.nav {
-  display: flex;
-  margin: 0;
-  padding: 0;
-  flex-grow: 1;
-}
-header .flexContainer ul.nav li {
-  list-style-type: none;
-  flex-grow: 1;
-}
-header .flexContainer ul.nav li:hover a {
-  border-bottom: solid 2px #F48120;
-}
-header .flexContainer ul.nav li a {
-  text-decoration: none;
-  color: #004A5D;
-  padding: 0.6em 0;
-  display: inline-block;
-}
-header .flexContainer ul.nav li form {
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-header .flexContainer a#youtube-popup {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #999;
-  text-transform: capitalize;
-  font-weight: 500;
   margin-right: 20px;
 }
-header .flexContainer a#youtube-popup img {
-  margin-right: 6px;
+main .authContainer form.authForm .optionLinks a:hover {
+  text-decoration: underline;
 }
-header .flexContainer i {
-  background: #004A5D;
-  border-radius: 50%;
-  color: white;
-  display: inline-flex;
-  height: 30px;
-  width: 30px;
-  align-items: center;
-  justify-content: center;
+main .authContainer form.authForm .alert {
+  color: #F48120;
+  display: block;
+  font-size: 1.2em;
+}
+main .authContainer form.authForm .invalid-feedback {
+  color: #F48120;
 }
 
 footer {
   color: white;
   background: #004A5D;
+  padding: 3em 0;
 }
-
-header, footer {
-  text-transform: uppercase;
-  font-weight: 700;
+footer .footerFlex {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+footer .footerFlex h3 {
+  margin: 0;
+}
+footer .footerFlex a {
+  color: white;
+  text-decoration: none;
+}
+footer .footerFlex .copyright {
+  font-size: 14px;
+  margin-top: 35px;
 }
 
 .fancybox-container input[type=text] {
