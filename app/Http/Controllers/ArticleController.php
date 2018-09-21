@@ -6,10 +6,9 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
 use Illuminate\Support\Facades\Input;
-
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 use App\Articles;
 use App\Categories;
@@ -21,18 +20,31 @@ class ArticleController extends Controller
 
 		Featured Articles
 		Required fields on forms
-		Sort by category
+		Soft Delete
+		Record who created and updated
 	*/
 
 
- 	public function createArticle(){
+ 	public function createArticle(Request $request){
  		if(empty($_POST)){
 	 		$categories = Categories::all();
 
 	 		 return view('createArticle', array('categories' => $categories));
 	 	}else{
+
+	 		
+
 	 		//print_r($_POST);
+	 		//echo "asd";
 	 		//die();
+
+	 		$validatedData = $request->validate([
+		        'title' => 'required|unique:Articles',
+		        'content' => 'required',
+		    ]);
+
+
+
 
 			$articleId = DB::table('Articles')->insert(array(
 				'Title' => $_POST['title'], 
@@ -65,7 +77,7 @@ class ArticleController extends Controller
 	            ->get();
 	    $articles->sortBy('dateCreated');
 
-		return view('readArticles')->with(array('articles' => $articles));
+		return view('readArticles')->with(array('articles' => $articles, 'sorted' => array(false)));
  	}
 
  	public function readArticle($articleId){
@@ -133,20 +145,34 @@ class ArticleController extends Controller
 
 
 
- 	public function sortArticles($param, $dir){
- 		
+ 	public function sortArticles($param, $dir, $searchTerm = null){
 
- 		$articles = DB::table('Articles as a')
+ 		if(empty($searchTerm)){
+	 		$articles = DB::table('Articles as a')
+		         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
+		            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
+		            ->select('a.*', 
+		            	DB::raw('group_concat(c.Name) as categoryNames'), 
+		            	DB::raw('group_concat(c.ID) as categoryIds'))
+		           	->groupBy('a.ID')
+		           	->orderBy($param, $dir)
+		            ->get();
+		 }else{
+		 	$articles = DB::table('Articles as a')
 	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
 	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
 	            ->select('a.*', 
 	            	DB::raw('group_concat(c.Name) as categoryNames'), 
 	            	DB::raw('group_concat(c.ID) as categoryIds'))
+
+	            ->where('a.Title', 'like', '%'.$searchTerm.'%')
+                ->orWhere('a.textOnlyContent', 'like', '%'.$searchTerm.'%')
 	           	->groupBy('a.ID')
 	           	->orderBy($param, $dir)
 	            ->get();
+		 }
 
-		return view('readArticles')->with(array('articles' => $articles, 'sort' => 'sorted'));
+		return view('readArticles')->with(array('articles' => $articles, 'sorted' => array(true, $param, $dir)));
  	}
 
 }

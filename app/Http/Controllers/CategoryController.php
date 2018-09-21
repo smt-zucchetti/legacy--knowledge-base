@@ -40,7 +40,12 @@ class CategoryController extends Controller
 
  	public function readCategories(){
  		if (Auth::user()){
- 			return view('readCategories', array('categories' => Categories::orderBy('dateCreated', 'DESC')->get() ));
+ 			return view('readCategories', 
+ 				array(
+ 					'categories' => Categories::orderBy('dateCreated', 'DESC')->get(), 
+ 					'sorted' => array(false)
+ 				)
+ 			);
  		}else{
  			return view('home');
  		}
@@ -72,7 +77,7 @@ class CategoryController extends Controller
  		$categories = Categories::orderBy($param, $dir)->get();
  			
 
-		return view('readCategories')->with(array('categories' => $categories, 'sort' => 'sorted'));
+		return view('readCategories')->with(array('categories' => $categories, 'sorted' => array(true, $param, $dir)));
  	}
 }
 
