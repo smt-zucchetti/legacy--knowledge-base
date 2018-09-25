@@ -19,6 +19,7 @@ Route::get('/createArticle', 'ArticleController@createArticle');
 Route::get('/readArticle/{articleId}', 'ArticleController@readArticle');
 Route::post('/updateArticle/{articleId}', 'ArticleController@updateArticle');
 Route::get('/updateArticle/{articleId}', 'ArticleController@updateArticle');
+
 Route::post('/deleteArticle/{articleId}', 'ArticleController@deleteArticle');
 Route::get('/sortArticles/{param}/{dir}', 'ArticleController@sortArticles');
 Route::get('/sortArticles/{param}/{dir}/{searchTerm}', 'ArticleController@sortArticles');
