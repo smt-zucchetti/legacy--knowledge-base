@@ -445,6 +445,13 @@ main .authContainer form.authForm .invalid-feedback {
   color: #F48120;
 }
 
+.fancybox-container #add-category .catNameError {
+  color: orangered;
+}
+.fancybox-container #add-category .catNameError.hide {
+  display: none;
+}
+
 footer {
   color: white;
   background: #004A5D;

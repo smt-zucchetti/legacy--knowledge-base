@@ -399,6 +399,8 @@ main{
         }
     }
 
+
+
     .collatedGrid {
         display: grid;
         grid-template-rows: auto;
@@ -547,6 +549,18 @@ main{
             }
             .invalid-feedback{
                 color:$orange;
+            }
+        }
+    }
+}
+
+.fancybox-container{
+    #add-category{
+        .catNameError{
+            color: orangered; 
+
+            &.hide{
+                display: none;
             }
         }
     }
