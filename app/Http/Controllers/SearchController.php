@@ -44,7 +44,7 @@ class SearchController extends Controller
 
         //$filteredArticlesWithCats = self::__mergeArticleCatIdsWithCats($filteredArticles);
 
-        return view('readArticles')->with(array('articles' => $articles));
+        return view('readArticles')->with(array('articles' => $articles, 'searchTerm' => $_POST['search'], 'sorted' => array(false)));
  	}
 
 }

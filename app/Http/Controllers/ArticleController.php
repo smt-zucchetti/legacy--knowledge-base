@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Articles;
 use App\Categories;
@@ -19,9 +20,7 @@ class ArticleController extends Controller
 	/*TODO
 
 		Featured Articles
-		Required fields on forms
 		Soft Delete
-		Record who created and updated
 	*/
 
 
@@ -32,25 +31,18 @@ class ArticleController extends Controller
 	 		 return view('createArticle', array('categories' => $categories));
 	 	}else{
 
-	 		
-
-	 		//print_r($_POST);
-	 		//echo "asd";
-	 		//die();
 
 	 		$validatedData = $request->validate([
 		        'title' => 'required|unique:Articles',
 		        'content' => 'required',
 		    ]);
 
-
-
-
 			$articleId = DB::table('Articles')->insert(array(
-				'Title' => $_POST['title'], 
-				'Content' => $_POST['content'], 
-				'textOnlyContent' => $_POST['textOnlyContent'],  
-				'dateCreated'	=> date('Y-m-d: H:i:s')
+				'Title' 			=> $_POST['title'], 
+				'Content' 			=> $_POST['content'], 
+				'textOnlyContent' 	=> $_POST['textOnlyContent'],  
+				'dateCreated'		=> date('Y-m-d: H:i:s'),
+				'createdBy' 		=> Auth::user()->id
 			) );
 
 			foreach(!empty($_POST['CategoryIDs'])?$_POST['CategoryIDs']:array() as $categoryId){
@@ -72,6 +64,7 @@ class ArticleController extends Controller
 	            ->select('a.*', 
 	            	DB::raw('group_concat(c.Name) as categoryNames'), 
 	            	DB::raw('group_concat(c.ID) as categoryIds'))
+	            ->where('a.deleted', '=', false)
 	            ->orderBy('dateCreated', 'DESC')
 	           	->groupBy('a.ID')
 	            ->get();
@@ -95,7 +88,7 @@ class ArticleController extends Controller
 	    return view('readArticle')->with(array('article' => $article));
  	}
 
- 	public function updateArticle($articleId){
+ 	public function updateArticle(Request $request, $articleId){
 
  		if(empty($_POST)){
 
@@ -115,11 +108,17 @@ class ArticleController extends Controller
 
 		}else{
 
+			$validatedData = $request->validate([
+		        'title' => 'required|unique:Articles',
+		        'content' => 'required',
+		    ]);
+
 	 		DB::table('Articles')->where('id', $articleId)->update(array(
-	 			'Title' => $_POST['title'], 
-	 			'Content' => $_POST['content'], 
-	 			'textOnlyContent' => $_POST['textOnlyContent'], 
-	 			'lastUpdated'	=> date('Y-m-d')  
+	 			'Title' 			=> $_POST['title'], 
+	 			'Content' 			=> $_POST['content'], 
+	 			'textOnlyContent' 	=> $_POST['textOnlyContent'], 
+	 			'lastUpdated'		=> date('Y-m-d'),
+	 			'lastUpdatedBy' 	=> Auth::user()->id 
 	 		));
 
 	 		Articles_Categories::where('articleId', $articleId)->delete();
@@ -135,8 +134,12 @@ class ArticleController extends Controller
 
  	public function deleteArticle($articleId){
 
- 		Articles::where('ID', $articleId)->delete();
- 		Articles_Categories::where('articleId', $articleId)->delete();
+ 		//Articles::where('ID', $articleId)->delete();
+ 		//Articles_Categories::where('articleId', $articleId)->delete();
+ 		DB::table('Articles')->where('id', $articleId)->update(array(
+ 			'lastUpdatedBy' 	=> Auth::user()->id,
+ 			'deleted' => true 
+ 		));
 
 		$articles = Articles::all();
 		

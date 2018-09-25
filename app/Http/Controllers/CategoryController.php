@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-
 use App\Articles;
 use App\Categories;
 use App\Articles_Categories;
@@ -20,8 +19,6 @@ class CategoryController extends Controller
 	/*TODO
 
 		Featured Articles
-		Required fields on forms
-		Auto fill pop up update forms
 	*/
 
 	/* BUG
@@ -30,9 +27,11 @@ class CategoryController extends Controller
 
  	
 	public function createCategory(){
+
  		DB::table('Categories')->insert(array(
- 			'Name' => $_POST['name'], 
- 			'dateCreated' => date('Y-m-d H:i:s')
+ 			'Name' 			=> $_POST['name'], 
+ 			'dateCreated' 	=> date('Y-m-d H:i:s'),
+ 			'createdBy'		=> Auth::user()->id
  		));
 
  		return self::readCategories();
@@ -42,7 +41,10 @@ class CategoryController extends Controller
  		if (Auth::user()){
  			return view('readCategories', 
  				array(
- 					'categories' => Categories::orderBy('dateCreated', 'DESC')->get(), 
+ 					'categories' => DB::table('Categories')
+ 										->where('deleted','=',false)
+ 										->orderBy('dateCreated', 'DESC')
+ 										->get(), 
  					'sorted' => array(false)
  				)
  			);
@@ -53,22 +55,28 @@ class CategoryController extends Controller
 
  	public function updateCategory($categoryID){
  		DB::table('Categories')
- 		->where('id', $categoryID)
- 		->update(array(
- 			'Name' => $_POST['name'],
- 			'lastUpdated' => date('Y-m-d H:i:s') 
+	 		->where('id', $categoryID)
+	 		->update(array(
+	 			'Name' 			=> $_POST['name'],
+	 			'lastUpdated' 	=> date('Y-m-d H:i:s'),
+	 			'lastUpdatedBy'	=> Auth::user()->id
  		));
 
  		return self::readCategories();
- 		//return view('readCategories', array('categories' => Categories::all()));
  	}
 
  	public function deleteCategory($categoryId){
- 		Categories::where('ID', $categoryId)->delete();
- 		Articles_Categories::where('categoryId', $categoryId)->delete();
+ 		DB::table('Categories')
+	 		->where('id', $categoryId)
+	 		->update(array(
+				'deleted'		=> true,	
+	 			'lastUpdatedBy'	=> Auth::user()->id
+ 		));
+
+ 		//Categories::where('ID', $categoryId)->delete();
+ 		//Articles_Categories::where('categoryId', $categoryId)->delete();
 
  		return self::readCategories();
- 		//return view('readCategories', array('categories' => Categories::all()));
  	}
 
  	public function sortCategories($param, $dir){
