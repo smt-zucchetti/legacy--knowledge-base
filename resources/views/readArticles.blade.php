@@ -5,9 +5,11 @@
 @section('main')
 
 @if (Auth::check())
-	<a class="addArticle" href="<?php echo url('/createArticle') ?>">
-		<i class="fas fa-plus"></i> Add New 
-	</a>
+	<div class="actionItems">
+		<a class="addArticle" href="<?php echo url('/createArticle') ?>">
+			<i class="fas fa-plus"></i> Add New 
+		</a>
+	</div>
 @endif
 
 <form class="searchForm" method="post" action="<?php echo url('/searchArticles') ?>" >
@@ -49,9 +51,7 @@
 	</div>
 </div>
  <?php 
- 	if(empty($sort)){
- 		$sort = 'noSort';
- 	}
+ 	$sort = $sorted[0] == true?'sorted':'noSort';
  ?>
 
 @if (Auth::check())
@@ -61,9 +61,9 @@
 @endif
 	<?php $i = 0; ?>
 	@foreach($articles as $article)
-		<?php $row = ($i % 2 == 0)?"row":""; ?>
+		<?php $row = ($i % 2 == 0)?"oddRow":""; ?>
 
-		<div class="{{$row}}">
+		<div class="{{$row}} titleRow">
 			<a href="<?php echo url('/readArticle/'.$article->ID);?>">
 				{{$article->Title}}
 			</a>
@@ -116,7 +116,7 @@
 <script>
 	$(document).ready(function(){
 
-		$('a.seeMore').click(function(e){
+		$('.collatedGrid').on('click', 'a.seeMore', function(e){
 			e.preventDefault();
 			
 			$(this).closest('ul.categories').toggleClass('showAll');

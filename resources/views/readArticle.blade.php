@@ -1,9 +1,9 @@
-@extends('layouts.formMaster', ['bodyId'=>'singleArticle'])
+@extends('layouts.formMaster')
 
 @section('title', 'New User')
 
 @section('main')
-	<div class="action-icons">
+	<div class="actionItems">
 		<a id="goBack" href="javascript:window.history.back();" >
 			<i class="fas fa-reply"></i>
 			Back
@@ -19,7 +19,7 @@
 					</button>
 				</form>
 			</div>
-			<a id="deleteArticle" data-fancybox data-src="#deleteArticleTmp" href="javascript:;">
+			<a data-fancybox data-src="#deleteArticleTmp" href="javascript:;">
 				<i class="fas fa-trash-alt"></i> Delete 
 			</a>
 			<a id="editArticle" href="<?php echo url('/updateArticle/'.$article->ID) ?>" >
@@ -30,13 +30,15 @@
 	</div>
 	<div>
 		<h3>Categories:</h3>
-		<?php
-			foreach(explode(",",$article->categoryNames) as $categoryName){						 
-				echo "<li class='category'>";
-				echo 	$categoryName; 
-				echo "</li>";
-			}
-		?>
+		<ul class="categoryList">
+			<?php
+				foreach(explode(",",$article->categoryNames) as $categoryName){						 
+					echo "<li class='category'>";
+					echo 	$categoryName; 
+					echo "</li>";
+				}
+			?>
+		</ul>
 	</div>
 	<h3 class="title">Title: {{$article->Title}}</h3>
 	<div class="singleArticleBorder">

@@ -31,17 +31,30 @@ $('.sortArrow').click(function(e){
 		uriSegment = 'sortCategories';
 	<?php } ?>
 
+	var searchTerm;
+	<?php if(!empty($searchTerm)){ ?>
+		searchTerm = "<?php echo $searchTerm ?>";
+	<?php }else{ ?>
+		searchTerm = null;
+	<?php } ?>
+
+
 	var url = uriSegment + "/" + param + "/" + dir;
+
+	if(searchTerm){
+		url += '/' + searchTerm;
+	}
 
 	console.log(url);
 
 	$.ajax({
      	url : url,
-      	type : "GET",
+      	//type : "GET",
       	//data: data,
       	data : {action: 'refresh'},
 
       	failure: function(response){
+      		console.log('asdasd');
       		console.log(response);
       	},
 
