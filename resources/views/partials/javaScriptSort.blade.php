@@ -47,22 +47,24 @@ $('.sortArrow').click(function(e){
 
 	console.log(url);
 
-	$.ajax({
-     	url : url,
-      	//type : "GET",
-      	//data: data,
-      	data : {action: 'refresh'},
+	try{
+		$.ajax({
+	     	url : url,
+	      	type : "GET",
+	      	//data: data,
+	      	data : {action: 'refresh'},
 
-      	failure: function(response){
-      		console.log('asdasd');
-      		console.log(response);
-      	},
+	      	failure: function(response){
+	      		console.log('asdasd');
+	      		console.log(response);
+	      	},
 
-        success: function(response){
-        	//alert('11');
-        	console.log(response);
-            $('.collatedGrid.noSort').empty();
-            $(response).find('.collatedGrid.sorted > *').appendTo('.collatedGrid.noSort');		            
-    	},
-	});
+	        success: function(response){
+	            $('.collatedGrid.noSort').empty();
+	            $(response).find('.collatedGrid.sorted > *').appendTo('.collatedGrid.noSort');		            
+	    	},
+		});
+	}catch(e){
+		console.log(e);
+	}
 });
