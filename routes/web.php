@@ -21,6 +21,7 @@ Route::post('/updateArticle/{articleId}', 'ArticleController@updateArticle');
 Route::get('/updateArticle/{articleId}', 'ArticleController@updateArticle');
 
 Route::post('/deleteArticle/{articleId}', 'ArticleController@deleteArticle');
+Route::get('fullPageArticle/{articleId}', 'ArticleController@fullPageArticle');
 Route::get('/sortArticles/{param}/{dir}', 'ArticleController@sortArticles');
 Route::get('/sortArticles/{param}/{dir}/{searchTerm}', 'ArticleController@sortArticles');
 
@@ -32,7 +33,10 @@ Route::post('/deleteCategory/{categoryID}', 'CategoryController@deleteCategory')
 Route::get('/sortCategories/{param}/{dir}', 'CategoryController@sortCategories');
 
 
-Route::post('/searchArticles', 'SearchController@searchArticles');
+Route::post('/searchArticles', 'ArticleController@searchArticles');
+
+Route::get('/search', 'SearchController@search');
+Route::post('/search', 'SearchController@search');
 
 
 
