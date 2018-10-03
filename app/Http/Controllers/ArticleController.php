@@ -17,11 +17,6 @@ use App\Articles_Categories;
 
 class ArticleController extends Controller
 {
-	/*TODO
-
-		Featured Articles
-		Soft Delete
-	*/
 
 
  	public function createArticle(Request $request){
@@ -42,7 +37,8 @@ class ArticleController extends Controller
 				'Content' 			=> $_POST['content'], 
 				'textOnlyContent' 	=> $_POST['textOnlyContent'],  
 				'dateCreated'		=> date('Y-m-d: H:i:s'),
-				'createdBy' 		=> Auth::user()->id
+				'createdBy' 		=> Auth::user()->id,
+				'featured'			=> !empty($_POST['featured'])?$_POST['featured']:0
 			) );
 
 			foreach(!empty($_POST['CategoryIDs'])?$_POST['CategoryIDs']:array() as $categoryId){
@@ -70,7 +66,20 @@ class ArticleController extends Controller
 	            ->get();
 	    $articles->sortBy('dateCreated');
 
-		return view('readArticles')->with(array('articles' => $articles, 'sorted' => array(false)));
+	    $featuredArticles = DB::table('Articles as a')
+	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
+	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
+	            ->select('a.*', 
+	            	DB::raw('group_concat(c.Name) as categoryNames'), 
+	            	DB::raw('group_concat(c.ID) as categoryIds'))
+	            ->where('a.deleted', '=', false)
+	            ->where('a.featured', '=', 1)
+	            ->orderBy('dateCreated', 'DESC')
+	           	->groupBy('a.ID')
+	            ->get();
+	    $featuredArticles->sortBy('dateCreated');
+
+		return view('readArticles')->with(array('articles' => $articles, 'featuredArticles' => $featuredArticles, 'sorted' => array(false)));
  	}
 
  	public function readArticle($articleId){
@@ -109,12 +118,13 @@ class ArticleController extends Controller
 		}else{
 
 			$validatedData = $request->validate([
-		        'title' => 'required|unique:Articles',
+		        'title' => 'required|unique:Articles,ID,$articleId',
 		        'content' => 'required',
 		    ]);
 
 	 		DB::table('Articles')->where('id', $articleId)->update(array(
 	 			'Title' 			=> $_POST['title'], 
+	 			'featured'			=> $_POST['featured'],
 	 			'Content' 			=> $_POST['content'], 
 	 			'textOnlyContent' 	=> $_POST['textOnlyContent'], 
 	 			'lastUpdated'		=> date('Y-m-d'),
@@ -134,8 +144,6 @@ class ArticleController extends Controller
 
  	public function deleteArticle($articleId){
 
- 		//Articles::where('ID', $articleId)->delete();
- 		//Articles_Categories::where('articleId', $articleId)->delete();
  		DB::table('Articles')->where('id', $articleId)->update(array(
  			'lastUpdatedBy' 	=> Auth::user()->id,
  			'deleted' => true 
@@ -157,25 +165,59 @@ class ArticleController extends Controller
 		            ->select('a.*', 
 		            	DB::raw('group_concat(c.Name) as categoryNames'), 
 		            	DB::raw('group_concat(c.ID) as categoryIds'))
+		        	->where('a.deleted', 0)
 		           	->groupBy('a.ID')
 		           	->orderBy($param, $dir)
 		            ->get();
 		 }else{
+		 	
 		 	$articles = DB::table('Articles as a')
 	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
 	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
 	            ->select('a.*', 
 	            	DB::raw('group_concat(c.Name) as categoryNames'), 
 	            	DB::raw('group_concat(c.ID) as categoryIds'))
-
-	            ->where('a.Title', 'like', '%'.$searchTerm.'%')
-                ->orWhere('a.textOnlyContent', 'like', '%'.$searchTerm.'%')
+	            ->where('a.deleted', 0)
+	            ->where(function($query) use($searchTerm){
+	            	$query->where('a.Title', 'like', '%'.$searchTerm.'%')
+                	->orWhere('a.textOnlyContent', 'like', '%'.$searchTerm.'%');
+	            })
+	            ->orderBy($param, $dir)
 	           	->groupBy('a.ID')
-	           	->orderBy($param, $dir)
 	            ->get();
 		 }
 
 		return view('readArticles')->with(array('articles' => $articles, 'sorted' => array(true, $param, $dir)));
+ 	}
+
+ 	public function sortArticles2($param, $dir, $searchTerm = null){
+ 		die('1234');
+ 	}
+
+ 	public function fullPageArticle($articleId){
+ 		$article = DB::table('Articles')->where('ID', $articleId)->first();
+
+ 		return view('fullPageArticle')->with(array('article' => $article));
+ 	}
+
+ 	public function searchArticles(){
+
+ 		$articles = DB::table('Articles as a')
+	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
+	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
+	            ->select('a.*', 
+	            	DB::raw('group_concat(c.Name) as categoryNames'), 
+	            	DB::raw('group_concat(c.ID) as categoryIds'))
+	            ->where('a.deleted', 0)
+	            ->where(function($query){
+	            	$query->where('a.Title', 'like', '%'.$_POST['search'].'%')
+                	->orWhere('a.textOnlyContent', 'like', '%'.$_POST['search'].'%');	
+	            })
+	            ->orderBy('dateCreated', 'DESC')
+	           	->groupBy('a.ID')
+	            ->get();
+
+        return view('readArticles')->with(array('articles' => $articles, 'searchTerm' => $_POST['search'], 'sorted' => array(false)));
  	}
 
 }
