@@ -1,7 +1,5 @@
-$turquoise: #004A5D;
-$orange: #F48120;
-$lightBlue: #D6F1FC;
-$darkBlue: #31B8EF;
+@import 'colors.scss';
+
 
 html,body{
     height:100%;
@@ -92,7 +90,7 @@ header{
                             padding: 0;
 
                             &:hover{
-                                background:$darkBlue;
+                                background:$blue;
 
                                 a{
                                     color: white;
@@ -150,14 +148,7 @@ main{
         min-height: 600px;
     }    
       
-    .singleArticleBorder{
-        border:solid dimgray 1px;
-        padding: 2em;
-
-        .title{
-            margin-top: 0;
-        }
-    }
+    
 
     .container{
         height: 100%;
@@ -188,28 +179,85 @@ main{
         }
 
 
-        .searchForm{
-            flex-grow: 1;
-            display: inline-flex;
-            align-items: center;
-            float: right;
-            flex-flow: row;
+        .smallSearchForm{
             margin-bottom: 1.5em;
+            text-align: right;
 
-            input[type="text"] {
-                height: 27px;
-                width: 200px;
-                margin: 0 0 0 10px;
+            &::after{
+                clear: both;
+                content: " ";
+                display: block;
+            }
+
+            form{
+                flex-grow: 1;
+                display: flex;
+                align-items: center;
+                flex-flow: row;
+                float: right;
+
+                input[type="text"] {
+                    height: 27px;
+                    width: 200px;
+                    margin: 0 0 0 10px;
+                    font-size: 18px;
+                    color: #888;
+                    padding-left: 5px;
+                }
+
+                input[type=submit]{
+                    padding: .5em .8em;
+                    margin: 0;
+                }
+            }
+
+            .advSearch{
+                color:$orange;
+                font-size: 14px;
+                margin-top: 14px;
+                float: right;
+                clear: right;
+            }
+        }
+
+        #searchForm {
+            display: grid;
+            grid-template-columns: 1fr 4fr;
+            grid-template-rows: auto;
+            align-items: center;
+            justify-items: start;
+            grid-gap: 16px 0;
+            width: 80%;
+            margin: 0 auto;
+
+            input,select{
+                color: $textGray;
+            }
+
+            input{
+                border-radius: 4px;
+                border: solid 1px gray;
+                font-size: 16px !important;
+            }
+
+            input#datepicker{
+                padding: 6px 0 6px 8px;
+            }
+
+            select#category{
+                transform: scale(1.6);
+                transform-origin: top left;
+                margin-bottom: 7px;
             }
 
             input[type=submit]{
-                padding: .5em .8em;
-                margin: 0;
+                justify-self:end;
             }
         }
 
         .actionItems{
-            display: inline-block;
+            float: left;
+            margin-bottom: 3em;
 
             a{
                 text-decoration: none;
@@ -231,20 +279,20 @@ main{
             flex-flow: column;
 
             input[type=submit]{
-                background-color: $turquoise;
-                border: none;
-                background: $turquoise;
-                border-radius: 0;
+                background-color: $blue;
+                border: none !important;
+                border-radius: 0 !important;
                 padding: .5em 1.8em;
-                font-size: 16px;
-                color: white;
+                font-size: 16px !important;
+                color: white !important;
                 margin-top: 25px;
                 float: right;
                 align-self: flex-end;
+                transition: background-color .5s;
 
                 &:hover{
                     cursor:pointer;
-                    background-color:lighten($turquoise, 10%);
+                    background-color:lighten($blue, 10%);
                 }
             }
 
@@ -271,20 +319,82 @@ main{
     section.form-group{
         margin-bottom: 20px;
 
-        h3{
-            font-size: 20px;
-            margin-bottom: 0;
-            color: dimgray;
-        }
+        
     }
         
+    .articleContainer{
+        clear: both;
+
+        .metaDataContainer{
+            background: lightgray;
+            border-radius: 5px;
+            border:solid 1px dimgray;
+            padding: 1em;
+            margin: 0 0 2em;
+        }
+
+        h3{
+            font-size: 20px;
+            margin: 0;
+            color: dimgray;
+
+
+            & > .answer{
+                font-weight: normal;
+            }
+
+        }
+
+        .singleArticleDetails {
+            display: flex;
+            width: 100%;
+            margin-top: 1em;
+
+            &> .item{
+                flex-grow: 1;
+
+                &.categories{
+                    display: flex;
+
+                    .categoryList {
+                        padding-left: 30px;
+                        color: dimgray;
+                        margin: 3px 0 0;
+                    }
+                }
+            }
+        }
+        .singleArticleBorder{
+            border:solid dimgray 1px;
+            padding: 2em;
+            min-height: 70vw;
+
+            .title{
+                margin-top: 0;
+            }
+        }
+    }
+
          
-    ul.categoryList{
-        background: lightgray;
-        padding: 1.4em;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        border-radius: 3px;
+    ul.formCheckbox{
+
+        &.featured{
+            align-self: flex-start;
+            padding: 0;
+
+            input{
+                margin-left: 20px !important;
+            }
+        }
+        
+        &.categoryList{
+            background: lightgray;
+            padding: 1.4em;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            border-radius: 3px;
+            border:solid dimgray 1px;    
+        }
 
         li{
             list-style-type: none;
@@ -310,7 +420,7 @@ main{
       display: inline-block;
 
       &.seeMore{
-        color:$orange;
+        color:$blue;
         &:hover{
           text-decoration:underline;
         }
@@ -324,10 +434,10 @@ main{
     }
 
     .collatedGridHeader, .collatedGrid{
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr .7fr 1fr;
 
         &.loggedIn{
-            grid-template-columns: 1fr 1fr 1fr 1fr;            
+            grid-template-columns: 1fr 1fr 1fr .7fr 1fr;            
         }
     }
 
@@ -363,13 +473,13 @@ main{
                         border-bottom-color:lighten(black,50%);
                     }
                     .downArrow{
-                        border-top-color:$orange;
+                        border-top-color:lightgray;
                     }
                 }
 
                 &.up{
                     .upArrow{
-                        border-bottom-color:$orange;
+                        border-bottom-color:lightgray;
                     }
                     .downArrow{
                         border-top-color:lighten(black,50%);
@@ -415,20 +525,23 @@ main{
 
 
         .titleRow a{
-            color: $orange;
+            color: $turquoise;
         }
+        .actionItems{
+            margin-bottom: 0;
 
-        a#deleteArticle, a#editArticle {
-            color: dimgray;
-            text-decoration: none;
-            transition: color .5s;
+            a#deleteArticle, a#editArticle {
+                color: dimgray;
+                text-decoration: none;
+                transition: color .5s;
 
-            &:hover{
-                color:black;
+                &:hover{
+                    color:black;
+                }
             }
-        }
-        a#editArticle{
-            margin-left: 10px;
+            a#editArticle{
+                margin-left: 10px;
+            }
         }
 
         ul.categories{
@@ -445,7 +558,7 @@ main{
 
                 a.seeMore::after {
                     content: " See More";
-                    color: $orange;
+                    color: $blue;
                     margin-left: 8px;
                     font-size: 13px;
                 }
@@ -552,6 +665,55 @@ main{
             }
         }
     }
+
+    .featuredArticlesGrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 180px));
+        grid-template-rows: auto;
+        background: lightgray;
+        grid-gap: 0em 2em;
+        border-radius: 3px;
+        border: solid 1px dimgray;
+        margin-bottom: 4em;
+
+        .featuredArticle{
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            padding: 1em;
+
+            h2{
+                text-decoration: none;
+                text-align: center;
+                margin: 5px 0 5px;
+                color: dimgray;
+                font-size: 16px;
+            }
+
+            iframe{
+                width: 100%;
+                min-height: 210px;
+                background: white;
+                border: solid 1px dimgray;
+                border-radius: 4px;
+            }
+
+            a.clickableLink{
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                top:0;
+                transition: background .5s;
+
+                &:hover{
+                    background:rgba(12,12,12,20%);
+                }
+            }
+        }
+    }
+
 }
 
 .fancybox-container{
@@ -613,16 +775,16 @@ footer{
         }
     }
     input[type=submit]{
-      background: $turquoise;
+      background: $orange;
       &:hover{
-          background-color:lighten($turquoise, 10%);
+          background-color:lighten($orange, 10%);
       }
     }
     button.cancelButton{
-        background: $orange;
+        background: $blue;
         margin-right:10px;
         &:hover{
-            background-color:lighten($orange, 10%);
+            background-color:lighten($blue, 10%);
         }
     }
 

@@ -123,13 +123,6 @@ main textarea#tinyMCE {
   flex-grow: 1;
   min-height: 600px;
 }
-main .singleArticleBorder {
-  border: solid dimgray 1px;
-  padding: 2em;
-}
-main .singleArticleBorder .title {
-  margin-top: 0;
-}
 main .container {
   height: 100%;
   margin: 80px auto 60px;
@@ -153,25 +146,73 @@ main .container .validationAlerts ul li {
   list-style-type: none;
   line-height: 2em;
 }
-main .container .searchForm {
-  flex-grow: 1;
-  display: inline-flex;
-  align-items: center;
-  float: right;
-  flex-flow: row;
+main .container .smallSearchForm {
   margin-bottom: 1.5em;
+  text-align: right;
 }
-main .container .searchForm input[type=text] {
+main .container .smallSearchForm::after {
+  clear: both;
+  content: " ";
+  display: block;
+}
+main .container .smallSearchForm form {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  flex-flow: row;
+  float: right;
+}
+main .container .smallSearchForm form input[type=text] {
   height: 27px;
   width: 200px;
   margin: 0 0 0 10px;
+  font-size: 18px;
+  color: #888;
+  padding-left: 5px;
 }
-main .container .searchForm input[type=submit] {
+main .container .smallSearchForm form input[type=submit] {
   padding: 0.5em 0.8em;
   margin: 0;
 }
+main .container .smallSearchForm .advSearch {
+  color: #F48120;
+  font-size: 14px;
+  margin-top: 14px;
+  float: right;
+  clear: right;
+}
+main .container #searchForm {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: auto;
+  align-items: center;
+  justify-items: start;
+  grid-gap: 16px 0;
+  width: 80%;
+  margin: 0 auto;
+}
+main .container #searchForm input, main .container #searchForm select {
+  color: #555;
+}
+main .container #searchForm input {
+  border-radius: 4px;
+  border: solid 1px gray;
+  font-size: 16px !important;
+}
+main .container #searchForm input#datepicker {
+  padding: 6px 0 6px 8px;
+}
+main .container #searchForm select#category {
+  transform: scale(1.6);
+  transform-origin: top left;
+  margin-bottom: 7px;
+}
+main .container #searchForm input[type=submit] {
+  justify-self: end;
+}
 main .container .actionItems {
-  display: inline-block;
+  float: left;
+  margin-bottom: 3em;
 }
 main .container .actionItems a {
   text-decoration: none;
@@ -189,20 +230,20 @@ main .container form {
   flex-flow: column;
 }
 main .container form input[type=submit] {
-  background-color: #004A5D;
-  border: none;
-  background: #004A5D;
-  border-radius: 0;
+  background-color: #31B8EF;
+  border: none !important;
+  border-radius: 0 !important;
   padding: 0.5em 1.8em;
-  font-size: 16px;
-  color: white;
+  font-size: 16px !important;
+  color: white !important;
   margin-top: 25px;
   float: right;
   align-self: flex-end;
+  transition: background-color 0.5s;
 }
 main .container form input[type=submit]:hover {
   cursor: pointer;
-  background-color: #007390;
+  background-color: #60c8f3;
 }
 main .container form textarea#textOnlyContent {
   display: none;
@@ -220,30 +261,75 @@ main .container form input#title#title, main .container form #mceu_16#title {
 main section.form-group {
   margin-bottom: 20px;
 }
-main section.form-group h3 {
+main .articleContainer {
+  clear: both;
+}
+main .articleContainer .metaDataContainer {
+  background: lightgray;
+  border-radius: 5px;
+  border: solid 1px dimgray;
+  padding: 1em;
+  margin: 0 0 2em;
+}
+main .articleContainer h3 {
   font-size: 20px;
-  margin-bottom: 0;
+  margin: 0;
   color: dimgray;
 }
-main ul.categoryList {
+main .articleContainer h3 > .answer {
+  font-weight: normal;
+}
+main .articleContainer .singleArticleDetails {
+  display: flex;
+  width: 100%;
+  margin-top: 1em;
+}
+main .articleContainer .singleArticleDetails > .item {
+  flex-grow: 1;
+}
+main .articleContainer .singleArticleDetails > .item.categories {
+  display: flex;
+}
+main .articleContainer .singleArticleDetails > .item.categories .categoryList {
+  padding-left: 30px;
+  color: dimgray;
+  margin: 3px 0 0;
+}
+main .articleContainer .singleArticleBorder {
+  border: solid dimgray 1px;
+  padding: 2em;
+  min-height: 70vw;
+}
+main .articleContainer .singleArticleBorder .title {
+  margin-top: 0;
+}
+main ul.formCheckbox.featured {
+  align-self: flex-start;
+  padding: 0;
+}
+main ul.formCheckbox.featured input {
+  margin-left: 20px !important;
+}
+main ul.formCheckbox.categoryList {
   background: lightgray;
   padding: 1.4em;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   border-radius: 3px;
+  border: solid dimgray 1px;
 }
-main ul.categoryList li {
+main ul.formCheckbox li {
   list-style-type: none;
   padding-right: 51px;
 }
-main ul.categoryList label {
+main ul.formCheckbox label {
   display: inline-block;
   margin-bottom: 10px;
   display: flex;
   margin-bottom: 10px;
   width: 100%;
 }
-main ul.categoryList label input[type=checkbox] {
+main ul.formCheckbox label input[type=checkbox] {
   margin-left: auto;
   transform: scale(1.4);
 }
@@ -251,7 +337,7 @@ main a {
   display: inline-block;
 }
 main a.seeMore {
-  color: #F48120;
+  color: #31B8EF;
 }
 main a.seeMore:hover {
   text-decoration: underline;
@@ -260,10 +346,10 @@ main .collatedGrid > div {
   padding: 1em;
 }
 main .collatedGridHeader, main .collatedGrid {
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 0.7fr 1fr;
 }
 main .collatedGridHeader.loggedIn, main .collatedGrid.loggedIn {
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 0.7fr 1fr;
 }
 main .collatedGridHeader {
   display: grid;
@@ -295,10 +381,10 @@ main .collatedGridHeader > div .sortArrow.down .upArrow {
   border-bottom-color: gray;
 }
 main .collatedGridHeader > div .sortArrow.down .downArrow {
-  border-top-color: #F48120;
+  border-top-color: lightgray;
 }
 main .collatedGridHeader > div .sortArrow.up .upArrow {
-  border-bottom-color: #F48120;
+  border-bottom-color: lightgray;
 }
 main .collatedGridHeader > div .sortArrow.up .downArrow {
   border-top-color: gray;
@@ -332,17 +418,20 @@ main .collatedGrid .oddRow {
   background: lightgray;
 }
 main .collatedGrid .titleRow a {
-  color: #F48120;
+  color: #004A5D;
 }
-main .collatedGrid a#deleteArticle, main .collatedGrid a#editArticle {
+main .collatedGrid .actionItems {
+  margin-bottom: 0;
+}
+main .collatedGrid .actionItems a#deleteArticle, main .collatedGrid .actionItems a#editArticle {
   color: dimgray;
   text-decoration: none;
   transition: color 0.5s;
 }
-main .collatedGrid a#deleteArticle:hover, main .collatedGrid a#editArticle:hover {
+main .collatedGrid .actionItems a#deleteArticle:hover, main .collatedGrid .actionItems a#editArticle:hover {
   color: black;
 }
-main .collatedGrid a#editArticle {
+main .collatedGrid .actionItems a#editArticle {
   margin-left: 10px;
 }
 main .collatedGrid ul.categories {
@@ -358,7 +447,7 @@ main .collatedGrid ul.categories li:nth-child(n+2) {
 }
 main .collatedGrid ul.categories li a.seeMore::after {
   content: " See More";
-  color: #F48120;
+  color: #31B8EF;
   margin-left: 8px;
   font-size: 13px;
 }
@@ -444,6 +533,48 @@ main .authContainer form.authForm .alert {
 main .authContainer form.authForm .invalid-feedback {
   color: #F48120;
 }
+main .featuredArticlesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 180px));
+  grid-template-rows: auto;
+  background: lightgray;
+  grid-gap: 0em 2em;
+  border-radius: 3px;
+  border: solid 1px dimgray;
+  margin-bottom: 4em;
+}
+main .featuredArticlesGrid .featuredArticle {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  padding: 1em;
+}
+main .featuredArticlesGrid .featuredArticle h2 {
+  text-decoration: none;
+  text-align: center;
+  margin: 5px 0 5px;
+  color: dimgray;
+  font-size: 16px;
+}
+main .featuredArticlesGrid .featuredArticle iframe {
+  width: 100%;
+  min-height: 210px;
+  background: white;
+  border: solid 1px dimgray;
+  border-radius: 4px;
+}
+main .featuredArticlesGrid .featuredArticle a.clickableLink {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  transition: background 0.5s;
+}
+main .featuredArticlesGrid .featuredArticle a.clickableLink:hover {
+  background: rgba(12, 12, 12, 0.2);
+}
 
 .fancybox-container #add-category .catNameError {
   color: orangered;
@@ -490,17 +621,17 @@ footer .footerFlex .copyright {
   cursor: pointer;
 }
 .fancybox-container input[type=submit] {
-  background: #004A5D;
+  background: #F48120;
 }
 .fancybox-container input[type=submit]:hover {
-  background-color: #007390;
+  background-color: #f69c51;
 }
 .fancybox-container button.cancelButton {
-  background: #F48120;
+  background: #31B8EF;
   margin-right: 10px;
 }
 .fancybox-container button.cancelButton:hover {
-  background-color: #f69c51;
+  background-color: #60c8f3;
 }
 .fancybox-container h2 {
   margin-top: 0;
