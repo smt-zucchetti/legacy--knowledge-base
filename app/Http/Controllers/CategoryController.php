@@ -22,7 +22,7 @@ class CategoryController extends Controller
 	*/
 
 	/* BUG
-		after create, update, and delete, the view returned is not sortable
+		after update, and delete, the view returned is not sortable
 	*/
 
  	
@@ -82,7 +82,9 @@ class CategoryController extends Controller
  	public function sortCategories($param, $dir){
  		
 
- 		$categories = Categories::orderBy($param, $dir)->get();
+ 		$categories = Categories::orderBy($param, $dir)
+ 			->where('deleted', 0)
+ 			->get();
  			
 
 		return view('readCategories')->with(array('categories' => $categories, 'sorted' => array(true, $param, $dir)));
