@@ -28,21 +28,37 @@
 			</a>
 		@endif
 	</div>
-	<div>
-		<h3>Categories:</h3>
-		<ul class="categoryList">
-			<?php
-				foreach(explode(",",$article->categoryNames) as $categoryName){						 
-					echo "<li class='category'>";
-					echo 	$categoryName; 
-					echo "</li>";
-				}
-			?>
-		</ul>
-	</div>
-	<h3 class="title">Title: {{$article->Title}}</h3>
-	<div class="singleArticleBorder">
-		{!! $article->Content !!}
+
+	<div class="articleContainer">
+
+		<div class="metaDataContainer">
+			<h3 class="title">Title: <span class="answer">{{$article->Title}}</span></h3>
+			<div class="singleArticleDetails">
+		    	<div class="item">
+			    	<h3>Featured? <span class="answer"><?php echo !empty($article->featured)?"Yes":"No"; ?></span></h3> 
+				</div>
+				<div class="item categories">
+					<h3>Categories:</h3>
+					<ul class="categoryList">
+						<?php
+							if(!empty($article->categoryNames)){
+								foreach(explode(",",$article->categoryNames) as $categoryName){						 
+									echo "<li class='category'>";
+									echo 	$categoryName; 
+									echo "</li>";
+								}
+							}else{
+								echo "no categories selected"; 
+							}
+						?>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="singleArticleBorder">
+			{!! $article->Content !!}
+		</div>
 	</div>
 
 	<script>

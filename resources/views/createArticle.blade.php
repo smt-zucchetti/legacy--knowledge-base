@@ -13,39 +13,11 @@
 
 @include('partials/validationErrors')
 
-<form id="kbForm" method="post" action="<?php echo url('createArticle');?>">
+<form id="kbForm" method="post" action="<?php echo url('createArticle');?>" class="articleContainer">
 
  	@csrf
 
-  	<label for="title"><h3>Title:</h3>
-  		{{ Form::text('title', null, array('id' => 'title')) }}
-    </label>
-
-	<h3>Categories:</h3>
-	<ul class="categoryList">
-	@foreach($categories as $category)
-		<li>
-			<label for="{{$category->ID}}">{{$category->Name}}
-				<?php 
-					if(!empty($article)){
-						if(in_array($category->ID, explode(",",$article->categoryIds))){
-							//echo '<input type="checkbox" name="CategoryIDs[]" value="'.$category->ID.'" id="'.$category->ID.'" checked />';
-							echo Form::checkbox('CategoryIDs[]', $category->ID, false, array('class'=>'asd','id' => $category->ID));
-
-						}else{
-							//echo '<input type="checkbox" name="CategoryIDs[]" value="'.$category->ID.'" id="'.$category->ID.'"/>';
-							echo Form::checkbox('CategoryIDs[]', $category->ID, false, array('id' => $category->ID));
-
-						}
-					}else{
-						//echo '<input type="checkbox" name="CategoryIDs[]" value="'.$category->ID.'" id="'.$category->ID.'"/>';
-						echo Form::checkbox('CategoryIDs[]', $category->ID, false, array('id' => $category->ID));
-					}
-				?>
-			</label>
-		</li>
-	@endforeach
-	</ul>
+	@include('partials/firstPartOfForm')
 
 	@include('partials/tinyMceForm')
 
