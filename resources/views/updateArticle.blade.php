@@ -18,6 +18,7 @@
 	@csrf
 
 	@include('partials/firstPartOfForm')
+	
 	@include('partials/tinyMceForm', ['article' => $article ] )
 
 	<input type="submit" value="Save" />

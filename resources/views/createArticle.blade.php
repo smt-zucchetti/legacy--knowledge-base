@@ -5,7 +5,7 @@
 @section('main')
 
 <div class="actionItems">
-	<a id="goBack" href="<?php echo url('/readArticles') ?>" >
+	<a id="goBack" href="<?php echo url('/readAllArticles') ?>" >
 		<i class="fas fa-reply"></i>
 		Back
 	</a>

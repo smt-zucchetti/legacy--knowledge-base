@@ -12,24 +12,33 @@
     	</li>
     </ul>
 
+    <h3>Folder:</h3>
+	<ul class="categoryList formCheckbox">
+	@foreach($folders as $folder)
+		<li>
+			<label for="{{$folder->id}}">{{$folder->name}}
+				<?php 
+					if(!empty($article) && $folder->id === $article->folderId){
+						echo Form::radio('folderId', $folder->id, true, array('id' => $folder->id));
+					}else{
+						echo Form::radio('folderId', $folder->id, false, array('id' => $folder->id));
+					}
+				?>
+			</label>
+		</li>
+	@endforeach
+	</ul>
+
+
 	<h3>Categories:</h3>
 	<ul class="categoryList formCheckbox">
 	@foreach($categories as $category)
 		<li>
 			<label for="{{$category->ID}}">{{$category->Name}}
 				<?php 
-					if(!empty($article)){
-						if(in_array($category->ID, explode(",",$article->categoryIds))){
-							//echo '<input type="checkbox" name="CategoryIDs[]" value="'.$category->ID.'" id="'.$category->ID.'" checked />';
-							echo Form::checkbox('CategoryIDs[]', $category->ID, false, array('id' => $category->ID));
-
-						}else{
-							//echo '<input type="checkbox" name="CategoryIDs[]" value="'.$category->ID.'" id="'.$category->ID.'"/>';
-							echo Form::checkbox('CategoryIDs[]', $category->ID, false, array('id' => $category->ID));
-
-						}
+					if(!empty($article) && in_array($category->ID, explode(",",$article->categoryIds))){
+						echo Form::checkbox('CategoryIDs[]', $category->ID, true, array('id' => $category->ID));
 					}else{
-						//echo '<input type="checkbox" name="CategoryIDs[]" value="'.$category->ID.'" id="'.$category->ID.'"/>';
 						echo Form::checkbox('CategoryIDs[]', $category->ID, false, array('id' => $category->ID));
 					}
 				?>
