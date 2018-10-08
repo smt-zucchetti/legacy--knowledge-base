@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Articles;
 use App\Categories;
 use App\Articles_Categories;
+use App\Folders;
 
 class ArticleController extends Controller
 {
@@ -52,39 +53,106 @@ class ArticleController extends Controller
 		}
  	}   
 
- 	public function readArticles(){
- 	
-		$articles = DB::table('Articles as a')
+ 	public function __getAllArticles(){
+
+ 		$results = DB::table('Articles as a')
+		 		->leftJoin('Folders as f', 'f.id', '=', 'a.folderId')
 	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
 	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
-	            ->select('a.*', 
-	            	DB::raw('group_concat(c.Name) as categoryNames'), 
-	            	DB::raw('group_concat(c.ID) as categoryIds'))
+	            ->select(array(
+	            			'a.*', 
+	            			'f.name as folderName',
+	            			'f.id as folderId',
+	            			DB::raw('group_concat(c.Name) as categoryNames'), 
+	            			DB::raw('group_concat(c.ID) as categoryIds')
+	            	))
 	            ->where('a.deleted', '=', false)
 	            ->orderBy('dateCreated', 'DESC')
 	           	->groupBy('a.ID')
 	            ->get();
-	    $articles->sortBy('dateCreated');
 
+	    return $results;
+ 	}
+
+ 	public function readAllArticles(){
+
+ 		$articles = self::__getAllArticles();
+ 	
 	    $featuredArticles = DB::table('Articles as a')
 	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
 	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
 	            ->select('a.*', 
 	            	DB::raw('group_concat(c.Name) as categoryNames'), 
 	            	DB::raw('group_concat(c.ID) as categoryIds'))
+	            ->groupBy('a.ID')
 	            ->where('a.deleted', '=', false)
 	            ->where('a.featured', '=', 1)
 	            ->orderBy('dateCreated', 'DESC')
-	           	->groupBy('a.ID')
 	            ->get();
 	    $featuredArticles->sortBy('dateCreated');
 
-		return view('readArticles')->with(array('articles' => $articles, 'featuredArticles' => $featuredArticles, 'sorted' => array(false)));
+		return view('readAllArticles')->with(array('articles' => $articles, 'featuredArticles' => $featuredArticles, 'sorted' => array(false)));
  	}
 
- 	public function readArticle($articleId){
+ 	public function __getFolderPath($curFolderId){
+ 		
+ 		$pathArr = array();
 
- 		$article = DB::table('Articles as a')
+ 		while($curFolderId !== null){
+	 		$folder = DB::table('Folders as f')
+	 				->select('id', 'parentId', 'name')
+	 				->where('id', '=', $curFolderId)
+	 				->first();
+	 		
+	 		$curFolderId = $folder->parentId;
+
+	 		$pathArr[] = array('name' => $folder->name, 'id' => $folder->id);
+	 	}
+
+	 	return array_reverse($pathArr);
+
+ 	}
+
+ 	public function readArticleGUI($curFolderId = null){
+ 	
+		$folders = self::__getArticleGUI($curFolderId);
+
+		$pathArr = self::__getFolderPath($curFolderId);
+
+		//dd($pathArr);
+
+		return view('readArticleGUI')->with(array('folders' => $folders, 'curFolderId' => $curFolderId, 'pathArr' => $pathArr) );
+ 	}
+
+
+ 	public function __getArticleGUI($parentFolderId = null){
+
+ 		$results = DB::table('Folders as f')
+		 		->leftJoin('Articles as a', 'f.id', '=', 'a.folderId')
+	            ->select(array(
+			            	'f.name as folderName','f.id as folderId',       			
+	            			DB::raw('group_concat(a.Title) as articleTitles'), 
+	            			DB::raw('group_concat(a.ID) as articleIds')
+	            		))
+	            ->where('f.parentId', '=', $parentFolderId)
+	            /*->where(function($query) use($parentFolderId){
+		            $query->where('a.folderId', '=', $parentFolderId)
+		            ->orWhere('f.parentId', '=', $parentFolderId);
+		        })*/
+		        //->where('a.deleted', '=', false)
+	            ->orderBy('f.id', 'DESC')
+	           	->groupBy('f.name','f.id')
+	            ->get();
+	           	//->toSql();
+
+	            //dd($results);
+
+	    return $results;
+ 	}
+
+ 	public function __getArticle($articleId){
+
+ 		$result = DB::table('Articles as a')
 	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
 	            ->leftJoin('Categories as c', 'a_c.categoryId', '=','c.ID')
 	            ->select('a.*', 
@@ -94,6 +162,13 @@ class ArticleController extends Controller
 	           	->groupBy('a.ID')
 	            ->first();
 
+	    return $result;
+ 	}
+
+ 	public function readArticle($articleId){
+
+ 		$article = self::__getArticle($articleId);
+
 	    return view('readArticle')->with(array('article' => $article));
  	}
 
@@ -101,19 +176,13 @@ class ArticleController extends Controller
 
  		if(empty($_POST)){
 
-	 		$article = DB::table('Articles as a')
-	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
-	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
-	            ->select('a.*', 
-	            	DB::raw('group_concat(c.Name) as categoryNames'), 
-	            	DB::raw('group_concat(c.ID) as categoryIds'))
-	            ->where('a.ID', '=', $articleId)
-	           	->groupBy('a.ID')
-	            ->first();
+	 		$article = self::__getArticle($articleId);
 
 	        $categories = Categories::all();
 
-			return view('updateArticle')->with(array('article' => $article, 'categories' => $categories));
+	        $folders = Folders::all();
+
+			return view('updateArticle')->with(array('article' => $article, 'categories' => $categories, 'folders' => $folders));
 
 		}else{
 
@@ -124,7 +193,8 @@ class ArticleController extends Controller
 
 	 		DB::table('Articles')->where('id', $articleId)->update(array(
 	 			'Title' 			=> $_POST['title'], 
-	 			'featured'			=> $_POST['featured'],
+	 			'featured'			=> !empty($_POST['featured'])?$_POST['featured']:0,
+	 			'folderId'			=> !empty($_POST['folderId'])?$_POST['folderId']:null,
 	 			'Content' 			=> $_POST['content'], 
 	 			'textOnlyContent' 	=> $_POST['textOnlyContent'], 
 	 			'lastUpdated'		=> date('Y-m-d'),
@@ -138,7 +208,7 @@ class ArticleController extends Controller
 				);
 	 		}
 
-	 		return self::readArticles();
+	 		return self::readAllArticles();
 		}
  	}
 
