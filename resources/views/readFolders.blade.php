@@ -8,23 +8,15 @@
 
 
 <div class="actionItems">
-	<div style="display: none;" id="addCategory">
+	<div style="display: none;" id="addFolder">
 		<form method="post" action="<?php echo url('createFolder');?>">
 			@csrf
 			<h2>Add New Folder</h2>
-			<div class="catNameError hide">Folder Name is empty</div>
-			<h3>Parent Folder</h3>
-			<select name="parentFolder">
-				<option name="null" selected>None (top-level folder)</option>
-				@foreach($folders as $folder)
-					<option name="{{$folder->id}}">{{$folder->name}}</option>
-				@endforeach
-			</select>
-			<input type="text" name="name" />
+			@include('partials/folderFormFields')
 			<input type="submit" value="Create" />
 		</form>
 	</div>
-	<a class="addCategory" data-fancybox data-src="#addCategory" href="javascript:;">
+	<a class="addFolder" data-fancybox data-src="#addFolder" href="javascript:;">
 		<i class="fas fa-plus"></i> Add New 
 	</a>
 </div>
@@ -64,7 +56,7 @@
 				<form method="post" action="<?php echo url('/updateFolder/'.$folder->id);?>">
 					@csrf
 					<h2>Edit Folder Name</h2>
-					<input type="text" name="name" value="{{$folder->name}}" />
+					@include('partials/folderFormFields', ['curFolder' => $folder])
 					<input type="submit" value="Edit" />
 					<button class="cancelButton" type="button" data-fancybox-close="" >
 						Cancel
