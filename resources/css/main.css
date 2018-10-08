@@ -133,7 +133,8 @@ main .container .validationAlerts {
   color: white;
   border-radius: 7px;
   padding: 1em;
-  margin-top: 20px;
+  clear: both;
+  margin-bottom: 20px;
 }
 main .container .validationAlerts h3 {
   margin: 0;
@@ -329,7 +330,8 @@ main ul.formCheckbox label {
   margin-bottom: 10px;
   width: 100%;
 }
-main ul.formCheckbox label input[type=checkbox] {
+main ul.formCheckbox label input[type=checkbox],
+main ul.formCheckbox label input[type=radio] {
   margin-left: auto;
   transform: scale(1.4);
 }
@@ -346,10 +348,10 @@ main .collatedGrid > div {
   padding: 1em;
 }
 main .collatedGridHeader, main .collatedGrid {
-  grid-template-columns: 1fr 1fr 0.7fr 1fr;
+  grid-template-columns: 1fr 1fr 0.7fr 0.7fr 1fr;
 }
 main .collatedGridHeader.loggedIn, main .collatedGrid.loggedIn {
-  grid-template-columns: 1fr 1fr 1fr 0.7fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 0.7fr 0.7fr 1fr;
 }
 main .collatedGridHeader {
   display: grid;
@@ -574,6 +576,69 @@ main .featuredArticlesGrid .featuredArticle a.clickableLink {
 }
 main .featuredArticlesGrid .featuredArticle a.clickableLink:hover {
   background: rgba(12, 12, 12, 0.2);
+}
+main .articleTree .folderPath {
+  background: lightgray;
+  padding: 0.7em;
+  display: flex;
+  align-items: center;
+}
+main .articleTree .folderPath a:hover {
+  text-decoration: none;
+}
+main .articleTree .folderPath i {
+  margin: 0 12px;
+}
+main .articleTree .folderPath > * {
+  color: #333;
+}
+main .articleTree ul {
+  display: flex;
+  padding: 0;
+  align-items: center;
+}
+main .articleTree ul li.fileOrFolder {
+  list-style-type: none;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+main .articleTree ul li.fileOrFolder .fa-file, main .articleTree ul li.fileOrFolder .fa-folder {
+  width: 136px;
+  height: 127px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main .articleTree ul li.fileOrFolder .fa-file:hover, main .articleTree ul li.fileOrFolder .fa-folder:hover {
+  cursor: pointer;
+}
+main .articleTree ul li.fileOrFolder .itemTitle {
+  padding: 5px 9px;
+  border-radius: 5px;
+}
+main .articleTree ul li.fileOrFolder .fa-file {
+  color: dimgray;
+  font-size: 6em;
+}
+main .articleTree ul li.fileOrFolder .fa-file + .itemTitle {
+  margin-top: 10px;
+}
+main .articleTree ul li.fileOrFolder .fa-folder {
+  color: lightblue;
+  font-size: 6.5em;
+}
+main .articleTree ul li.fileOrFolder.selected .fa-file, main .articleTree ul li.fileOrFolder.selected .fa-folder {
+  background: #EDEDED;
+}
+main .articleTree ul li.fileOrFolder.selected .itemTitle {
+  background: dodgerblue;
+  display: inline-block !important;
+  color: white;
+}
+main .articleTree ul li.fileOrFolder ul {
+  display: none;
 }
 
 .fancybox-container #add-category .catNameError {
