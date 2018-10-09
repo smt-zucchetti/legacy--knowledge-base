@@ -121,7 +121,7 @@ class ArticleController extends Controller
 
 		//dd($pathArr);
 
-		return view('readArticleGUI')->with(array('folders' => $folders, 'curFolderId' => $curFolderId, 'pathArr' => $pathArr) );
+		return view('readArticlesWrapper')->with(array('folders' => $folders, 'curFolderId' => $curFolderId, 'pathArr' => $pathArr, 'type' => 'articleGUI') );
  	}
 
 

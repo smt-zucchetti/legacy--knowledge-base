@@ -12,24 +12,6 @@
     	</li>
     </ul>
 
-    <h3>Folder:</h3>
-	<ul class="categoryList formCheckbox">
-	@foreach($folders as $folder)
-		<li>
-			<label for="{{$folder->id}}">{{$folder->name}}
-				<?php 
-					if(!empty($article) && $folder->id === $article->folderId){
-						echo Form::radio('folderId', $folder->id, true, array('id' => $folder->id));
-					}else{
-						echo Form::radio('folderId', $folder->id, false, array('id' => $folder->id));
-					}
-				?>
-			</label>
-		</li>
-	@endforeach
-	</ul>
-
-
 	<h3>Categories:</h3>
 	<ul class="categoryList formCheckbox">
 	@foreach($categories as $category)

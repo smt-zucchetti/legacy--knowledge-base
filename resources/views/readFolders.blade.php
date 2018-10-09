@@ -57,6 +57,9 @@
 					@csrf
 					<h2>Edit Folder Name</h2>
 					@include('partials/folderFormFields', ['curFolder' => $folder])
+					<label for="name">Name
+						<input type="text" name="name" id="name" value="{{!empty($curFolder)?$curFolder->name:''}}" />
+					</label>
 					<input type="submit" value="Edit" />
 					<button class="cancelButton" type="button" data-fancybox-close="" >
 						Cancel

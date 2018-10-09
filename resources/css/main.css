@@ -348,10 +348,10 @@ main .collatedGrid > div {
   padding: 1em;
 }
 main .collatedGridHeader, main .collatedGrid {
-  grid-template-columns: 1fr 1fr 0.7fr 0.7fr 1fr;
+  grid-template-columns: 1fr 1fr 0.7fr 1fr;
 }
 main .collatedGridHeader.loggedIn, main .collatedGrid.loggedIn {
-  grid-template-columns: 1fr 1fr 1fr 0.7fr 0.7fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 0.7fr 1fr;
 }
 main .collatedGridHeader {
   display: grid;
@@ -577,33 +577,33 @@ main .featuredArticlesGrid .featuredArticle a.clickableLink {
 main .featuredArticlesGrid .featuredArticle a.clickableLink:hover {
   background: rgba(12, 12, 12, 0.2);
 }
-main .articleTree .folderPath {
+main .articleGUI .folderPath {
   background: lightgray;
   padding: 0.7em;
   display: flex;
   align-items: center;
 }
-main .articleTree .folderPath a:hover {
+main .articleGUI .folderPath a:hover {
   text-decoration: none;
 }
-main .articleTree .folderPath i {
+main .articleGUI .folderPath i {
   margin: 0 12px;
 }
-main .articleTree .folderPath > * {
+main .articleGUI .folderPath > * {
   color: #333;
 }
-main .articleTree ul {
+main .articleGUI ul {
   display: flex;
-  padding: 0;
   align-items: center;
+  padding: 0;
 }
-main .articleTree ul li.fileOrFolder {
+main .articleGUI ul li.fileOrFolder {
   list-style-type: none;
   display: flex;
   flex-flow: column;
   align-items: center;
 }
-main .articleTree ul li.fileOrFolder .fa-file, main .articleTree ul li.fileOrFolder .fa-folder {
+main .articleGUI ul li.fileOrFolder .fa-file, main .articleGUI ul li.fileOrFolder .fa-folder {
   width: 136px;
   height: 127px;
   box-sizing: border-box;
@@ -611,34 +611,68 @@ main .articleTree ul li.fileOrFolder .fa-file, main .articleTree ul li.fileOrFol
   align-items: center;
   justify-content: center;
 }
-main .articleTree ul li.fileOrFolder .fa-file:hover, main .articleTree ul li.fileOrFolder .fa-folder:hover {
+main .articleGUI ul li.fileOrFolder .fa-file:hover, main .articleGUI ul li.fileOrFolder .fa-folder:hover {
   cursor: pointer;
 }
-main .articleTree ul li.fileOrFolder .itemTitle {
+main .articleGUI ul li.fileOrFolder .itemTitle {
   padding: 5px 9px;
   border-radius: 5px;
 }
-main .articleTree ul li.fileOrFolder .fa-file {
+main .articleGUI ul li.fileOrFolder .fa-file {
   color: dimgray;
   font-size: 6em;
 }
-main .articleTree ul li.fileOrFolder .fa-file + .itemTitle {
+main .articleGUI ul li.fileOrFolder .fa-file + .itemTitle {
   margin-top: 10px;
 }
-main .articleTree ul li.fileOrFolder .fa-folder {
-  color: lightblue;
+main .articleGUI ul li.fileOrFolder .fa-folder {
   font-size: 6.5em;
 }
-main .articleTree ul li.fileOrFolder.selected .fa-file, main .articleTree ul li.fileOrFolder.selected .fa-folder {
+main .articleGUI ul li.fileOrFolder.selected .fa-file, main .articleGUI ul li.fileOrFolder.selected .fa-folder {
   background: #EDEDED;
 }
-main .articleTree ul li.fileOrFolder.selected .itemTitle {
+main .articleGUI ul li.fileOrFolder.selected .itemTitle {
   background: dodgerblue;
   display: inline-block !important;
   color: white;
 }
-main .articleTree ul li.fileOrFolder ul {
+main .articleGUI ul li.fileOrFolder ul {
   display: none;
+}
+main .articleTree li {
+  list-style-type: none;
+}
+main .articleTree li .fa-minus-square,
+main .articleTree li .fa-plus-square {
+  color: dimgray;
+  transition: color 0.5s;
+}
+main .articleTree li .fa-minus-square:hover,
+main .articleTree li .fa-plus-square:hover {
+  cursor: pointer;
+  color: black;
+}
+main .articleTree li .fa-plus-square {
+  display: none;
+}
+main .articleTree li .fa-folder {
+  font-size: 1.5em;
+}
+main .articleGUI .fa-folder,
+main .articleTree .fa-folder {
+  color: dodgerblue;
+}
+main ul.fileManagerView {
+  display: inline-flex;
+  background: chartreuse;
+  padding: 0;
+}
+main ul.fileManagerView li {
+  list-style-type: none;
+}
+main ul.fileManagerView li a {
+  padding: 1em;
+  border: solid 2px orangered;
 }
 
 .fancybox-container #add-category .catNameError {

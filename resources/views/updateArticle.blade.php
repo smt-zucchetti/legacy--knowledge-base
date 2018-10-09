@@ -18,6 +18,7 @@
 	@csrf
 
 	@include('partials/firstPartOfForm')
+	@include('partials/folderFormFields')
 	
 	@include('partials/tinyMceForm', ['article' => $article ] )
 

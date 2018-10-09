@@ -11,11 +11,11 @@
 |
 */
 
-Route::get('/', 'ArticleController@readAllArticles');
-Route::get('/allArticles', 'ArticleController@readAllArticles');
+Route::get('/', 'ArticleController@readArticles');
+Route::get('/allArticles', 'ArticleController@readArticles');
 Route::get('/articleGUI', 'ArticleController@readArticleGUI');
 Route::get('/articleGUI/{articleId}', 'ArticleController@readArticleGUI');
-Route::get('/getArticleTree', 'ArticleController@getArticleTree');
+Route::get('/articleTree', 'ArticleController@getArticleTree');
 
 Route::post('/createArticle', 'ArticleController@createArticle');
 Route::get('/createArticle', 'ArticleController@createArticle');
