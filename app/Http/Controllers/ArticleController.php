@@ -91,7 +91,7 @@ class ArticleController extends Controller
 	            ->get();
 	    $featuredArticles->sortBy('dateCreated');
 
-		return view('readAllArticles')->with(array('articles' => $articles, 'featuredArticles' => $featuredArticles, 'sorted' => array(false)));
+		return view('readArticles')->with(array('articles' => $articles, 'featuredArticles' => $featuredArticles, 'sorted' => array(false)));
  	}
 
  	public function __getFolderPath($curFolderId){
