@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/', 'ArticleController@readAllArticles');
-Route::get('/allArticles', 'ArticleController@readAllArticles');
+Route::get('/', 'ArticleController@dashboard');
+Route::get('/articleList', 'ArticleController@articleList');
 Route::get('/articleGUI', 'ArticleController@readArticleGUI');
 Route::get('/articleGUI/{articleId}', 'ArticleController@readArticleGUI');
 Route::get('/articleTree', 'ArticleController@readArticleTree');

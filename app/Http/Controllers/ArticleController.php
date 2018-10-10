@@ -74,7 +74,7 @@ class ArticleController extends Controller
 	    return $results;
  	}
 
- 	public function readAllArticles(){
+ 	public function dashboard(){
 
  		$articles = self::__getAllArticles();
  	
@@ -91,19 +91,10 @@ class ArticleController extends Controller
 	            ->get();
 	    $featuredArticles->sortBy('dateCreated');
 
-		return view('readAllArticles')->with(array('articles' => $articles, 'featuredArticles' => $featuredArticles, 'sorted' => array(false)));
+		return view('dashboard')->with(array('articles' => $articles, 'featuredArticles' => $featuredArticles, 'sorted' => array(false)));
  	}
 
- 	public function readArticleGUI($curFolderId = null){
  	
-		$folders = self::__getArticleGUI($curFolderId);
-
-		$pathArr = self::__getFolderPath($curFolderId);
-
-		//dd($pathArr);
-
-		return view('readArticlesWrapper')->with(array('folders' => $folders, 'curFolderId' => $curFolderId, 'pathArr' => $pathArr, 'type' => 'articleGUI') );
- 	}
 
  	public function __getArticleTree(){
  		
@@ -129,8 +120,27 @@ class ArticleController extends Controller
  	
 		$folders = self::__getArticleTree();
 
-		return view('readArticlesWrapper')->with(array('folders' => $folders, 'curFolderId' => $curFolderId, 'type' => 'articleTree') );
+		return view('readArticlesWrapper')->with(array('folders' => $folders, 'curFolderId' => $curFolderId, 'type' => 'tree') );
  	} 	
+
+ 	public function articleList(){
+
+ 		$articles = self::__getAllArticles();
+
+		return view('readArticlesWrapper')->with(array('articles' => $articles, 'sorted' => array(false), 'type' => 'list'));
+ 	}
+
+ 	public function readArticleGUI($curFolderId = null){
+ 	
+		$folders = self::__getArticleGUI($curFolderId);
+
+		$pathArr = self::__getFolderPath($curFolderId);
+
+		return view('readArticlesWrapper')->with(array('folders' => $folders, 'curFolderId' => $curFolderId, 'pathArr' => $pathArr, 'type' => 'GUI') );
+ 	}
+
+
+
 
  	public function __getFolderPath($curFolderId){
  		
@@ -195,31 +205,7 @@ class ArticleController extends Controller
 	    return view('readArticle')->with(array('article' => $article));
  	}
 
- 	/*public function __getFolderHierarchy($folders){
-
- 		foreach($folders as $folderChild){
-
- 			if($folderChild->parentId !== null){
-
- 				foreach($folders as $folderParent){
- 					if($folderParent->id === $folderChild->parentId){
- 						$folderParent->childFolders[] = $folderChild;
- 					}
- 				}
- 			}
-        }
-
-        foreach($folders as $key => $folder){
-        	if($folder->parentId !== null){
-        		unset($folders[$key]);
-        	}
-        }
-
- 		return $folders;
- 	}*/
  	public function __createFolderTreeHierarchy($folders){
-
- 		//$folders = $folders->toArray(); 
 
  		foreach($folders as $folder){
  			$folder->childFolders = array();
@@ -234,9 +220,6 @@ class ArticleController extends Controller
  				}
  			}
  		}
-
- 		//print_r($folders);
- 		//die();
 
  		foreach($folders as $key => $folder){
  			if($folder->parentId != null){
@@ -256,12 +239,8 @@ class ArticleController extends Controller
 	        $categories = Categories::all();
 
 	        $folders = Folders::all();
-	        //print_r($folders);
-	        //die();
 
 	        $folderHierarchy = self::__createFolderTreeHierarchy($folders);
-	        //print_r($folderHierarchy);
-	        //die();
 
 			return view('updateArticle')->with(array('article' => $article, 'categories' => $categories, 'folders' => $folders, 'folderHierarchy' => $folderHierarchy));
 
@@ -289,7 +268,7 @@ class ArticleController extends Controller
 				);
 	 		}
 
-	 		return self::readAllArticles();
+	 		return self::dashboard();
 		}
  	}
 

@@ -24,20 +24,23 @@
 
 <ul class="fileManagerView">
 	<li>
-		<a href="{{url('/articleTree')}}">Tree</a>
+		<a class="{{($type == 'list')?'active':''}}" href="{{url('/articleList')}}">List</a>
 	</li>
 	<li>
-		<a href="{{url('/articleGUI')}}">GUI</a>
+		<a class="{{($type == 'tree')?'active':''}}" href="{{url('/articleTree')}}">Tree</a>
+	</li>
+	<li>
+		<a class="{{($type == 'GUI')?'active':''}}" href="{{url('/articleGUI')}}">GUI</a>
 	</li>
 </ul>
 
 <div class="fileManager">
-	@if($type == 'articleTree')
-		<div class="articleTree">
-			@include('partials/articleTree', ['folders' => $folders ])
-		</div>
-	@elseif($type == 'articleGUI')
+	@if($type == 'tree')
+		@include('partials/articleTree', ['folders' => $folders ])
+	@elseif($type == 'GUI')
 		@include('partials/articleGUI')
+	@elseif($type == 'list')
+		@include('partials/articleList')
 	@endif
 </div>
 

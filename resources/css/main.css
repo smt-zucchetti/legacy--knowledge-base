@@ -664,15 +664,25 @@ main .articleTree .fa-folder {
 }
 main ul.fileManagerView {
   display: inline-flex;
-  background: chartreuse;
   padding: 0;
 }
 main ul.fileManagerView li {
   list-style-type: none;
 }
 main ul.fileManagerView li a {
-  padding: 1em;
-  border: solid 2px orangered;
+  text-transform: uppercase;
+  color: #004A5D;
+  padding: 0 1em;
+  border-left: solid 2px #dadfe3;
+  font-size: 18px;
+  text-decoration: none;
+}
+main ul.fileManagerView li a.active {
+  color: #F48120;
+}
+main ul.fileManagerView li:first-of-type a {
+  padding-left: 0;
+  border-left: none;
 }
 
 .fancybox-container #add-category .catNameError {

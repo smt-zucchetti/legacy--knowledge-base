@@ -6,11 +6,14 @@
 
 				<ul class="nav">
 					  <li>
-					  		<a href="<?php echo url('/allArticles');?>">Articles</a>
+					  		<a href="<?php echo url('/');?>">Articles</a>
 					  		<ul>
-								<!--<li>
-									 <a href="<?php echo url('/articleTree'); ?>">Featured Articles</a>
-								</li>-->
+								<li>
+									 <a href="<?php echo url('/articleList'); ?>">Article List</a>
+								</li>
+								<li>
+									 <a href="<?php echo url('/articleTree'); ?>">Article Tree</a>
+								</li>
 								<li>
 									 <a href="<?php echo url('/articleGUI'); ?>">Article GUI</a>
 								</li>

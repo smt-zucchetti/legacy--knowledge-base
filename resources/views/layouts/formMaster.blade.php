@@ -8,8 +8,7 @@
     <body id="{{!empty($bodyId)?$bodyId:''}}">
         @include('partials/header')
         <main>
-          <div class="container">
-            
+          <div class="container">            
               @section('main')
               @show
           </div>

@@ -837,15 +837,26 @@ main{
 
     ul.fileManagerView{
         display: inline-flex;
-        background: chartreuse;
         padding: 0;
 
         li{
             list-style-type: none;
 
             a{
-                padding: 1em;
-                border: solid 2px orangered;
+                text-transform: uppercase;
+                color: $turquoise;
+                padding: 0 1em;
+                border-left: solid 2px $lightGray;
+                font-size: 18px;
+                text-decoration: none;
+                
+                &.active{
+                    color: $orange;
+                }
+            }
+            &:first-of-type a{
+                padding-left:0;
+                border-left: none;
             }
         }
     }

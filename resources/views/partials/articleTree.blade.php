@@ -1,3 +1,4 @@
+<div class="articleTree">
 <ul>
 	@foreach($folders as $folder)
 		<li class="fileOrFolder" data-id="{{$folder->id}}">
@@ -28,6 +29,7 @@
 
 	@endforeach
 </ul>
+</div>
 
 <script>
 	$(document).ready(function(){
