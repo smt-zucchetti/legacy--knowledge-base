@@ -106,7 +106,42 @@ class ArticleController extends Controller
  	}
 
  	public function __getArticleTree(){
- 		return array();
+ 		
+ 		$results = DB::table('Folders as f')
+		 		->leftJoin('Articles as a', 'f.id', '=', 'a.folderId')
+	            ->select(array(
+			            	'f.name as folderName','f.id as folderId', 'f.parentId',       			
+	            			DB::raw('group_concat(a.Title) as articleTitles'), 
+	            			DB::raw('group_concat(a.ID) as articleIds')
+	            		))
+	           	->groupBy('f.name','f.id')
+	            ->get();
+
+	    $results = self::__createArticleTreeHierarchy($results);
+
+	    return $results;
+
+ 	}
+
+ 	public function __createArticleTreeHierarchy($folders){
+
+ 		foreach($folders as $folderChild){
+ 			if($folderChild->parentId !== null){
+ 				foreach($folders as $folderParent){
+ 					if($folderParent->folderId === $folderChild->parentId){
+ 						$folderParent->childFolders[] = $folderChild;
+ 					}
+ 				}
+ 			}
+ 		}
+
+ 		foreach($folders as $key => $folder){
+ 			if($folder->parentId != null){
+ 				unset($folders[$key]);
+ 			}
+ 		}
+
+ 		return $folders;
  	}
 
 	public function readArticleTree($curFolderId = null){
@@ -140,18 +175,13 @@ class ArticleController extends Controller
  	public function __getArticleGUI($parentFolderId = null){
 
  		$results = DB::table('Folders as f')
-		 		->leftJoin('Articles as a', 'f.id', '=', 'a.folderId')
+		 		->leftJoin('Articles as a', 'f.parentId', '=', 'a.folderId')
 	            ->select(array(
 			            	'f.name as folderName','f.id as folderId',       			
 	            			DB::raw('group_concat(a.Title) as articleTitles'), 
 	            			DB::raw('group_concat(a.ID) as articleIds')
 	            		))
 	            ->where('f.parentId', '=', $parentFolderId)
-	            /*->where(function($query) use($parentFolderId){
-		            $query->where('a.folderId', '=', $parentFolderId)
-		            ->orWhere('f.parentId', '=', $parentFolderId);
-		        })*/
-		        //->where('a.deleted', '=', false)
 	            ->orderBy('f.id', 'DESC')
 	           	->groupBy('f.name','f.id')
 	            ->get();
