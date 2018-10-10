@@ -110,39 +110,20 @@ class ArticleController extends Controller
  		$results = DB::table('Folders as f')
 		 		->leftJoin('Articles as a', 'f.id', '=', 'a.folderId')
 	            ->select(array(
-			            	'f.name as folderName','f.id as folderId', 'f.parentId',       			
+			            	'f.name as folderName','f.id', 'f.parentId',       			
 	            			DB::raw('group_concat(a.Title) as articleTitles'), 
 	            			DB::raw('group_concat(a.ID) as articleIds')
 	            		))
 	           	->groupBy('f.name','f.id')
 	            ->get();
 
-	    $results = self::__createArticleTreeHierarchy($results);
+	    $results = self::__createFolderTreeHierarchy($results);
 
 	    return $results;
 
  	}
 
- 	public function __createArticleTreeHierarchy($folders){
 
- 		foreach($folders as $folderChild){
- 			if($folderChild->parentId !== null){
- 				foreach($folders as $folderParent){
- 					if($folderParent->folderId === $folderChild->parentId){
- 						$folderParent->childFolders[] = $folderChild;
- 					}
- 				}
- 			}
- 		}
-
- 		foreach($folders as $key => $folder){
- 			if($folder->parentId != null){
- 				unset($folders[$key]);
- 			}
- 		}
-
- 		return $folders;
- 	}
 
 	public function readArticleTree($curFolderId = null){
  	
@@ -214,6 +195,58 @@ class ArticleController extends Controller
 	    return view('readArticle')->with(array('article' => $article));
  	}
 
+ 	/*public function __getFolderHierarchy($folders){
+
+ 		foreach($folders as $folderChild){
+
+ 			if($folderChild->parentId !== null){
+
+ 				foreach($folders as $folderParent){
+ 					if($folderParent->id === $folderChild->parentId){
+ 						$folderParent->childFolders[] = $folderChild;
+ 					}
+ 				}
+ 			}
+        }
+
+        foreach($folders as $key => $folder){
+        	if($folder->parentId !== null){
+        		unset($folders[$key]);
+        	}
+        }
+
+ 		return $folders;
+ 	}*/
+ 	public function __createFolderTreeHierarchy($folders){
+
+ 		//$folders = $folders->toArray(); 
+
+ 		foreach($folders as $folder){
+ 			$folder->childFolders = array();
+ 		}
+
+ 		foreach($folders as $childFolder){
+ 			if($childFolder->parentId !== null){
+ 				foreach($folders as $key => $parentFolder){
+ 					if($parentFolder->id === $childFolder->parentId){
+ 						$parentFolder->childFolders = array_merge($parentFolder->childFolders, array($childFolder));
+ 					}
+ 				}
+ 			}
+ 		}
+
+ 		//print_r($folders);
+ 		//die();
+
+ 		foreach($folders as $key => $folder){
+ 			if($folder->parentId != null){
+ 				unset($folders[$key]);
+ 			}
+ 		}
+
+ 		return $folders;
+ 	}
+
  	public function updateArticle(Request $request, $articleId){
 
  		if(empty($_POST)){
@@ -223,8 +256,14 @@ class ArticleController extends Controller
 	        $categories = Categories::all();
 
 	        $folders = Folders::all();
+	        //print_r($folders);
+	        //die();
 
-			return view('updateArticle')->with(array('article' => $article, 'categories' => $categories, 'folders' => $folders));
+	        $folderHierarchy = self::__createFolderTreeHierarchy($folders);
+	        //print_r($folderHierarchy);
+	        //die();
+
+			return view('updateArticle')->with(array('article' => $article, 'categories' => $categories, 'folders' => $folders, 'folderHierarchy' => $folderHierarchy));
 
 		}else{
 

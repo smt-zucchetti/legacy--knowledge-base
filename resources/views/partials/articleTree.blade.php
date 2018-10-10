@@ -1,6 +1,6 @@
 <ul>
 	@foreach($folders as $folder)
-		<li class="fileOrFolder" data-id="{{$folder->folderId}}">
+		<li class="fileOrFolder" data-id="{{$folder->id}}">
 			<a href="#" class="collapseExpandAnchor">
 				<i class="far fa-minus-square"></i>
 				<i class="far fa-plus-square"></i>
