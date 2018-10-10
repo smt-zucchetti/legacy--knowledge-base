@@ -125,6 +125,18 @@ class ArticleController extends Controller
  	}
 
 
+ 	public function __getArticleTree(){
+ 		return array();
+ 	}
+
+	public function readArticleTree($curFolderId = null){
+ 	
+		$folders = self::__getArticleTree();
+
+		return view('readArticlesWrapper')->with(array('folders' => $folders, 'curFolderId' => $curFolderId, 'type' => 'articleTree') );
+ 	} 	
+
+
  	public function __getArticleGUI($parentFolderId = null){
 
  		$results = DB::table('Folders as f')

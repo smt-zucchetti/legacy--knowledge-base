@@ -13,6 +13,9 @@
 
 Route::get('/', 'ArticleController@readArticles');
 Route::get('/readArticles', 'ArticleController@readArticles');
+Route::get('/articleGUI', 'ArticleController@readArticleGUI');
+Route::get('/articleGUI/{articleId}', 'ArticleController@readArticleGUI');
+Route::get('/articleTree', 'ArticleController@readArticleTree');
 
 Route::post('/createArticle', 'ArticleController@createArticle');
 Route::get('/createArticle', 'ArticleController@createArticle');
