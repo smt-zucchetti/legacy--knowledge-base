@@ -54,9 +54,6 @@ class FolderController extends Controller
  			}
  		}
 
- 		//print_r($foldersCopy);
- 		//die();
-
  		return $foldersCopy;
  	}
 

@@ -6,18 +6,20 @@
 
 				<ul class="nav">
 					  <li>
-					  		<a href="<?php echo url('/readArticles');?>">Articles</a>
+					  		<a href="<?php echo url('/allArticles');?>">Articles</a>
 					  		<ul>
+								<!--<li>
+									 <a href="<?php echo url('/articleTree'); ?>">Featured Articles</a>
+								</li>-->
 								<li>
-									 <a href="<?php echo url('/logout'); ?>">Featured Articles</a>
-								</li>
-								<li>
-									 <a href="<?php echo url('/logout'); ?>">All Articles</a>
+									 <a href="<?php echo url('/articleGUI'); ?>">Article GUI</a>
 								</li>
 							</ul>
 					  </li>
 					  @if (Auth::check())
 					    <li><a href="<?php echo url('/readCategories');?>">Categories</a></li>
+
+					    <li><a href="<?php echo url('/readFolders');?>">Folders</a></li>
 					  @endif
 					  <li><a href="<?php echo url('/search');?>">Advanced Search</a></li>
 					  <li>

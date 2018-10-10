@@ -94,6 +94,28 @@ class ArticleController extends Controller
 		return view('readAllArticles')->with(array('articles' => $articles, 'featuredArticles' => $featuredArticles, 'sorted' => array(false)));
  	}
 
+ 	public function readArticleGUI($curFolderId = null){
+ 	
+		$folders = self::__getArticleGUI($curFolderId);
+
+		$pathArr = self::__getFolderPath($curFolderId);
+
+		//dd($pathArr);
+
+		return view('readArticlesWrapper')->with(array('folders' => $folders, 'curFolderId' => $curFolderId, 'pathArr' => $pathArr, 'type' => 'articleGUI') );
+ 	}
+
+ 	public function __getArticleTree(){
+ 		return array();
+ 	}
+
+	public function readArticleTree($curFolderId = null){
+ 	
+		$folders = self::__getArticleTree();
+
+		return view('readArticlesWrapper')->with(array('folders' => $folders, 'curFolderId' => $curFolderId, 'type' => 'articleTree') );
+ 	} 	
+
  	public function __getFolderPath($curFolderId){
  		
  		$pathArr = array();
@@ -113,28 +135,6 @@ class ArticleController extends Controller
 
  	}
 
- 	public function readArticleGUI($curFolderId = null){
- 	
-		$folders = self::__getArticleGUI($curFolderId);
-
-		$pathArr = self::__getFolderPath($curFolderId);
-
-		//dd($pathArr);
-
-		return view('readArticleGUI')->with(array('folders' => $folders, 'curFolderId' => $curFolderId, 'pathArr' => $pathArr) );
- 	}
-
-
- 	public function __getArticleTree(){
- 		return array();
- 	}
-
-	public function readArticleTree($curFolderId = null){
- 	
-		$folders = self::__getArticleTree();
-
-		return view('readArticlesWrapper')->with(array('folders' => $folders, 'curFolderId' => $curFolderId, 'type' => 'articleTree') );
- 	} 	
 
 
  	public function __getArticleGUI($parentFolderId = null){

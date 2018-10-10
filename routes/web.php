@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/', 'ArticleController@readArticles');
-Route::get('/readArticles', 'ArticleController@readArticles');
+Route::get('/', 'ArticleController@readAllArticles');
+Route::get('/allArticles', 'ArticleController@readAllArticles');
 Route::get('/articleGUI', 'ArticleController@readArticleGUI');
 Route::get('/articleGUI/{articleId}', 'ArticleController@readArticleGUI');
 Route::get('/articleTree', 'ArticleController@readArticleTree');
@@ -28,6 +28,10 @@ Route::get('fullPageArticle/{articleId}', 'ArticleController@fullPageArticle');
 Route::get('/sortArticles/{param}/{dir}', 'ArticleController@sortArticles');
 Route::get('/sortArticles/{param}/{dir}/{searchTerm}', 'ArticleController@sortArticles');
 
+Route::get('/readFolders', 'FolderController@readFolders');
+Route::post('/createFolder', 'FolderController@createFolder');
+Route::post('/deleteFolder/{folderID}', 'FolderController@deleteFolder');
+Route::post('/updateFolder/{folderID}', 'FolderController@updateFolder');
 
 Route::post('/createCategory', 'CategoryController@createCategory');
 Route::get('/readCategories', 'CategoryController@readCategories');

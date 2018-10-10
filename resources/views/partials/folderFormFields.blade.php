@@ -8,6 +8,3 @@
 		
 	@endforeach
 </select><br><br>
-<label for="name">Name
-	<input type="text" name="name" id="name" value="{{!empty($curFolder)?$curFolder->name:''}}" />
-</label>

@@ -18,18 +18,9 @@
 		<li>
 			<label for="{{$category->ID}}">{{$category->Name}}
 				<?php 
-					if(!empty($article)){
-						if(in_array($category->ID, explode(",",$article->categoryIds))){
-							//echo '<input type="checkbox" name="CategoryIDs[]" value="'.$category->ID.'" id="'.$category->ID.'" checked />';
-							echo Form::checkbox('CategoryIDs[]', $category->ID, false, array('id' => $category->ID));
-
-						}else{
-							//echo '<input type="checkbox" name="CategoryIDs[]" value="'.$category->ID.'" id="'.$category->ID.'"/>';
-							echo Form::checkbox('CategoryIDs[]', $category->ID, false, array('id' => $category->ID));
-
-						}
+					if(!empty($article) && in_array($category->ID, explode(",",$article->categoryIds))){
+						echo Form::checkbox('CategoryIDs[]', $category->ID, true, array('id' => $category->ID));
 					}else{
-						//echo '<input type="checkbox" name="CategoryIDs[]" value="'.$category->ID.'" id="'.$category->ID.'"/>';
 						echo Form::checkbox('CategoryIDs[]', $category->ID, false, array('id' => $category->ID));
 					}
 				?>

@@ -1,9 +1,9 @@
-@extends('layouts.formMaster')
+@extends('layouts.formMaster', ['bodyId'=>'singleArticle'])
 
 @section('title', 'New User')
 
 @section('main')
-	<div class="actionItems">
+	<div class="action-icons">
 		<a id="goBack" href="javascript:window.history.back();" >
 			<i class="fas fa-reply"></i>
 			Back
@@ -19,7 +19,7 @@
 					</button>
 				</form>
 			</div>
-			<a data-fancybox data-src="#deleteArticleTmp" href="javascript:;">
+			<a id="deleteArticle" data-fancybox data-src="#deleteArticleTmp" href="javascript:;">
 				<i class="fas fa-trash-alt"></i> Delete 
 			</a>
 			<a id="editArticle" href="<?php echo url('/updateArticle/'.$article->ID) ?>" >
@@ -28,37 +28,19 @@
 			</a>
 		@endif
 	</div>
-
-	<div class="articleContainer">
-
-		<div class="metaDataContainer">
-			<h3 class="title">Title: <span class="answer">{{$article->Title}}</span></h3>
-			<div class="singleArticleDetails">
-		    	<div class="item">
-			    	<h3>Featured? <span class="answer"><?php echo !empty($article->featured)?"Yes":"No"; ?></span></h3> 
-				</div>
-				<div class="item categories">
-					<h3>Categories:</h3>
-					<ul class="categoryList">
-						<?php
-							if(!empty($article->categoryNames)){
-								foreach(explode(",",$article->categoryNames) as $categoryName){						 
-									echo "<li class='category'>";
-									echo 	$categoryName; 
-									echo "</li>";
-								}
-							}else{
-								echo "no categories selected"; 
-							}
-						?>
-					</ul>
-				</div>
-			</div>
-		</div>
-
-		<div class="singleArticleBorder">
-			{!! $article->Content !!}
-		</div>
+	<div>
+		<h3>Categories:</h3>
+		<?php
+			foreach(explode(",",$article->categoryNames) as $categoryName){						 
+				echo "<li class='category'>";
+				echo 	$categoryName; 
+				echo "</li>";
+			}
+		?>
+	</div>
+	<h3 class="title">Title: {{$article->Title}}</h3>
+	<div class="singleArticleBorder">
+		{!! $article->Content !!}
 	</div>
 
 	<script>
