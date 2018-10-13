@@ -11,7 +11,7 @@
     
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="/KnowledgeBase/resources/css/main.css" />
+    <link rel="stylesheet" href="resources/css/main.css" />
     
     
 
@@ -23,11 +23,11 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-    <script src="/KnowledgeBase/resources/js/cycle2.js"></script>
-    <script src="/KnowledgeBase/resources/js/cycle.carousel.js"></script>
+    <script src="resources/js/cycle2.js"></script>
+    <script src="resources/js/cycle.carousel.js"></script>
 
 
    	<!--JQuery UI-->
-    <link rel="stylesheet" href="/KnowledgeBase/resources/jquery-ui/jquery-ui.min.css">
-    <script src="/KnowledgeBase/resources/jquery-ui/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="/KnowledgeBase/resources/css/my-jquery-ui.css">
+    <link rel="stylesheet" href="resources/jquery-ui/jquery-ui.min.css">
+    <script src="resources/jquery-ui/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="resources/css/my-jquery-ui.css">
