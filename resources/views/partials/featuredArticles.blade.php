@@ -32,9 +32,9 @@
 <div class="featuredArticlesGrid">
 	@foreach($featuredArticles as $article)
 		<div class="featuredArticle">
-			<iframe src="http://localhost:8888/KnowledgeBase/public/fullPageArticle/{{$article->ID}}"></iframe>
+			<iframe src="fullPageArticle/{{$article->ID}}"></iframe>
 			<h2>{{$article->Title}}</h2>
-			<a href="http://localhost:8888/KnowledgeBase/public/readArticle/{{$article->ID}}" class="clickableLink"></a>
+			<a href="readArticle/{{$article->ID}}" class="clickableLink"></a>
 		</div>
 	@endforeach
 
