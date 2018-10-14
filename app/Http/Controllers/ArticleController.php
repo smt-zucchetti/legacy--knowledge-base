@@ -49,7 +49,7 @@ class ArticleController extends Controller
 				));			
 			}
 
-			return self::readArticles();
+			return self::dashboard();
 		}
  	}   
 
@@ -281,7 +281,7 @@ class ArticleController extends Controller
 
 		$articles = Articles::all();
 		
-		return self::readArticles();
+		return self::dashboard();
  	}
 
 
