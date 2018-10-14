@@ -212,8 +212,7 @@ main .container #searchForm input[type=submit] {
   justify-self: end;
 }
 main .container .actionItems {
-  float: left;
-  margin-bottom: 3em;
+  margin-bottom: 2em;
 }
 main .container .actionItems a {
   text-decoration: none;
