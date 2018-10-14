@@ -4,12 +4,8 @@
 
 @section('main')
 
-<div class="actionItems">
-	<a id="goBack" href="javascript:window.history.back();" >
-		<i class="fas fa-reply"></i>
-		Back
-	</a>
-</div>
+
+@include('partials/actionItems', ['items' => array('back')])
 
 @include('partials/validationErrors')
 

@@ -4,12 +4,7 @@
 
 @section('main')
 
-<div class="actionItems">
-	<a id="goBack" href="<?php echo url('/readAllArticles') ?>" >
-		<i class="fas fa-reply"></i>
-		Back
-	</a>
-</div>
+@include('partials/actionItems', ['items' => array('back')])
 
 @include('partials/validationErrors')
 
