@@ -535,6 +535,12 @@ main .authContainer form.authForm .alert {
 main .authContainer form.authForm .invalid-feedback {
   color: #F48120;
 }
+main .authContainer ul.loggedInLinks li {
+  line-height: 2em;
+}
+main .authContainer ul.loggedInLinks li a {
+  color: #004A5D;
+}
 main .featuredArticlesGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 180px));

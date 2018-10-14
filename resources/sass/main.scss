@@ -666,6 +666,16 @@ main{
                 color:$orange;
             }
         }
+        
+        ul.loggedInLinks{
+            li{
+                line-height: 2em;
+
+                a{
+                    color: $turquoise;
+                }
+            }        
+        }
     }
 
     .featuredArticlesGrid {
@@ -861,7 +871,9 @@ main{
         }
     }
 
+
 }
+
 
 .fancybox-container{
     #add-category{
