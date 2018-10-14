@@ -30,13 +30,16 @@
 </script>-->
 
 <div class="featuredArticlesGrid">
-	@foreach($featuredArticles as $article)
-		<div class="featuredArticle">
-			<iframe src="fullPageArticle/{{$article->ID}}"></iframe>
-			<h2>{{$article->Title}}</h2>
-			<a href="readArticle/{{$article->ID}}" class="clickableLink"></a>
-		</div>
-	@endforeach
-
+	@if(count($featuredArticles) === 0)
+		<h2>No results</h2>
+	@else
+		@foreach($featuredArticles as $article)
+			<div class="featuredArticle">
+				<iframe src="fullPageArticle/{{$article->ID}}"></iframe>
+				<h2>{{$article->Title}}</h2>
+				<a href="readArticle/{{$article->ID}}" class="clickableLink"></a>
+			</div>
+		@endforeach
+	@endif
 
 </div>
