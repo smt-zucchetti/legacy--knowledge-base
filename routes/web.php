@@ -68,3 +68,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
+
+
+
+Route::get('/public/laravel-filemanager', '\UniSharp\LaravelFilemanager\Controllers\LfmController@show');
+
+
+
+
