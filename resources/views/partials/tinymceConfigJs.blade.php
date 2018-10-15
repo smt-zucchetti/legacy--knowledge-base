@@ -1,7 +1,7 @@
 <script>
 
 var editor_config = {
-    path_absolute : "/",
+    path_absolute : "/KnowledgeBase/public/",
     selector: "#tinyMCE",
     plugins: [
       "advlist autolink lists link image charmap print preview hr anchor pagebreak",
