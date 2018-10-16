@@ -1,7 +1,7 @@
 <script>
 
 var editor_config = {
-    path_absolute : "{{env('APP_URL')}}public/",
+    path_absolute : "{{env('LFM_URL')}}",
     selector: "#tinyMCE",
     plugins: [
       "advlist autolink lists link image charmap print preview hr anchor pagebreak",
