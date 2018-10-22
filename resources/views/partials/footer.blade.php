@@ -1,5 +1,5 @@
 <footer>
-	<div class="footerFlex">
+	<div class="container footerContainer">
 	    <h3>GET IN TOUCH&nbsp;&nbsp;<a href="tel:503 343 4263">503 343 4263</a></h3>
 	    <div class="contactInfo">
 	      <a href="email:marklewisbrown@gmail.com">info@verticalbookingusa.com</a>
