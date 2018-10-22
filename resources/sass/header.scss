@@ -1,0 +1,91 @@
+@import 'colors.scss';
+
+header{
+    color: white;
+    box-shadow: 2px 6px 11px #AAA;
+    padding: 1em 0;
+    
+    .headerContainer{
+        display: flex;
+        align-items: center;
+
+        img.logo{
+            max-width: 200px;
+        }
+
+        ul.nav{
+            display: flex;
+            margin:0; 
+            padding: 0 2em;
+            flex-grow: 1;
+            font-weight: 700;
+            justify-content: space-between;
+
+            li{
+                list-style-type:none;
+                font-size: .9em;
+
+                a{ 
+                    text-decoration: none;
+                    border-bottom: solid 2px transparent;
+                    padding-bottom: .4em;
+                    text-transform: uppercase;
+                    color:$turquoise;
+                    position: relative;
+                    z-index: 2;
+                }
+
+                ul{
+                    display: none;
+                }
+
+                &:hover{
+                    a{
+                        border-bottom:solid 2px $orange;
+                    }
+                    ul{
+                        display: block;
+                        position: absolute;
+                        padding: 1.5em 0;
+                        z-index: 3;
+
+                        li{
+                            background: $lightBlue;
+                            padding: 0;
+
+                            &:hover{
+                                background:$blue;
+
+                                a{
+                                    color: white;
+                                }
+                            }
+
+                            a{
+                                border: none; 
+                                padding: 1em 2em;
+                                display: block;
+                            }
+                        }
+                    }   
+                }
+            }
+        }
+
+        i{
+            background: $turquoise;
+            border-radius: 50%;
+            color: white;
+            display: inline-flex;
+            height: 30px;
+            width: 30px;
+            align-items: center;
+            justify-content: center;
+            margin-right: 13px;
+
+            &:hover{
+                background:lighten($turquoise, 10%);
+            }
+        }
+    }
+}

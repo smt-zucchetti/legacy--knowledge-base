@@ -1,0 +1,44 @@
+.featuredArticlesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 180px));
+  grid-template-rows: auto;
+  background: lightgray;
+  grid-gap: 0em 2em;
+  border-radius: 3px;
+  border: solid 1px dimgray;
+  margin-bottom: 4em;
+}
+.featuredArticlesGrid .featuredArticle {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  padding: 1em;
+}
+.featuredArticlesGrid .featuredArticle h2 {
+  text-decoration: none;
+  text-align: center;
+  margin: 5px 0 5px;
+  color: dimgray;
+  font-size: 16px;
+}
+.featuredArticlesGrid .featuredArticle iframe {
+  width: 100%;
+  min-height: 210px;
+  background: white;
+  border: solid 1px dimgray;
+  border-radius: 4px;
+}
+.featuredArticlesGrid .featuredArticle a.clickableLink {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  transition: background 0.5s;
+}
+.featuredArticlesGrid .featuredArticle a.clickableLink:hover {
+  background: rgba(12, 12, 12, 0.2);
+}
+
+/*# sourceMappingURL=featuredArticles.css.map */

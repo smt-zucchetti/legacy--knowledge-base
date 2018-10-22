@@ -1,0 +1,115 @@
+.articleGUI .folderPath {
+  background: lightgray;
+  padding: 0.7em;
+  display: flex;
+  align-items: center;
+}
+.articleGUI .folderPath a:hover {
+  text-decoration: none;
+}
+.articleGUI .folderPath i {
+  margin: 0 12px;
+}
+.articleGUI .folderPath > * {
+  color: #333;
+}
+.articleGUI ul {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+.articleGUI ul li.fileOrFolder {
+  list-style-type: none;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.articleGUI ul li.fileOrFolder .fa-file, .articleGUI ul li.fileOrFolder .fa-folder {
+  width: 136px;
+  height: 127px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.articleGUI ul li.fileOrFolder .fa-file:hover, .articleGUI ul li.fileOrFolder .fa-folder:hover {
+  cursor: pointer;
+}
+.articleGUI ul li.fileOrFolder .itemTitle {
+  padding: 5px 9px;
+  border-radius: 5px;
+}
+.articleGUI ul li.fileOrFolder .fa-file {
+  color: dimgray;
+  font-size: 6em;
+}
+.articleGUI ul li.fileOrFolder .fa-file + .itemTitle {
+  margin-top: 10px;
+}
+.articleGUI ul li.fileOrFolder .fa-folder {
+  font-size: 6.5em;
+}
+.articleGUI ul li.fileOrFolder.selected .fa-file, .articleGUI ul li.fileOrFolder.selected .fa-folder {
+  background: #EDEDED;
+}
+.articleGUI ul li.fileOrFolder.selected .itemTitle {
+  background: dodgerblue;
+  display: inline-block !important;
+  color: white;
+}
+.articleGUI ul li.fileOrFolder ul {
+  display: none;
+}
+
+.articleTree ul.noFolder {
+  padding: 0;
+}
+.articleTree li {
+  list-style-type: none;
+}
+.articleTree li .fa-minus-square,
+.articleTree li .fa-plus-square {
+  color: dimgray;
+  transition: color 0.5s;
+}
+.articleTree li .fa-minus-square:hover,
+.articleTree li .fa-plus-square:hover {
+  cursor: pointer;
+  color: black;
+}
+.articleTree li .fa-plus-square {
+  display: none;
+}
+.articleTree li .fa-folder {
+  font-size: 1.5em;
+}
+
+.articleGUI .fa-folder,
+.articleTree .fa-folder {
+  color: dodgerblue;
+}
+
+ul.fileManagerView {
+  display: inline-flex;
+  padding: 0;
+}
+ul.fileManagerView li {
+  list-style-type: none;
+}
+ul.fileManagerView li a {
+  text-transform: uppercase;
+  color: #004A5D;
+  padding: 0 1em;
+  border-left: solid 2px #dadfe3;
+  font-size: 18px;
+  text-decoration: none;
+}
+ul.fileManagerView li a.active {
+  color: #F48120;
+}
+ul.fileManagerView li:first-of-type a {
+  padding-left: 0;
+  border-left: none;
+}
+
+/*# sourceMappingURL=articleViews.css.map */

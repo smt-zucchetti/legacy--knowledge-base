@@ -1,0 +1,147 @@
+@import 'colors.scss';
+
+
+.articleGUI{
+    .folderPath {
+        background: lightgray;
+        padding: 0.7em;
+        display: flex;
+        align-items: center;
+
+        a:hover{
+           text-decoration:none;
+        }
+
+        i{
+            margin: 0 12px;
+        }
+
+        > *{
+            color: $textGrayDark;
+        }
+    }
+    
+    ul{
+        display: flex;
+        align-items: center;
+        padding: 0;
+       
+        li.fileOrFolder{
+            list-style-type: none;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            
+            .fa-file, .fa-folder{
+                width: 136px;
+                height: 127px;
+                box-sizing: border-box;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &:hover{
+                    cursor:pointer;
+                }
+            }
+
+            .itemTitle{
+                padding: 5px 9px;
+                border-radius: 5px;   
+            }
+
+            .fa-file{
+                color: dimgray;
+                font-size: 6em;
+
+                & + .itemTitle{
+                    margin-top:10px;
+                }
+            }
+
+
+            .fa-folder{
+                font-size: 6.5em;
+            }
+
+            &.selected{
+                .fa-file, .fa-folder{
+                    background: #EDEDED;
+                }
+
+                .itemTitle {
+                    background: dodgerblue;
+                    display: inline-block !important;
+                    color: white;
+                }
+            }
+
+            ul{
+                display: none;
+            }
+        }                
+
+    }
+}
+
+.articleTree{
+    ul.noFolder{
+        padding: 0;    
+    }
+
+    li{
+        list-style-type: none;
+
+        .fa-minus-square,
+        .fa-plus-square {
+            color: dimgray;
+            transition: color .5s;
+
+            &:hover{
+                cursor:pointer;
+                color: black;
+            }
+        }
+
+        .fa-plus-square{
+            display: none;
+        }
+
+        .fa-folder {
+            font-size: 1.5em;
+        }
+    }
+}
+
+.articleGUI,
+.articleTree{
+    .fa-folder{
+        color: dodgerblue;
+    }
+}
+
+ul.fileManagerView{
+    display: inline-flex;
+    padding: 0;
+
+    li{
+        list-style-type: none;
+
+        a{
+            text-transform: uppercase;
+            color: $turquoise;
+            padding: 0 1em;
+            border-left: solid 2px $lightGray;
+            font-size: 18px;
+            text-decoration: none;
+            
+            &.active{
+                color: $orange;
+            }
+        }
+        &:first-of-type a{
+            padding-left:0;
+            border-left: none;
+        }
+    }
+}

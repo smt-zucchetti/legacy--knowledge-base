@@ -1,3 +1,4 @@
+/* Sticky Footer */
 html, body {
   height: 100%;
   margin: 0;
@@ -9,8 +10,9 @@ body {
   font-family: Cabin, sans-serif;
   overflow: auto;
 }
-body.fancybox-active {
-  height: 100%;
+
+main {
+  flex-grow: 1;
 }
 
 header .container, main .container, footer .container {
@@ -19,89 +21,78 @@ header .container, main .container, footer .container {
   margin: 0 auto;
 }
 
+.actionItems a {
+  text-decoration: none;
+  margin-right: 15px;
+  color: dimgray;
+  transition: color 0.5s;
+  display: inline-block;
+}
+.actionItems a:hover {
+  color: black;
+}
+
 header {
   color: white;
   box-shadow: 2px 6px 11px #AAA;
+  padding: 1em 0;
 }
-header .flexContainer {
+header .headerContainer {
   display: flex;
-  max-width: 1100px;
-  margin: 0 auto;
   align-items: center;
 }
-header .flexContainer img.logo {
+header .headerContainer img.logo {
   max-width: 200px;
 }
-header .flexContainer ul.nav {
+header .headerContainer ul.nav {
   display: flex;
   margin: 0;
-  padding: 0;
+  padding: 0 2em;
   flex-grow: 1;
   font-weight: 700;
+  justify-content: space-between;
 }
-header .flexContainer ul.nav li {
+header .headerContainer ul.nav li {
   list-style-type: none;
   font-size: 0.9em;
-  padding: 2em 2em 2em 2em;
 }
-header .flexContainer ul.nav li .welcomeMsg {
-  position: absolute;
-}
-header .flexContainer ul.nav li:last-of-type {
-  margin-left: auto;
-}
-header .flexContainer ul.nav li a {
+header .headerContainer ul.nav li a {
   text-decoration: none;
   border-bottom: solid 2px transparent;
   padding-bottom: 0.4em;
   text-transform: uppercase;
   color: #004A5D;
+  position: relative;
+  z-index: 2;
 }
-header .flexContainer ul.nav li form {
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-header .flexContainer ul.nav li ul {
+header .headerContainer ul.nav li ul {
   display: none;
 }
-header .flexContainer ul.nav li:hover a {
+header .headerContainer ul.nav li:hover a {
   border-bottom: solid 2px #F48120;
 }
-header .flexContainer ul.nav li:hover ul {
+header .headerContainer ul.nav li:hover ul {
   display: block;
   position: absolute;
-  padding: 0;
-  margin-top: 1.5em;
+  padding: 1.5em 0;
+  z-index: 3;
 }
-header .flexContainer ul.nav li:hover ul li {
+header .headerContainer ul.nav li:hover ul li {
   background: #D6F1FC;
   padding: 0;
 }
-header .flexContainer ul.nav li:hover ul li:hover {
+header .headerContainer ul.nav li:hover ul li:hover {
   background: #31B8EF;
 }
-header .flexContainer ul.nav li:hover ul li:hover a {
+header .headerContainer ul.nav li:hover ul li:hover a {
   color: white;
 }
-header .flexContainer ul.nav li:hover ul li a {
+header .headerContainer ul.nav li:hover ul li a {
   border: none;
   padding: 1em 2em;
   display: block;
 }
-header .flexContainer a#youtube-popup {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #999;
-  text-transform: capitalize;
-  font-weight: 500;
-  margin-right: 20px;
-}
-header .flexContainer a#youtube-popup img {
-  margin-right: 6px;
-}
-header .flexContainer i {
+header .headerContainer i {
   background: #004A5D;
   border-radius: 50%;
   color: white;
@@ -112,23 +103,72 @@ header .flexContainer i {
   justify-content: center;
   margin-right: 13px;
 }
-header .flexContainer i:hover {
+header .headerContainer i:hover {
   background: #007390;
 }
 
-main {
-  flex-grow: 1;
+footer {
+  color: white;
+  background: #004A5D;
+  padding: 3em 0;
 }
-main textarea#tinyMCE {
-  flex-grow: 1;
-  min-height: 600px;
+footer .footerContainer {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }
-main .container {
-  height: 100%;
-  margin: 80px auto 60px;
+footer .footerContainer h3 {
+  margin: 0;
 }
-main .container .validationAlerts {
-  width: 40%;
+footer .footerContainer a {
+  color: white;
+  text-decoration: none;
+}
+footer .footerContainer .copyright {
+  font-size: 14px;
+  margin-top: 35px;
+}
+
+.fancybox-content .validationError {
+  color: orangered;
+  font-size: 12px;
+}
+.fancybox-content .validationError.hidden {
+  visibility: hidden;
+}
+.fancybox-content input[type=text] {
+  width: 100%;
+  font-size: 20px;
+}
+.fancybox-content input[type=submit], .fancybox-content button.cancelButton {
+  color: white;
+  border: none;
+  font-size: 17px;
+  float: right;
+  margin-top: 20px;
+  padding: 0.4em 1em;
+}
+.fancybox-content input[type=submit]:hover, .fancybox-content button.cancelButton:hover {
+  cursor: pointer;
+}
+.fancybox-content input[type=submit] {
+  background: #F48120;
+}
+.fancybox-content input[type=submit]:hover {
+  background-color: #f69c51;
+}
+.fancybox-content button.cancelButton {
+  background: #31B8EF;
+  margin-right: 10px;
+}
+.fancybox-content button.cancelButton:hover {
+  background-color: #60c8f3;
+}
+.fancybox-content h2 {
+  margin-top: 0;
+}
+
+.validationAlerts {
   background: #ff581a;
   color: white;
   border-radius: 7px;
@@ -136,181 +176,81 @@ main .container .validationAlerts {
   clear: both;
   margin-bottom: 20px;
 }
-main .container .validationAlerts h3 {
+.validationAlerts h3 {
   margin: 0;
 }
-main .container .validationAlerts ul {
+.validationAlerts ul {
   padding: 0;
   margin: 10px 0 0;
 }
-main .container .validationAlerts ul li {
+.validationAlerts ul li {
   list-style-type: none;
   line-height: 2em;
 }
-main .container .smallSearchForm {
-  margin-bottom: 1.5em;
-  text-align: right;
+
+form textarea#textOnlyContent {
+  display: none;
 }
-main .container .smallSearchForm::after {
-  clear: both;
-  content: " ";
-  display: block;
-}
-main .container .smallSearchForm form {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  flex-flow: row;
-  float: right;
-}
-main .container .smallSearchForm form input[type=text] {
+form input[type=text],
+form input[type=email],
+form input[type=password],
+form input#datepicker {
   height: 27px;
-  width: 200px;
-  margin: 0 0 0 10px;
-  font-size: 18px;
-  color: #888;
-  padding-left: 5px;
-}
-main .container .smallSearchForm form input[type=submit] {
-  padding: 0.5em 0.8em;
-  margin: 0;
-}
-main .container .smallSearchForm .advSearch {
-  color: #F48120;
-  font-size: 14px;
-  margin-top: 14px;
-  float: right;
-  clear: right;
-}
-main .container #searchForm {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-template-rows: auto;
-  align-items: center;
-  justify-items: start;
-  grid-gap: 16px 0;
-  width: 80%;
-  margin: 0 auto;
-}
-main .container #searchForm input, main .container #searchForm select {
-  color: #555;
-}
-main .container #searchForm input {
-  border-radius: 4px;
+  width: 100%;
+  text-indent: 5px;
+  border-radius: 3px;
   border: solid 1px gray;
-  font-size: 16px !important;
 }
-main .container #searchForm input#datepicker {
-  padding: 6px 0 6px 8px;
+form input[type=text], form input[type=text] select,
+form input[type=email],
+form input[type=email] select,
+form input[type=password],
+form input[type=password] select,
+form input#datepicker,
+form input#datepicker select {
+  font-size: 17px;
+  color: #444;
 }
-main .container #searchForm select#category {
+form input#datepicker {
+  width: auto;
+}
+form select {
   transform: scale(1.6);
   transform-origin: top left;
   margin-bottom: 7px;
 }
-main .container #searchForm input[type=submit] {
-  justify-self: end;
-}
-main .container .actionItems {
-  margin-bottom: 2em;
-}
-main .container .actionItems a {
-  text-decoration: none;
-  margin-right: 15px;
-  color: dimgray;
-  transition: color 0.5s;
-  display: inline-block;
-}
-main .container .actionItems a:hover {
-  color: black;
-}
-main .container form {
-  flex-grow: 1;
-  display: flex;
-  flex-flow: column;
-}
-main .container form input[type=submit] {
+form input[type=submit],
+form button[type=submit] {
   background-color: #31B8EF;
   border: none !important;
-  border-radius: 0 !important;
-  padding: 0.5em 1.8em;
-  font-size: 16px !important;
   color: white !important;
-  margin-top: 25px;
+  margin: 25px 0;
   float: right;
-  align-self: flex-end;
   transition: background-color 0.5s;
+  box-sizing: content-box;
+  border-radius: 0;
+  font-size: 16px;
+  height: 29px;
 }
-main .container form input[type=submit]:hover {
+form input[type=submit]:hover,
+form button[type=submit]:hover {
   cursor: pointer;
   background-color: #60c8f3;
 }
-main .container form textarea#textOnlyContent {
-  display: none;
+form input[type=checkbox],
+form input[type=radio] {
+  transform: scale(1.4);
 }
-main .container form input#title, main .container form #mceu_16 {
-  margin: 10px 0 20px;
-}
-main .container form input#title#title, main .container form #mceu_16#title {
-  font-size: 22px;
-  width: 100%;
-  padding: 6px 0 6px 8px;
-  border-radius: 4px;
-  border: solid 1px gray;
-}
-main section.form-group {
-  margin-bottom: 20px;
-}
-main .articleContainer {
-  clear: both;
-}
-main .articleContainer .metaDataContainer {
-  background: lightgray;
-  border-radius: 5px;
-  border: solid 1px dimgray;
-  padding: 1em;
-  margin: 0 0 2em;
-}
-main .articleContainer h3 {
-  font-size: 20px;
-  margin: 0;
-  color: dimgray;
-}
-main .articleContainer h3 > .answer {
-  font-weight: normal;
-}
-main .articleContainer .singleArticleDetails {
+form label {
   display: flex;
-  width: 100%;
-  margin-top: 1em;
+  align-items: center;
+  margin: 1em 0 1em;
 }
-main .articleContainer .singleArticleDetails > .item {
-  flex-grow: 1;
+form .label {
+  font-size: 1.4em;
+  margin-right: 2em;
 }
-main .articleContainer .singleArticleDetails > .item.categories {
-  display: flex;
-}
-main .articleContainer .singleArticleDetails > .item.categories .categoryList {
-  padding-left: 30px;
-  color: dimgray;
-  margin: 3px 0 0;
-}
-main .articleContainer .singleArticleBorder {
-  border: solid dimgray 1px;
-  padding: 2em;
-  min-height: 70vw;
-}
-main .articleContainer .singleArticleBorder .title {
-  margin-top: 0;
-}
-main ul.formCheckbox.featured {
-  align-self: flex-start;
-  padding: 0;
-}
-main ul.formCheckbox.featured input {
-  margin-left: 20px !important;
-}
-main ul.formCheckbox.categoryList {
+form ul.formCheckbox {
   background: lightgray;
   padding: 1.4em;
   display: grid;
@@ -318,229 +258,150 @@ main ul.formCheckbox.categoryList {
   border-radius: 3px;
   border: solid dimgray 1px;
 }
-main ul.formCheckbox li {
+form ul.formCheckbox li {
   list-style-type: none;
   padding-right: 51px;
 }
-main ul.formCheckbox label {
-  display: inline-block;
-  margin-bottom: 10px;
+form ul.formCheckbox li label {
   display: flex;
-  margin-bottom: 10px;
-  width: 100%;
+  align-items: center;
+  margin: 0.4em 0;
 }
-main ul.formCheckbox label input[type=checkbox],
-main ul.formCheckbox label input[type=radio] {
+form ul.formCheckbox li label .checkboxLabel {
+  font-size: 1.2em;
+}
+form ul.formCheckbox li label input {
   margin-left: auto;
-  transform: scale(1.4);
 }
-main a {
-  display: inline-block;
+form textarea#tinyMCE {
+  min-height: 600px;
 }
-main a.seeMore {
-  color: #31B8EF;
+form.smallSearchForm {
+  display: flex;
+  width: 50%;
+  float: right;
+  align-items: center;
 }
-main a.seeMore:hover {
-  text-decoration: underline;
+form.smallSearchForm ~ .advSearch {
+  color: #F48120;
+  float: right;
+  clear: right;
 }
-main .collatedGrid > div {
-  padding: 1em;
-}
-main .collatedGridHeader, main .collatedGrid {
-  grid-template-columns: 1fr 1fr 0.7fr 1fr;
-}
-main .collatedGridHeader.loggedIn, main .collatedGrid.loggedIn {
-  grid-template-columns: 1fr 1fr 1fr 0.7fr 1fr;
-}
-main .collatedGridHeader {
-  display: grid;
-  grid-template-rows: auto;
-  height: 40px;
-  color: white;
+form.smallSearchForm ~ .clear {
   clear: both;
 }
-main .collatedGridHeader.categories {
+form#searchForm {
+  width: 80%;
+}
+
+.collatedGridHeader,
+.collatedGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.7fr 1fr;
+}
+.collatedGridHeader.loggedIn,
+.collatedGrid.loggedIn {
+  grid-template-columns: 1fr 1fr 1fr 0.7fr 1fr;
+}
+
+.collatedGridHeader {
+  color: white;
+}
+.collatedGridHeader.categories {
   grid-template-columns: 1fr 1fr 1fr;
 }
-main .collatedGridHeader > div {
-  padding: 0;
+.collatedGridHeader > div {
   background-color: #004A5D;
   display: flex;
   align-items: center;
-  padding: 0 1em;
+  padding: 0 0.4em;
 }
-main .collatedGridHeader > div .sortArrow {
-  margin-left: auto;
+.collatedGridHeader > div .sortArrow {
+  margin-right: 0.6em;
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr;
-  width: 20px;
-  height: 40px;
-  z-index: 2;
 }
-main .collatedGridHeader > div .sortArrow.down .upArrow {
-  border-bottom-color: gray;
-}
-main .collatedGridHeader > div .sortArrow.down .downArrow {
-  border-top-color: lightgray;
-}
-main .collatedGridHeader > div .sortArrow.up .upArrow {
-  border-bottom-color: lightgray;
-}
-main .collatedGridHeader > div .sortArrow.up .downArrow {
-  border-top-color: gray;
-}
-main .collatedGridHeader > div .sortArrow .upArrow, main .collatedGridHeader > div .sortArrow .downArrow {
-  height: 0;
-  width: 0;
+.collatedGridHeader > div .sortArrow .upArrow,
+.collatedGridHeader > div .sortArrow .downArrow {
   border-right-color: transparent;
   border-left-color: transparent;
   border-style: solid;
   border-width: 9px;
   width: 2px;
 }
-main .collatedGridHeader > div .sortArrow .upArrow {
+.collatedGridHeader > div .sortArrow .upArrow {
   border-top-color: transparent;
   border-bottom-color: gray;
   margin-bottom: 4px;
 }
-main .collatedGridHeader > div .sortArrow .downArrow {
+.collatedGridHeader > div .sortArrow .downArrow {
   border-bottom-color: transparent;
   border-top-color: gray;
 }
-main .collatedGrid {
-  display: grid;
-  grid-template-rows: auto;
+.collatedGridHeader > div .sortArrow.down .upArrow {
+  border-bottom-color: gray;
 }
-main .collatedGrid.categories {
+.collatedGridHeader > div .sortArrow.down .downArrow {
+  border-top-color: lightgray;
+}
+.collatedGridHeader > div .sortArrow.up .upArrow {
+  border-bottom-color: lightgray;
+}
+.collatedGridHeader > div .sortArrow.up .downArrow {
+  border-top-color: gray;
+}
+
+.collatedGrid > div {
+  padding: 1em 1em 1em 1.6em;
+}
+.collatedGrid.categories {
   grid-template-columns: 1fr 1fr 1fr;
 }
-main .collatedGrid .oddRow {
+.collatedGrid .oddRow {
   background: lightgray;
 }
-main .collatedGrid .titleRow a {
+.collatedGrid .titleRow a {
   color: #004A5D;
-}
-main .collatedGrid .actionItems {
-  margin-bottom: 0;
-}
-main .collatedGrid .actionItems a#deleteArticle, main .collatedGrid .actionItems a#editArticle {
-  color: dimgray;
+  font-size: 1.1em;
   text-decoration: none;
-  transition: color 0.5s;
 }
-main .collatedGrid .actionItems a#deleteArticle:hover, main .collatedGrid .actionItems a#editArticle:hover {
-  color: black;
+.collatedGrid .titleRow a:hover {
+  text-decoration: underline;
 }
-main .collatedGrid .actionItems a#editArticle {
-  margin-left: 10px;
-}
-main .collatedGrid ul.categories {
+.collatedGrid ul.categories {
   margin: 0;
   padding: 0;
 }
-main .collatedGrid ul.categories li {
-  background: transparent;
+.collatedGrid ul.categories li {
   list-style-type: none;
 }
-main .collatedGrid ul.categories li:nth-child(n+2) {
+.collatedGrid ul.categories li:nth-child(n+2) {
   display: none;
 }
-main .collatedGrid ul.categories li a.seeMore::after {
+.collatedGrid ul.categories li a.seeMore::after {
   content: " See More";
   color: #31B8EF;
   margin-left: 8px;
   font-size: 13px;
 }
-main .collatedGrid ul.categories.showAll {
+.collatedGrid ul.categories.showAll {
   position: absolute;
   background: white;
   padding: 16px 10px !important;
   box-shadow: 3px 3px 3px 0px dimgray;
   margin: -16px 0 0 -10px;
 }
-main .collatedGrid ul.categories.showAll li {
+.collatedGrid ul.categories.showAll li {
   display: block;
   margin-bottom: 10px;
 }
-main .collatedGrid ul.categories.showAll li:last-of-type {
+.collatedGrid ul.categories.showAll li:last-of-type {
   margin-bottom: 0;
 }
-main .collatedGrid ul.categories.showAll li a.seeMore::after {
+.collatedGrid ul.categories.showAll li a.seeMore::after {
   content: "See Less";
 }
-main .authContainer {
-  width: 80%;
-  margin: 0 auto;
-  max-width: 500px;
-}
-main .authContainer h2 {
-  color: #444;
-}
-main .authContainer form.authForm {
-  display: block;
-}
-main .authContainer form.authForm * {
-  box-sizing: border-box;
-}
-main .authContainer form.authForm label {
-  display: block;
-  color: dimgray;
-}
-main .authContainer form.authForm input {
-  font-size: 16px;
-  border: solid 1px dimgray;
-  border-radius: 5px;
-  padding: 7px 0 7px 9px;
-  width: 100%;
-  margin: 4px 0 20px;
-}
-main .authContainer form.authForm .form-check {
-  display: flex;
-  align-items: center;
-}
-main .authContainer form.authForm .form-check input {
-  width: auto;
-  margin: 0 4px 0 0;
-}
-main .authContainer form.authForm button[type=submit] {
-  background: #004A5D;
-  border: none;
-  font-size: 1.1em;
-  color: white;
-  padding: 0.5em 1.5em;
-  margin: 0.5em 0;
-}
-main .authContainer form.authForm button[type=submit]:hover {
-  background: #007390;
-  cursor: pointer;
-}
-main .authContainer form.authForm .optionLinks {
-  margin-top: 10px;
-}
-main .authContainer form.authForm .optionLinks a {
-  text-decoration: none;
-  color: #004A5D;
-  margin-right: 20px;
-}
-main .authContainer form.authForm .optionLinks a:hover {
-  text-decoration: underline;
-}
-main .authContainer form.authForm .alert {
-  color: #F48120;
-  display: block;
-  font-size: 1.2em;
-}
-main .authContainer form.authForm .invalid-feedback {
-  color: #F48120;
-}
-main .authContainer ul.loggedInLinks li {
-  line-height: 2em;
-}
-main .authContainer ul.loggedInLinks li a {
-  color: #004A5D;
-}
-main .featuredArticlesGrid {
+
+.featuredArticlesGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 180px));
   grid-template-rows: auto;
@@ -550,7 +411,7 @@ main .featuredArticlesGrid {
   border: solid 1px dimgray;
   margin-bottom: 4em;
 }
-main .featuredArticlesGrid .featuredArticle {
+.featuredArticlesGrid .featuredArticle {
   position: relative;
   width: 100%;
   display: flex;
@@ -558,57 +419,58 @@ main .featuredArticlesGrid .featuredArticle {
   align-items: center;
   padding: 1em;
 }
-main .featuredArticlesGrid .featuredArticle h2 {
+.featuredArticlesGrid .featuredArticle h2 {
   text-decoration: none;
   text-align: center;
   margin: 5px 0 5px;
   color: dimgray;
   font-size: 16px;
 }
-main .featuredArticlesGrid .featuredArticle iframe {
+.featuredArticlesGrid .featuredArticle iframe {
   width: 100%;
   min-height: 210px;
   background: white;
   border: solid 1px dimgray;
   border-radius: 4px;
 }
-main .featuredArticlesGrid .featuredArticle a.clickableLink {
+.featuredArticlesGrid .featuredArticle a.clickableLink {
   position: absolute;
   height: 100%;
   width: 100%;
   top: 0;
   transition: background 0.5s;
 }
-main .featuredArticlesGrid .featuredArticle a.clickableLink:hover {
+.featuredArticlesGrid .featuredArticle a.clickableLink:hover {
   background: rgba(12, 12, 12, 0.2);
 }
-main .articleGUI .folderPath {
+
+.articleGUI .folderPath {
   background: lightgray;
   padding: 0.7em;
   display: flex;
   align-items: center;
 }
-main .articleGUI .folderPath a:hover {
+.articleGUI .folderPath a:hover {
   text-decoration: none;
 }
-main .articleGUI .folderPath i {
+.articleGUI .folderPath i {
   margin: 0 12px;
 }
-main .articleGUI .folderPath > * {
+.articleGUI .folderPath > * {
   color: #333;
 }
-main .articleGUI ul {
+.articleGUI ul {
   display: flex;
   align-items: center;
   padding: 0;
 }
-main .articleGUI ul li.fileOrFolder {
+.articleGUI ul li.fileOrFolder {
   list-style-type: none;
   display: flex;
   flex-flow: column;
   align-items: center;
 }
-main .articleGUI ul li.fileOrFolder .fa-file, main .articleGUI ul li.fileOrFolder .fa-folder {
+.articleGUI ul li.fileOrFolder .fa-file, .articleGUI ul li.fileOrFolder .fa-folder {
   width: 136px;
   height: 127px;
   box-sizing: border-box;
@@ -616,65 +478,71 @@ main .articleGUI ul li.fileOrFolder .fa-file, main .articleGUI ul li.fileOrFolde
   align-items: center;
   justify-content: center;
 }
-main .articleGUI ul li.fileOrFolder .fa-file:hover, main .articleGUI ul li.fileOrFolder .fa-folder:hover {
+.articleGUI ul li.fileOrFolder .fa-file:hover, .articleGUI ul li.fileOrFolder .fa-folder:hover {
   cursor: pointer;
 }
-main .articleGUI ul li.fileOrFolder .itemTitle {
+.articleGUI ul li.fileOrFolder .itemTitle {
   padding: 5px 9px;
   border-radius: 5px;
 }
-main .articleGUI ul li.fileOrFolder .fa-file {
+.articleGUI ul li.fileOrFolder .fa-file {
   color: dimgray;
   font-size: 6em;
 }
-main .articleGUI ul li.fileOrFolder .fa-file + .itemTitle {
+.articleGUI ul li.fileOrFolder .fa-file + .itemTitle {
   margin-top: 10px;
 }
-main .articleGUI ul li.fileOrFolder .fa-folder {
+.articleGUI ul li.fileOrFolder .fa-folder {
   font-size: 6.5em;
 }
-main .articleGUI ul li.fileOrFolder.selected .fa-file, main .articleGUI ul li.fileOrFolder.selected .fa-folder {
+.articleGUI ul li.fileOrFolder.selected .fa-file, .articleGUI ul li.fileOrFolder.selected .fa-folder {
   background: #EDEDED;
 }
-main .articleGUI ul li.fileOrFolder.selected .itemTitle {
+.articleGUI ul li.fileOrFolder.selected .itemTitle {
   background: dodgerblue;
   display: inline-block !important;
   color: white;
 }
-main .articleGUI ul li.fileOrFolder ul {
+.articleGUI ul li.fileOrFolder ul {
   display: none;
 }
-main .articleTree li {
+
+.articleTree ul.noFolder {
+  padding: 0;
+}
+.articleTree li {
   list-style-type: none;
 }
-main .articleTree li .fa-minus-square,
-main .articleTree li .fa-plus-square {
+.articleTree li .fa-minus-square,
+.articleTree li .fa-plus-square {
   color: dimgray;
   transition: color 0.5s;
 }
-main .articleTree li .fa-minus-square:hover,
-main .articleTree li .fa-plus-square:hover {
+.articleTree li .fa-minus-square:hover,
+.articleTree li .fa-plus-square:hover {
   cursor: pointer;
   color: black;
 }
-main .articleTree li .fa-plus-square {
+.articleTree li .fa-plus-square {
   display: none;
 }
-main .articleTree li .fa-folder {
+.articleTree li .fa-folder {
   font-size: 1.5em;
 }
-main .articleGUI .fa-folder,
-main .articleTree .fa-folder {
+
+.articleGUI .fa-folder,
+.articleTree .fa-folder {
   color: dodgerblue;
 }
-main ul.fileManagerView {
+
+ul.fileManagerView {
   display: inline-flex;
   padding: 0;
 }
-main ul.fileManagerView li {
+ul.fileManagerView li {
   list-style-type: none;
 }
-main ul.fileManagerView li a {
+ul.fileManagerView li a {
   text-transform: uppercase;
   color: #004A5D;
   padding: 0 1em;
@@ -682,73 +550,12 @@ main ul.fileManagerView li a {
   font-size: 18px;
   text-decoration: none;
 }
-main ul.fileManagerView li a.active {
+ul.fileManagerView li a.active {
   color: #F48120;
 }
-main ul.fileManagerView li:first-of-type a {
+ul.fileManagerView li:first-of-type a {
   padding-left: 0;
   border-left: none;
-}
-
-.fancybox-container #add-category .catNameError {
-  color: orangered;
-}
-.fancybox-container #add-category .catNameError.hide {
-  display: none;
-}
-
-footer {
-  color: white;
-  background: #004A5D;
-  padding: 3em 0;
-}
-footer .footerFlex {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-}
-footer .footerFlex h3 {
-  margin: 0;
-}
-footer .footerFlex a {
-  color: white;
-  text-decoration: none;
-}
-footer .footerFlex .copyright {
-  font-size: 14px;
-  margin-top: 35px;
-}
-
-.fancybox-container input[type=text] {
-  width: 100%;
-  font-size: 20px;
-}
-.fancybox-container input[type=submit], .fancybox-container button.cancelButton {
-  color: white;
-  border: none;
-  font-size: 17px;
-  float: right;
-  margin-top: 20px;
-  padding: 0.4em 1em;
-}
-.fancybox-container input[type=submit]:hover, .fancybox-container button.cancelButton:hover {
-  cursor: pointer;
-}
-.fancybox-container input[type=submit] {
-  background: #F48120;
-}
-.fancybox-container input[type=submit]:hover {
-  background-color: #f69c51;
-}
-.fancybox-container button.cancelButton {
-  background: #31B8EF;
-  margin-right: 10px;
-}
-.fancybox-container button.cancelButton:hover {
-  background-color: #60c8f3;
-}
-.fancybox-container h2 {
-  margin-top: 0;
 }
 
 /*# sourceMappingURL=main.css.map */

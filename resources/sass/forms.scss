@@ -1,0 +1,150 @@
+
+@import 'colors.scss';
+
+.validationAlerts {
+    background: lighten(orangered,5%);
+    color: white;
+    border-radius: 7px;
+    padding: 1em;
+    clear: both;
+    margin-bottom: 20px;
+
+    h3{
+        margin: 0;
+    }
+
+    ul{
+        padding: 0;
+        margin: 10px 0 0;
+
+        li{
+            list-style-type: none;
+            line-height: 2em;
+        }
+    }
+}
+
+form{
+   
+     textarea#textOnlyContent{
+        display: none;
+    }
+
+    input[type=text], 
+    input[type=email],
+    input[type=password],
+    input#datepicker{
+        height: 27px;
+        width: 100%;
+        text-indent: 5px;
+        border-radius: 3px;
+        border: solid 1px gray;
+
+        &,select{
+            font-size: 17px;
+            color: #444;
+        }
+    }
+
+    input#datepicker{
+        width: auto;
+    }
+
+    select{
+        transform: scale(1.6);
+        transform-origin: top left;
+        margin-bottom: 7px;
+    }
+
+    input[type=submit],
+    button[type=submit]{
+        background-color: $blue;
+        border: none !important;
+        color: white !important;
+        margin: 25px 0;
+        float: right;
+        transition: background-color 0.5s;
+        box-sizing: content-box;
+        border-radius: 0;
+        font-size: 16px;
+        height: 29px;
+
+        &:hover{
+            cursor:pointer;
+            background-color:lighten($blue, 10%);
+        }
+    }
+
+    input[type=checkbox],
+    input[type=radio]{
+        transform: scale(1.4);
+    }
+
+    label {
+        display: flex;
+        align-items: center;
+        margin: 1em 0 1em;
+    }
+
+    .label{
+        font-size: 1.4em;
+        margin-right: 2em;
+    }
+
+    ul.formCheckbox{        
+        background: lightgray;
+        padding: 1.4em;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        border-radius: 3px;
+        border:solid dimgray 1px;    
+
+        li{
+            list-style-type: none;
+            padding-right: 51px;
+
+            label{
+                display: flex;
+                align-items: center;
+                margin: .4em 0;
+
+                .checkboxLabel{
+                    font-size: 1.2em;
+                }
+
+                input{
+                    margin-left: auto;
+                }
+            }
+        }
+    }
+
+    textarea#tinyMCE {
+        min-height: 600px;
+    }  
+
+    &.smallSearchForm{
+        display: flex;
+        width: 50%;
+        float: right;
+        align-items: center;
+
+        & ~ .advSearch{
+            color:$orange;
+            float: right;
+            clear: right;
+        }
+
+        & ~ .clear{
+            clear: both;
+        }
+    }
+
+    &#searchForm {
+        width: 80%;
+
+    }
+}
+
+
+

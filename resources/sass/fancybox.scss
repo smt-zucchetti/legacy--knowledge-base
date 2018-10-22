@@ -1,0 +1,48 @@
+@import 'colors.scss';
+
+.fancybox-content{
+    
+    .validationError{
+        color: orangered; 
+        font-size: 12px;
+
+        &.hidden{
+            visibility: hidden;
+        }
+    }
+
+    input[type=text]{
+        width: 100%;
+        font-size: 20px;
+    }
+
+    input[type=submit], button.cancelButton{
+        color: white;
+        border: none;
+        font-size: 17px;
+        float: right;
+        margin-top: 20px;
+        padding: .4em 1em;
+      
+        &:hover{
+          cursor:pointer;
+        }
+    }
+    input[type=submit]{
+        background: $orange;
+        &:hover{
+          background-color:lighten($orange, 10%);
+        }
+    }
+    button.cancelButton{
+        background: $blue;
+        margin-right:10px;
+        &:hover{
+            background-color:lighten($blue, 10%);
+        }
+    }
+
+    h2 {
+        margin-top: 0;
+    }
+}

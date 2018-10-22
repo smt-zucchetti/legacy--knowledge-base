@@ -1,0 +1,25 @@
+@import 'colors.scss';
+
+footer{
+    color:white;
+    background: $turquoise;
+    padding: 3em 0;
+
+    .footerContainer{
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+
+        h3{
+            margin: 0;
+        }
+        a{
+            color: white;
+            text-decoration: none;
+        }
+        .copyright {
+            font-size: 14px;
+            margin-top: 35px;
+        }
+    }
+}

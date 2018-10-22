@@ -1,0 +1,137 @@
+@import 'colors.scss';
+
+
+.collatedGridHeader, 
+.collatedGrid{
+    display: grid;
+    grid-template-columns: 1fr 1fr .7fr 1fr;
+
+    &.loggedIn{
+        grid-template-columns: 1fr 1fr 1fr .7fr 1fr;            
+    }
+}
+
+.collatedGridHeader {
+    color:white;
+
+    &.categories{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    & > div{
+        background-color: $turquoise;
+        display: flex;
+        align-items: center;
+        padding:0 0.4em;
+
+        .sortArrow{
+            margin-right: .6em;
+            display: grid;
+
+            .upArrow,
+            .downArrow{
+                border-right-color: transparent;
+                border-left-color: transparent;
+                border-style: solid;
+                border-width: 9px;
+                width: 2px;
+            }
+            .upArrow{
+                border-top-color: transparent;
+                border-bottom-color: lighten(black,50%);
+                margin-bottom: 4px;
+            }
+            .downArrow{
+                border-bottom-color: transparent;
+                border-top-color: lighten(black,50%);
+            }
+
+            &.down{
+                .upArrow{
+                    border-bottom-color:lighten(black,50%);
+                }
+                .downArrow{
+                    border-top-color:lightgray;
+                }
+            }
+
+            &.up{
+                .upArrow{
+                    border-bottom-color:lightgray;
+                }
+                .downArrow{
+                    border-top-color:lighten(black,50%);
+                }
+            }
+        }
+    }
+}
+
+
+
+.collatedGrid {
+   
+    & > div{
+        padding: 1em 1em 1em 1.6em;
+    }
+
+    &.categories{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .oddRow{
+        background: lightgray;
+    }
+
+    .titleRow a{
+        color: $turquoise;
+        font-size: 1.1em;
+        text-decoration: none;
+
+        &:hover{
+            text-decoration: underline;
+        }
+    }
+
+    ul.categories{
+        margin: 0;
+        padding: 0;
+
+        li{
+            list-style-type: none;
+
+            &:nth-child(n+2){
+                display: none;
+            }
+
+            a.seeMore::after {
+                content: " See More";
+                color: $blue;
+                margin-left: 8px;
+                font-size: 13px;
+            }
+        }
+
+        &.showAll{
+            position: absolute;
+            background: white;
+            padding: 16px 10px !important;
+            box-shadow: 3px 3px 3px 0px dimgray;
+            margin: -16px 0 0 -10px;
+
+            li{
+                display: block;
+                margin-bottom: 10px;
+
+                &:last-of-type{
+                    margin-bottom:0;
+                }
+
+                a.seeMore::after{
+                    content:"See Less";
+                }
+            }
+        }
+
+    }
+}

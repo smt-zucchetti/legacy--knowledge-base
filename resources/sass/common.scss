@@ -1,0 +1,40 @@
+@import 'colors.scss';
+
+/* Sticky Footer */
+html,body{
+    height:100%;
+    margin:0;
+}
+body{
+    display: flex;
+    flex-flow: column;
+    font-family: Cabin, sans-serif;
+    overflow: auto;
+}
+main{
+	flex-grow: 1;
+}
+
+
+header, main, footer{ 
+  .container{
+      max-width:1100px;
+      width:80%;
+      margin:0 auto;
+    }
+}
+
+.actionItems{
+    a{
+        text-decoration: none;
+        margin-right: 15px;
+        color: dimgray;
+        transition: color .5s;
+        display: inline-block;
+
+
+        &:hover{
+            color:black;
+        }
+    }
+}

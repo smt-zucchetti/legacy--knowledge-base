@@ -1,0 +1,35 @@
+/* Sticky Footer */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-flow: column;
+  font-family: Cabin, sans-serif;
+  overflow: auto;
+}
+
+main {
+  flex-grow: 1;
+}
+
+header .container, main .container, footer .container {
+  max-width: 1100px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.actionItems a {
+  text-decoration: none;
+  margin-right: 15px;
+  color: dimgray;
+  transition: color 0.5s;
+  display: inline-block;
+}
+.actionItems a:hover {
+  color: black;
+}
+
+/*# sourceMappingURL=common.css.map */
