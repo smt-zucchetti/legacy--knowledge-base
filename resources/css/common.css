@@ -1,6 +1,6 @@
 /* Sticky Footer */
 html, body {
-  height: 100%;
+  height: 100% !important;
   margin: 0;
 }
 
@@ -13,6 +13,7 @@ body {
 
 main {
   flex-grow: 1;
+  margin-top: 60px;
 }
 
 header .container, main .container, footer .container {
@@ -30,6 +31,9 @@ header .container, main .container, footer .container {
 }
 .actionItems a:hover {
   color: black;
+}
+.actionItems.actionItemsHeader {
+  margin-bottom: 30px;
 }
 
 /*# sourceMappingURL=common.css.map */

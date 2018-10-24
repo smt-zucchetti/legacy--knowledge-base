@@ -2,7 +2,7 @@
 
 /* Sticky Footer */
 html,body{
-    height:100%;
+    height:100% !important;
     margin:0;
 }
 body{
@@ -13,6 +13,7 @@ body{
 }
 main{
 	flex-grow: 1;
+  margin-top: 60px;
 }
 
 
@@ -36,5 +37,8 @@ header, main, footer{
         &:hover{
             color:black;
         }
+    }
+    &.actionItemsHeader{
+      margin-bottom: 30px;
     }
 }

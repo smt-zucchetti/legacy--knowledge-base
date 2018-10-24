@@ -1,6 +1,6 @@
 /* Sticky Footer */
 html, body {
-  height: 100%;
+  height: 100% !important;
   margin: 0;
 }
 
@@ -13,6 +13,7 @@ body {
 
 main {
   flex-grow: 1;
+  margin-top: 60px;
 }
 
 header .container, main .container, footer .container {
@@ -30,6 +31,9 @@ header .container, main .container, footer .container {
 }
 .actionItems a:hover {
   color: black;
+}
+.actionItems.actionItemsHeader {
+  margin-bottom: 30px;
 }
 
 header {
@@ -129,6 +133,9 @@ footer .footerContainer .copyright {
   margin-top: 35px;
 }
 
+.fancybox-content form {
+  min-width: 350px;
+}
 .fancybox-content .validationError {
   color: orangered;
   font-size: 12px;
@@ -303,12 +310,14 @@ form#searchForm {
 .collatedGrid.loggedIn {
   grid-template-columns: 1fr 1fr 1fr 0.7fr 1fr;
 }
+.collatedGridHeader.categories, .collatedGridHeader.folders,
+.collatedGrid.categories,
+.collatedGrid.folders {
+  grid-template-columns: 1fr 1fr 1fr;
+}
 
 .collatedGridHeader {
   color: white;
-}
-.collatedGridHeader.categories {
-  grid-template-columns: 1fr 1fr 1fr;
 }
 .collatedGridHeader > div {
   background-color: #004A5D;
@@ -352,9 +361,6 @@ form#searchForm {
 
 .collatedGrid > div {
   padding: 1em 1em 1em 1.6em;
-}
-.collatedGrid.categories {
-  grid-template-columns: 1fr 1fr 1fr;
 }
 .collatedGrid .oddRow {
   background: lightgray;

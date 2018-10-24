@@ -1,3 +1,6 @@
+.fancybox-content form {
+  min-width: 350px;
+}
 .fancybox-content .validationError {
   color: orangered;
   font-size: 12px;

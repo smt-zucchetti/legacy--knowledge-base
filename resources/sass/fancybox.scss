@@ -2,6 +2,10 @@
 
 .fancybox-content{
     
+    form{
+        min-width: 350px;
+    }
+
     .validationError{
         color: orangered; 
         font-size: 12px;

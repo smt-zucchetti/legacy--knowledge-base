@@ -9,14 +9,15 @@
     &.loggedIn{
         grid-template-columns: 1fr 1fr 1fr .7fr 1fr;            
     }
+
+    &.categories,
+    &.folders{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }
 
 .collatedGridHeader {
     color:white;
-
-    &.categories{
-        grid-template-columns: 1fr 1fr 1fr;
-    }
 
     & > div{
         background-color: $turquoise;
@@ -73,10 +74,6 @@
    
     & > div{
         padding: 1em 1em 1em 1.6em;
-    }
-
-    &.categories{
-        grid-template-columns: 1fr 1fr 1fr;
     }
 
     .oddRow{

@@ -7,12 +7,14 @@
 .collatedGrid.loggedIn {
   grid-template-columns: 1fr 1fr 1fr 0.7fr 1fr;
 }
+.collatedGridHeader.categories, .collatedGridHeader.folders,
+.collatedGrid.categories,
+.collatedGrid.folders {
+  grid-template-columns: 1fr 1fr 1fr;
+}
 
 .collatedGridHeader {
   color: white;
-}
-.collatedGridHeader.categories {
-  grid-template-columns: 1fr 1fr 1fr;
 }
 .collatedGridHeader > div {
   background-color: #004A5D;
@@ -56,9 +58,6 @@
 
 .collatedGrid > div {
   padding: 1em 1em 1em 1.6em;
-}
-.collatedGrid.categories {
-  grid-template-columns: 1fr 1fr 1fr;
 }
 .collatedGrid .oddRow {
   background: lightgray;
