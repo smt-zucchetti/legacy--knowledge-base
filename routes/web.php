@@ -25,8 +25,6 @@ Route::get('/updateArticle/{articleId}', 'ArticleController@updateArticle');
 
 Route::post('/deleteArticle/{articleId}', 'ArticleController@deleteArticle');
 Route::get('fullPageArticle/{articleId}', 'ArticleController@fullPageArticle');
-Route::get('/sortArticles/{param}/{dir}', 'ArticleController@sortArticles');
-Route::get('/sortArticles/{param}/{dir}/{searchTerm}', 'ArticleController@sortArticles');
 
 Route::get('/readFolders', 'FolderController@readFolders');
 Route::post('/createFolder', 'FolderController@createFolder');
@@ -37,7 +35,7 @@ Route::post('/createCategory', 'CategoryController@createCategory');
 Route::get('/readCategories', 'CategoryController@readCategories');
 Route::post('/updateCategory/{categoryID}', 'CategoryController@updateCategory');
 Route::post('/deleteCategory/{categoryID}', 'CategoryController@deleteCategory');
-Route::get('/sortCategories/{param}/{dir}', 'CategoryController@sortCategories');
+
 
 
 Route::post('/searchArticles', 'ArticleController@searchArticles');
@@ -45,6 +43,12 @@ Route::post('/searchArticles', 'ArticleController@searchArticles');
 Route::get('/search', 'SearchController@search');
 Route::post('/search', 'SearchController@search');
 
+
+
+Route::get('/sortArticles/{param}/{dir}', 'SortController@sortArticles');
+Route::get('/sortArticles/{param}/{dir}/{searchTerm}', 'SortController@sortArticles');
+Route::get('/sortCategories/{param}/{dir}', 'SortController@sortCategories');
+Route::get('/sortFolders/{param}/{dir}', 'SortController@sortFolders');
 
 
 Auth::routes();
