@@ -33,8 +33,20 @@ class FolderController extends Controller
  	public function readFolders(){
  		if (Auth::user()){
 
- 			$folders = DB::table('Folders')->orderBy('parentId', 'DESC')->get();
+ 			$folders = DB::table('Folders as f')
+		 		->leftJoin('Articles as a', 'f.id', '=', 'a.folderId')
+	            ->select(array(
+			            	'f.name', 'f.id', 'f.parentId', 'f.dateCreated',       			
+	            			DB::raw('group_concat(a.Title) as articleTitles'), 
+	            			DB::raw('group_concat(a.ID) as articleIds')
+	            		))
+	            ->where('a.deleted', '=', 0)
+	            ->orWhere('a.deleted', '=', null)
+	           	->groupBy('f.name','f.id')->get();
+
  			$folderz = clone $folders;
+
+ 			//dd($folders);
 
  			$folderHierarchy = $this->__createFolderHierarchy($folders);
  			//To do: fix object cloning issue

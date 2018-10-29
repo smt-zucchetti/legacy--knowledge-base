@@ -41,7 +41,7 @@
 			<div style="display: none;" id="deleteFolder-{{$folder->id}}">
 				<form method="post" action="<?php echo url('/deleteFolder/'.$folder->id);?>">
 					@csrf
-					<p>Are you sure you want to delete this folder? It contains the following folders: <?php print_r($folder->childIds); ?></p>
+					<p>Are you sure you want to delete this folder? It contains the following folders: <?php print_r($folder->children); ?></p>
 					<h2>Delete Folder "{{$folder->name}}"?</h2>
 					<input type="submit" value="Delete" />
 					<button class="cancelButton" type="button" data-fancybox-close="" >
