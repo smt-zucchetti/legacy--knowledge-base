@@ -54,11 +54,15 @@ header .headerContainer ul.nav {
   padding: 0 2em;
   flex-grow: 1;
   font-weight: 700;
-  justify-content: space-between;
 }
 header .headerContainer ul.nav li {
   list-style-type: none;
   font-size: 0.9em;
+  margin-right: 30px;
+}
+header .headerContainer ul.nav li:last-child {
+  margin-right: 0;
+  margin-left: auto;
 }
 header .headerContainer ul.nav li a {
   text-decoration: none;
@@ -84,6 +88,7 @@ header .headerContainer ul.nav li:hover ul {
 header .headerContainer ul.nav li:hover ul li {
   background: #D6F1FC;
   padding: 0;
+  margin: 0;
 }
 header .headerContainer ul.nav li:hover ul li:hover {
   background: #31B8EF;
@@ -513,27 +518,83 @@ form#searchForm {
   display: none;
 }
 
-.articleTree ul.noFolder {
+.articleTree {
+  display: flex;
+}
+.articleTree .foldersWrapper {
+  width: 30%;
+  overflow-x: scroll;
+}
+.articleTree .foldersWrapper ul.noFolder {
   padding: 0;
 }
-.articleTree li {
-  list-style-type: none;
+.articleTree .foldersWrapper li.folderList {
+  white-space: nowrap;
 }
-.articleTree li .fa-minus-square,
-.articleTree li .fa-plus-square {
+.articleTree .foldersWrapper li.folderList a.collapseExpandAnchor {
+  text-decoration: none;
+}
+.articleTree .foldersWrapper li.folderList a.collapseExpandAnchor .fa-minus-square,
+.articleTree .foldersWrapper li.folderList a.collapseExpandAnchor .fa-plus-square {
   color: dimgray;
   transition: color 0.5s;
+  display: inline-block;
 }
-.articleTree li .fa-minus-square:hover,
-.articleTree li .fa-plus-square:hover {
+.articleTree .foldersWrapper li.folderList a.collapseExpandAnchor .fa-minus-square:hover,
+.articleTree .foldersWrapper li.folderList a.collapseExpandAnchor .fa-plus-square:hover {
   cursor: pointer;
   color: black;
 }
-.articleTree li .fa-plus-square {
+.articleTree .foldersWrapper li.folderList a.collapseExpandAnchor .fa-minus-square.hide,
+.articleTree .foldersWrapper li.folderList a.collapseExpandAnchor .fa-plus-square.hide {
   display: none;
 }
-.articleTree li .fa-folder {
-  font-size: 1.5em;
+.articleTree .foldersWrapper li.folderList a.folder {
+  padding: 2px 8px;
+  text-decoration: none;
+  display: inline-block;
+}
+.articleTree .foldersWrapper li.folderList a.folder.selected {
+  background: darkblue;
+  color: white;
+}
+.articleTree .foldersWrapper li.folderList a.folder .fa-folder {
+  font-size: 30px;
+}
+.articleTree .filesWrapper {
+  width: 70%;
+}
+.articleTree .filesWrapper li.fileList {
+  display: none;
+}
+.articleTree .filesWrapper li.fileList a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: dimgray;
+}
+.articleTree .filesWrapper li.fileList.selected {
+  display: list-item;
+}
+.articleTree .filesWrapper li.fileList li {
+  padding-bottom: 1em;
+}
+.articleTree .filesWrapper li.fileList li .far.fa-file,
+.articleTree .filesWrapper li.fileList li .fas.fa-folder {
+  font-size: 2em;
+  margin-right: 8px;
+}
+.articleTree .foldersWrapper,
+.articleTree .filesWrapper {
+  border: solid 1px black;
+}
+.articleTree .foldersWrapper > ul,
+.articleTree .filesWrapper > ul {
+  padding-left: 10px;
+}
+.articleTree .foldersWrapper > ul li,
+.articleTree .filesWrapper > ul li {
+  list-style-type: none;
 }
 
 .articleGUI .fa-folder,
