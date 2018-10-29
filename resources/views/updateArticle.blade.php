@@ -4,29 +4,17 @@
 
 @section('main')
 
+	@include('partials/actionItems', ['items' => array('back')])
 
-@include('partials/actionItems', ['items' => array('back')])
+	@include('partials/validationErrors')
 
-@include('partials/validationErrors')
+	@include('partials/articleForm', ['action' => 'update'])
 
-<form id="kbForm" method="post" action="<?php echo url('updateArticle/'.$article->ID);?>" class="articleContainer">
-
-	@csrf
-
-	@include('partials/firstPartOfForm')
-	@include('partials/folderFormFields')
-	
-	@include('partials/tinyMceForm', ['article' => $article ] )
-
-	<input type="submit" value="Save" />
-</form>
-
-
-<script>
-	$('#kbForm').submit(function() {
-		var rawText = tinyMCE.activeEditor.getContent({format : 'text'});
-		$('textarea#textOnlyContent').val(rawText);
-	});
-</script>
+	<script>
+		$('#kbForm').submit(function() {
+			var rawText = tinyMCE.activeEditor.getContent({format : 'text'});
+			$('textarea#textOnlyContent').val(rawText);
+		});
+	</script>
 
 @stop
