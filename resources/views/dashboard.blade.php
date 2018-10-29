@@ -12,14 +12,7 @@
 	</div>
 @endif
 
-<div class="smallSearchForm">
-	<form method="post" action="<?php echo url('/searchArticles') ?>" >
-	   @csrf
-	  Search: <input type="text" name="search" value="<?php echo !empty($searchTerm)?$searchTerm:''; ?>" />
-	  <input type="submit" value="Search" />
-	</form>
-	<a class="advSearch" href="<?php echo url('/search') ?>">Advanced Search</a>
-</div>
+@include('partials/searchForm')
 
 @if (!empty($featuredArticles))
 	@include('partials/featuredArticles', ['articles' => $articles ] )
@@ -37,12 +30,8 @@
 
 		$('.collatedGrid').on('click', 'a.seeMore', function(e){
 			e.preventDefault();
-			
 			$(this).closest('ul.categories').toggleClass('showAll');
 		});
-
-		@include('partials/javaScriptSort', ['type' => 'articles'] );
-
 	});	
 </script>
 @stop

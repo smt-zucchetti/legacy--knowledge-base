@@ -1,5 +1,5 @@
 <h1>FEATURED ARTICLES</h1>
-
+<div>
 <!--<div class="featuredArticlesContainer slideshow-container">
     <i class="fas fa-angle-left cycle-prev"></i>
 
@@ -28,7 +28,7 @@
 <script>
   	$.fn.cycle.defaults.autoSelector = ".cycle-slideshow";
 </script>-->
-
+</div>
 <div class="featuredArticlesGrid">
 	@if(count($featuredArticles) === 0)
 		<h2>No results</h2>
