@@ -5,41 +5,11 @@
 @section('main')
 
 
+@include('partials/actionItems', ['items' => array('addCategory')])
 
 
-<div class="actionItems">
-	<div style="display: none;" id="add-category">
-		<form method="post" action="<?php echo url('createCategory');?>">
-			@csrf
-			<h2>Add New Category</h2>
-			<div class="catNameError hide">Category Name is empty</div>
-			<input type="text" name="name" />
-			<input type="submit" value="Create" />
-		</form>
-	</div>
-	<a class="addCategory" data-fancybox data-src="#add-category" href="javascript:;">
-		<i class="fas fa-plus"></i> Add New 
-	</a>
-</div>
+@include('partials/listHeader', ['type' => 'categories'])
 
-
-<div class="collatedGridHeader categories">
-	<div>
-		Name
-		<span class="sortArrow Name">
-			<a href="#" class="upArrow"></a>
-			<a href="#" class="downArrow"></a>
-		</span>
-	</div>
-	<div></div>
-	<div>
-		Date Created
-		<span class="sortArrow down dateCreated">
-			<a href="#" class="upArrow"></a>
-			<a href="#" class="downArrow"></a>
-		</span>
-	</div>
-</div>
 
 <?php $i = 0; ?>
 
@@ -91,13 +61,14 @@
 @endforeach
 </div>
 
+@include('partials/javaScriptSort')
+
 <script>
 	$(document).ready(function(){
-		@include('partials/javaScriptSort', ['type' => 'categories']  );
 
-		$('#add-category > form').submit(function(){
-			if( $(this).find($('input[name=name]')).val() == ""){
-				$('.catNameError').show();	
+		$('#addCategory > form').submit(function(){
+			if( $(this).find('input[name=name]').val() == ""){
+				$('.validationError').removeClass('hidden');	
 
 				return false;
 			}else{
