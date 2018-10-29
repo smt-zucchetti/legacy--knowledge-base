@@ -79,15 +79,6 @@ class CategoryController extends Controller
  		return self::readCategories();
  	}
 
- 	public function sortCategories($param, $dir){
- 		
-
- 		$categories = Categories::orderBy($param, $dir)
- 			->where('deleted', 0)
- 			->get();
- 			
-
-		return view('readCategories')->with(array('categories' => $categories, 'sorted' => array(true, $param, $dir)));
- 	}
+ 	
 }
 
