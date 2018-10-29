@@ -1,55 +1,48 @@
 <h1>ARTICLE GUI</h1>
 
-
-	
-
-	<div class="articleGUI">
-		<div class="folderPath">
-			<a href="{{url('/articleGUI')}}">Home</a>
-			@foreach($pathArr as $key => $path)
-				<i class="fas fa-angle-right"></i>
-				<?php end($pathArr); ?>
-				@if ($key !== key($pathArr))
-					<a href="{{url('/articleGUI')}}/{{$path['id']}}">{{$path['name']}}</a>
-				@else
-					{{$path['name']}}
-				@endif			
-			@endforeach
-		</div>
-
-		@if(!count($folders))
-			<h2>No results</h2>
-		@else
-			<ul>
-				@foreach($folders as $folder)
-						
-						<li class="fileOrFolder" data-id="{{$folder->folderId}}">
-							<i class="fas fa-folder"></i><br>
-							<span class="itemTitle">{{$folder->folderName}}</span>
-							<ul>
-								@foreach(explode(',', $folder->articleTitles) as $articleTitle)
-									<li>{{$articleTitle}}</li>
-								@endforeach
-							</ul>
-						</li>
-
-						<?php
-							$articleTitlesArr = ($folder->articleTitles !== null)?explode(",", $folder->articleTitles):array();
-							$articleIdsArr = ($folder->articleIds !== null)?explode(",", $folder->articleIds):array();
-						?>
-
-						@for($i = 0; $i < count($articleTitlesArr); $i++)
-							<li class="fileOrFolder" data-id="{{$articleIdsArr[$i]}}">
-								<i class="far fa-file"></i><br>
-								<span class="itemTitle">{{$articleTitlesArr[$i]}}</span>
-							</li>
-						@endfor
-				@endforeach
-			</ul>
-		@endif
+<div class="articleGUI">
+	<div class="folderPath">
+		<a href="{{url('articleGUI')}}">Home</a>
+		@foreach($pathArr as $key => $path)
+			<i class="fas fa-angle-right"></i>
+			<?php end($pathArr); ?>
+			@if ($key !== key($pathArr))
+				<a href="{{url('articleGUI')}}/{{$path['id']}}">{{$path['name']}}</a>
+			@else
+				{{$path['name']}}
+			@endif			
+		@endforeach
 	</div>
 
+	@if(!count($results))
+		<h2>No results</h2>
+	@else
+		<ul>
+			@foreach($results['folders'] as $folder)
+				<li class="fileOrFolder" data-id="{{$folder->id}}">
+					<i class="fas fa-folder"></i><br>
+					<span class="itemTitle">{{$folder->name}}</span>
+				</li>
+			@endforeach
 
+			@foreach($results['articles'] as $article)
+				<li class="fileOrFolder" data-id="{{$article->ID}}">
+					<i class="far fa-file"></i><br>
+					<span class="itemTitle">{{$article->Title}}</span>
+				</li>
+			@endforeach
+		</ul>
+	@endif
+</div>
+
+<script>
+	$('.fileManager').on('dblclick', '.fa-file', function(){
+		var fileId = $(this).closest('.fileOrFolder').data('id');
+		var url = 'readArticle/' + fileId;
+
+		location.href = url;
+	});
+</script>
 <script>
 	$(document).ready(function(){
 

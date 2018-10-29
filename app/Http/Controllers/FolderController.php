@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-use App\Articles;
-use App\Categories;
-use App\Articles_Categories;
 use App\Folders;
+use App\Traits\CreateFolderHierarchy;
 
 class FolderController extends Controller
 {
+
+	use CreateFolderHierarchy;
  	
 	public function createFolder(){
 
@@ -30,40 +30,16 @@ class FolderController extends Controller
  		return self::readFolders();
  	}
 
-
- 	public function __createFolderHierarchy($folders){ 		
-
- 		//deep clone array of objects
- 		$foldersCopy = array();
-	    foreach($folders as $key => $value) {
-	        $foldersCopy[$key] = clone $value;
-	    }
-
-	    //reorganize as needed into hierarchy
- 		foreach($foldersCopy as $key => $folderA){
- 			if(!property_exists($folderA, 'childFolders')){
- 				$folderA->childFolders = array();
- 			}
- 			if($folderA->parentId !== null){
- 				foreach($foldersCopy as $folderB){
- 					if($folderA->parentId === $folderB->id){
- 						$folderB->childFolders[] = $folderA;
- 						unset($foldersCopy[$key]);
- 					}
- 				}
- 			}
- 		}
-
- 		return $foldersCopy;
- 	}
-
  	public function readFolders(){
  		if (Auth::user()){
 
- 			$folders = DB::table('Folders')->orderBy('dateCreated', 'DESC')->get();
- 			$folderHierarchy = self::__createFolderHierarchy($folders);
+ 			$folders = DB::table('Folders')->orderBy('parentId', 'DESC')->get();
+ 			$folderz = clone $folders;
 
- 			return view('readFolders', array('folders' => $folders, 'folderHierarchy' => $folderHierarchy, 'sorted' => array(false)) );
+ 			$folderHierarchy = $this->__createFolderHierarchy($folders);
+ 			//To do: fix object cloning issue
+
+ 			return view('readFolders', array('folders' => $folderz, 'folderHierarchy' => $folderHierarchy, 'sorted' => array(false)) );
  		}else{
  			return view('home');
  		}
@@ -89,15 +65,6 @@ class FolderController extends Controller
  		return self::readFolders();
  	}
 
- 	public function sortCategories($param, $dir){
- 		
-
- 		$categories = Categories::orderBy($param, $dir)
- 			->where('deleted', 0)
- 			->get();
- 			
-
-		return view('readCategories')->with(array('categories' => $categories, 'sorted' => array(true, $param, $dir)));
- 	}
+ 	
 }
 

@@ -15,16 +15,20 @@ use App\Articles;
 use App\Categories;
 use App\Articles_Categories;
 use App\Folders;
+use App\Traits\CreateFolderHierarchy;
 
 class ArticleController extends Controller
 {
 
+	use CreateFolderHierarchy;
 
  	public function createArticle(Request $request){
  		if(empty($_POST)){
-	 		$categories = Categories::all();
+	 		$categories = DB::table('Categories')->where('deleted', '=', '0')->get();
 
-	 		 return view('createArticle', array('categories' => $categories));
+	 		$folderHierarchy = $this->__createFolderHierarchy(DB::table('Folders')->get());
+
+	 		return view('createArticle', array('categories' => $categories, 'folderHierarchy' => $folderHierarchy));
 	 	}else{
 
 
@@ -98,17 +102,38 @@ class ArticleController extends Controller
 
  	public function __getArticleTree(){
  		
- 		$results = DB::table('Folders as f')
+ 		$first = DB::table('Folders as f')
 		 		->leftJoin('Articles as a', 'f.id', '=', 'a.folderId')
 	            ->select(array(
-			            	'f.name as folderName','f.id', 'f.parentId',       			
+			            	'f.name', 'f.id', 'f.parentId',       			
 	            			DB::raw('group_concat(a.Title) as articleTitles'), 
 	            			DB::raw('group_concat(a.ID) as articleIds')
 	            		))
-	           	->groupBy('f.name','f.id')
-	            ->get();
+	            ->where('a.deleted', '=', 0)
+	            ->orWhere('a.deleted', '=', null)
+	           	->groupBy('f.name','f.id');
 
-	    $results = self::__createFolderTreeHierarchy($results);
+	    $results = DB::table('Folders as f')
+		 		->rightJoin('Articles as a', 'f.id', '=', 'a.folderId')
+	            ->select(array(
+			            	'f.name', 'f.id', 'f.parentId',
+			            	DB::raw('group_concat(a.Title) as articleTitles'), 
+	            			DB::raw('group_concat(a.ID) as articleIds')
+			            ))
+	           	->where('a.deleted', '=', 0)
+	            ->orWhere('a.deleted', '=', null)
+	           	->groupBy('f.name','f.id')
+	           	->union($first)
+	           	->get();
+
+	    //dd($second);
+
+	    //dd($results);
+
+	    $results = $this->__createFolderHierarchy($results->toArray());
+	    
+	    //$results = self::__createFolderTreeHierarchy($results);
+	    //dd($results);
 
 	    return $results;
 
@@ -132,11 +157,11 @@ class ArticleController extends Controller
 
  	public function readArticleGUI($curFolderId = null){
  	
-		$folders = self::__getArticleGUI($curFolderId);
+		$results = self::__getArticleGUI($curFolderId);
 
 		$pathArr = self::__getFolderPath($curFolderId);
 
-		return view('readArticlesWrapper')->with(array('folders' => $folders, 'curFolderId' => $curFolderId, 'pathArr' => $pathArr, 'type' => 'GUI') );
+		return view('readArticlesWrapper')->with(array('results' => $results, 'curFolderId' => $curFolderId, 'pathArr' => $pathArr, 'type' => 'GUI') );
  	}
 
 
@@ -165,22 +190,23 @@ class ArticleController extends Controller
 
  	public function __getArticleGUI($parentFolderId = null){
 
- 		$results = DB::table('Folders as f')
-		 		->leftJoin('Articles as a', 'f.parentId', '=', 'a.folderId')
-	            ->select(array(
-			            	'f.name as folderName','f.id as folderId',       			
-	            			DB::raw('group_concat(a.Title) as articleTitles'), 
-	            			DB::raw('group_concat(a.ID) as articleIds')
-	            		))
+ 		$articles = DB::table('Articles as a')
+	            ->select('a.Title', 'a.ID')
+	            ->where('a.folderId', '=', $parentFolderId)
+	            ->where('a.deleted', '=', 0)
+	            ->orderBy('a.ID')
+	           	->get();
+	           	
+	    $folders = DB::table('Folders as f')
 	            ->where('f.parentId', '=', $parentFolderId)
-	            ->orderBy('f.id', 'DESC')
-	           	->groupBy('f.name','f.id')
-	            ->get();
+	           	->orderBy('f.id', 'DESC')
+	           	->get();
 	           	//->toSql();
 
+	           	//dd($first);
 	            //dd($results);
 
-	    return $results;
+	    return array('articles' => $articles, 'folders' => $folders);
  	}
 
  	public function __getArticle($articleId){
@@ -205,8 +231,10 @@ class ArticleController extends Controller
 	    return view('readArticle')->with(array('article' => $article));
  	}
 
- 	public function __createFolderTreeHierarchy($folders){
+ 	/*public function __createFolderTreeHierarchy($folders){
 
+ 		
+ 		//dd($folders);
  		foreach($folders as $folder){
  			$folder->childFolders = array();
  		}
@@ -214,21 +242,27 @@ class ArticleController extends Controller
  		foreach($folders as $childFolder){
  			if($childFolder->parentId !== null){
  				foreach($folders as $key => $parentFolder){
- 					if($parentFolder->id === $childFolder->parentId){
- 						$parentFolder->childFolders = array_merge($parentFolder->childFolders, array($childFolder));
+ 					if($parentFolder->folderId === $childFolder->parentId){
+ 						$parentFolder->childFolders[] = $childFolder;
  					}
  				}
  			}
  		}
-
+ 		
+ 		dd($folders);
  		foreach($folders as $key => $folder){
- 			if($folder->parentId != null){
+ 			if($folder->parentId !== null){
  				unset($folders[$key]);
  			}
  		}
 
+ 		//if($folders->count() === 2){
+ 		//	$folders = $folders->reverse();
+ 		//}
+ 		dd($folders);
+
  		return $folders;
- 	}
+ 	}*/
 
  	public function updateArticle(Request $request, $articleId){
 
@@ -238,9 +272,9 @@ class ArticleController extends Controller
 
 	        $categories = Categories::all();
 
-	        $folders = Folders::all();
+	        $folders = DB::table('Folders')->orderBy('parentId', 'DESC')->get();
 
-	        $folderHierarchy = self::__createFolderTreeHierarchy($folders);
+	        $folderHierarchy = $this->__createFolderHierarchy($folders);
 
 			return view('updateArticle')->with(array('article' => $article, 'categories' => $categories, 'folders' => $folders, 'folderHierarchy' => $folderHierarchy));
 
@@ -282,46 +316,6 @@ class ArticleController extends Controller
 		$articles = Articles::all();
 		
 		return self::dashboard();
- 	}
-
-
-
- 	public function sortArticles($param, $dir, $searchTerm = null){
-
- 		if(empty($searchTerm)){
-	 		$articles = DB::table('Articles as a')
-		         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
-		            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
-		            ->select('a.*', 
-		            	DB::raw('group_concat(c.Name) as categoryNames'), 
-		            	DB::raw('group_concat(c.ID) as categoryIds'))
-		        	->where('a.deleted', 0)
-		           	->groupBy('a.ID')
-		           	->orderBy($param, $dir)
-		            ->get();
-		 }else{
-		 	
-		 	$articles = DB::table('Articles as a')
-	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
-	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
-	            ->select('a.*', 
-	            	DB::raw('group_concat(c.Name) as categoryNames'), 
-	            	DB::raw('group_concat(c.ID) as categoryIds'))
-	            ->where('a.deleted', 0)
-	            ->where(function($query) use($searchTerm){
-	            	$query->where('a.Title', 'like', '%'.$searchTerm.'%')
-                	->orWhere('a.textOnlyContent', 'like', '%'.$searchTerm.'%');
-	            })
-	            ->orderBy($param, $dir)
-	           	->groupBy('a.ID')
-	            ->get();
-		 }
-
-		return view('readArticles')->with(array('articles' => $articles, 'sorted' => array(true, $param, $dir)));
- 	}
-
- 	public function sortArticles2($param, $dir, $searchTerm = null){
- 		die('1234');
  	}
 
  	public function fullPageArticle($articleId){

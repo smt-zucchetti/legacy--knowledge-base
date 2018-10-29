@@ -12,15 +12,7 @@
 	</div>
 @endif
 
-<div class="smallSearchForm">
-	<form method="post" action="<?php echo url('/searchArticles') ?>" >
-	   @csrf
-	  Search: <input type="text" name="search" value="<?php echo !empty($searchTerm)?$searchTerm:''; ?>" />
-	  <input type="submit" value="Search" />
-	</form>
-	<a class="advSearch" href="<?php echo url('/search') ?>">Advanced Search</a>
-</div>
-
+@include('partials/searchForm')
 
 <ul class="fileManagerView">
 	<li>
@@ -35,26 +27,16 @@
 </ul>
 
 <div class="fileManager">
-	@if($type == 'tree')
-		@include('partials/articleTree', ['folders' => $folders ])
+	@if($type == 'list')
+		@include('partials/articleList')
+	@elseif($type == 'tree')
+		@include('partials/articleTree')
 	@elseif($type == 'GUI')
 		@include('partials/articleGUI')
-	@elseif($type == 'list')
-		@include('partials/articleList')
 	@endif
 </div>
 
 
-<script>
-
-	$('.fileManager').on('dblclick', '.fa-file', function(){
-			
-			var fileId = $(this).closest('.fileOrFolder').data('id');
-			var url = 'readArticle/' + fileId;
-
-			location.href = url;
-		});
-</script>
 
 
 @stop

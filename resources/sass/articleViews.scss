@@ -85,30 +85,93 @@
 }
 
 .articleTree{
-    ul.noFolder{
-        padding: 0;    
-    }
+    display: flex;
 
-    li{
-        list-style-type: none;
+    .foldersWrapper{
+        width: 30%;
+        overflow-x: scroll;
 
-        .fa-minus-square,
-        .fa-plus-square {
-            color: dimgray;
-            transition: color .5s;
+        ul.noFolder{
+            padding: 0;    
+        }
 
-            &:hover{
-                cursor:pointer;
-                color: black;
+        li.folderList{
+            white-space: nowrap;
+
+            a.collapseExpandAnchor{
+                text-decoration: none;
+
+                .fa-minus-square,
+                .fa-plus-square {
+                    color: dimgray;
+                    transition: color .5s;
+                    display: inline-block;
+
+                    &:hover{
+                        cursor:pointer;
+                        color: black;
+                    }
+
+                    &.hide{
+                        display: none;
+                    }
+                }
+            }
+
+            a.folder{
+                padding: 2px 8px;
+                text-decoration: none;
+                display: inline-block;
+
+                &.selected{
+                    background: darkblue;
+                    color: white;
+                }
+                .fa-folder {
+                    font-size: 30px;
+                }
             }
         }
+    }
+    .filesWrapper{
+        width: 70%;
 
-        .fa-plus-square{
+        li.fileList{
             display: none;
-        }
 
-        .fa-folder {
-            font-size: 1.5em;
+            a{
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                color: dimgray;
+            }
+
+            &.selected{
+                display: list-item;
+            }
+
+            li{
+                padding-bottom: 1em;
+
+                .far.fa-file,
+                .fas.fa-folder  {
+                    font-size: 2em;
+                    margin-right: 8px;
+                }
+            }
+        }
+    }
+
+    .foldersWrapper, 
+    .filesWrapper{
+        border: solid 1px black;
+
+        & > ul{
+            padding-left: 10px;
+
+            li{
+                list-style-type: none;
+            }
         }
     }
 }
