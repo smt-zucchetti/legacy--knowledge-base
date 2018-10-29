@@ -122,28 +122,6 @@ form{
     textarea#tinyMCE {
         min-height: 600px;
     }  
-
-    &.smallSearchForm{
-        display: flex;
-        width: 50%;
-        float: right;
-        align-items: center;
-
-        & ~ .advSearch{
-            color:$orange;
-            float: right;
-            clear: right;
-        }
-
-        & ~ .clear{
-            clear: both;
-        }
-    }
-
-    &#searchForm {
-        width: 80%;
-
-    }
 }
 
 

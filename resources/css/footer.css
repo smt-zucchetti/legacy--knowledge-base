@@ -2,6 +2,7 @@ footer {
   color: white;
   background: #004A5D;
   padding: 3em 0;
+  margin-top: 4em;
 }
 footer .footerContainer {
   display: flex;

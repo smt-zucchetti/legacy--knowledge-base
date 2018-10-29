@@ -1,0 +1,29 @@
+.smallSearchForm{
+	display: flex;
+    width: 50%;
+    float: right;
+    align-items: center;
+	max-width: 480px;
+
+	input[type=text]{
+		height: 31px;
+	    border-radius: 4px 0 0 4px;
+	}
+
+	input[type=submit]{
+		height: 35px;
+	    padding: 0 1.5em;
+	    font-size: 17px;
+	}
+
+	& ~ .advSearch{
+        color:$orange;
+        float: right;
+        clear: right;
+    }
+
+    & ~ .clear{
+        clear: both;
+    }
+}
+

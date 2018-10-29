@@ -106,22 +106,5 @@ form ul.formCheckbox li label input {
 form textarea#tinyMCE {
   min-height: 600px;
 }
-form.smallSearchForm {
-  display: flex;
-  width: 50%;
-  float: right;
-  align-items: center;
-}
-form.smallSearchForm ~ .advSearch {
-  color: #F48120;
-  float: right;
-  clear: right;
-}
-form.smallSearchForm ~ .clear {
-  clear: both;
-}
-form#searchForm {
-  width: 80%;
-}
 
 /*# sourceMappingURL=forms.css.map */

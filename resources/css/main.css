@@ -120,6 +120,7 @@ footer {
   color: white;
   background: #004A5D;
   padding: 3em 0;
+  margin-top: 4em;
 }
 footer .footerContainer {
   display: flex;
@@ -288,23 +289,6 @@ form ul.formCheckbox li label input {
 form textarea#tinyMCE {
   min-height: 600px;
 }
-form.smallSearchForm {
-  display: flex;
-  width: 50%;
-  float: right;
-  align-items: center;
-}
-form.smallSearchForm ~ .advSearch {
-  color: #F48120;
-  float: right;
-  clear: right;
-}
-form.smallSearchForm ~ .clear {
-  clear: both;
-}
-form#searchForm {
-  width: 80%;
-}
 
 .collatedGridHeader,
 .collatedGrid {
@@ -414,17 +398,15 @@ form#searchForm {
 
 .featuredArticlesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 180px));
+  grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
   grid-template-rows: auto;
   background: lightgray;
-  grid-gap: 0em 2em;
   border-radius: 3px;
   border: solid 1px dimgray;
   margin-bottom: 4em;
 }
 .featuredArticlesGrid .featuredArticle {
   position: relative;
-  width: 100%;
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -623,6 +605,57 @@ ul.fileManagerView li a.active {
 ul.fileManagerView li:first-of-type a {
   padding-left: 0;
   border-left: none;
+}
+
+.smallSearchForm {
+  display: flex;
+  width: 50%;
+  float: right;
+  align-items: center;
+  max-width: 480px;
+}
+.smallSearchForm input[type=text] {
+  height: 31px;
+  border-radius: 4px 0 0 4px;
+}
+.smallSearchForm input[type=submit] {
+  height: 35px;
+  padding: 0 1.5em;
+  font-size: 17px;
+}
+.smallSearchForm ~ .advSearch {
+  color: #F48120;
+  float: right;
+  clear: right;
+}
+.smallSearchForm ~ .clear {
+  clear: both;
+}
+
+.authContainer {
+  width: 50%;
+  min-width: 400px;
+  margin: 0 auto;
+}
+.authContainer label {
+  display: inline;
+}
+.authContainer input[type=text],
+.authContainer input[type=email],
+.authContainer input[type=password] {
+  margin: 0.3em 0 1em;
+}
+.authContainer button[type=submit] {
+  font-size: 1em;
+  padding: 0.2em 1em;
+}
+.authContainer .form-check {
+  margin: 1em 0;
+}
+.authContainer .optionLinks a {
+  display: block;
+  line-height: 27px;
+  color: #F48120;
 }
 
 /*# sourceMappingURL=main.css.map */

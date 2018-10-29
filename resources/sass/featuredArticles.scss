@@ -1,16 +1,14 @@
 .featuredArticlesGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 180px));
+    grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
     grid-template-rows: auto;
     background: lightgray;
-    grid-gap: 0em 2em;
     border-radius: 3px;
     border: solid 1px dimgray;
     margin-bottom: 4em;
 
     .featuredArticle{
         position: relative;
-        width: 100%;
         display: flex;
         flex-flow: column;
         align-items: center;

@@ -1,0 +1,32 @@
+@import 'colors.scss';
+
+.authContainer{
+	width: 50%;
+	min-width: 400px;
+	margin: 0 auto;
+
+	label{
+		display: inline;
+	}
+
+	input[type=text],
+	input[type=email],
+	input[type=password] {
+	    margin: .3em 0 1em;
+	}
+
+	button[type=submit]{
+		font-size: 1em;
+		padding: .2em 1em;
+	}
+
+	.form-check{
+		margin: 1em 0;
+	}
+
+	.optionLinks a{
+		display: block;
+		line-height: 27px;
+		color: $orange;
+	}
+}
