@@ -1,4 +1,4 @@
-@extends('layouts.formMaster', ['bodyId'=>'singleArticle'])
+@extends('layouts.mainLayout', ['bodyId'=>'singleArticle'])
 
 @section('title', 'New User')
 

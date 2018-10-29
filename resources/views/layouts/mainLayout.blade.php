@@ -13,7 +13,6 @@
               @show
           </div>
           <script src="http://cdn.tinymce.com/4/tinymce.min.js"></script>
-          <!--<script src="resources/js/tinymceConfig.js"></script>-->
           @include('partials/tinymceConfigJs')
         </main>
         @include('partials/footer')

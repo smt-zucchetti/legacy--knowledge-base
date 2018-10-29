@@ -1,4 +1,4 @@
-@extends('layouts.formMaster')
+@extends('layouts.mainLayout')
 @section('main')
 <div class="authContainer">
 

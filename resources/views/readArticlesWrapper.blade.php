@@ -1,4 +1,4 @@
-@extends('layouts.formMaster')
+@extends('layouts.mainLayout')
 
 @section('title', 'All Articles')
 
