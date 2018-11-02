@@ -8,17 +8,16 @@
 
 	<div class="articleContainer">
 
-		<div>
+		
+		@if(!empty($article->categoryNames))
 			<h3>Categories:</h3>
-			<?php
-				foreach(explode(",",$article->categoryNames) as $categoryName){						 
-					echo "<li class='category'>";
-					echo 	$categoryName; 
-					echo "</li>";
-				}
-			?>
-		</div>
-		<h3 class="title">Title: {{$article->Title}}</h3>
+			<ul>
+				@foreach(explode(",",$article->categoryNames) as $categoryName)						 
+					<li class='category'>{{$categoryName}}</li>
+				@endforeach
+			</ul>
+		@endif
+		<h3 class="title">{{$article->Title}}</h3>
 		<div class="singleArticleBorder">
 			{!! $article->Content !!}
 		</div>
