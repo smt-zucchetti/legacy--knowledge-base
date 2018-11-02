@@ -95,7 +95,7 @@ class ArticleController extends Controller
 	            ->get();
 	    $featuredArticles->sortBy('dateCreated');
 
-		return view('dashboard')->with(array('articles' => $articles, 'featuredArticles' => $featuredArticles, 'sorted' => array(false)));
+		return view('readArticles')->with(array('articles' => $articles, 'featuredArticles' => $featuredArticles, 'sorted' => array(false)));
  	}
 
  	
@@ -269,12 +269,11 @@ class ArticleController extends Controller
  		if(empty($_POST)){
 
 	 		$article = self::__getArticle($articleId);
-
-	        $categories = Categories::all();
-
+	        $categories = DB::table('Categories')->where('deleted', 0)->get();
 	        $folders = DB::table('Folders')->orderBy('parentId', 'DESC')->get();
-
+	        //dd($folders);
 	        $folderHierarchy = $this->__createFolderHierarchy($folders);
+	        //dd($folderHierarchy);
 
 			return view('updateArticle')->with(array('article' => $article, 'categories' => $categories, 'folders' => $folders, 'folderHierarchy' => $folderHierarchy));
 
