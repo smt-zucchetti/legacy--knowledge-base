@@ -33,7 +33,9 @@
 		</li>
 	@endforeach
 	</ul>
-	@include('partials/foldersSelectBox')
+
+	<label for="parentId" class="label">Parent Folder:</label>
+	@include('partials/foldersSelectBox', ['curFolder' => $article->folderId])
 
     <label for="content"><span class="label">Content:</span> </label>
     {{ Form::textarea('content', !empty($article->Content)?$article->Content:"", array('class' => 'form-control my-editor', 'id' => 'tinyMCE')) }}

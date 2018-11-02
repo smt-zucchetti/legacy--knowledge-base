@@ -5,7 +5,7 @@ namespace App\Traits;
 trait CreateFolderHierarchy
 {
 
-    protected function __createFolderHierarchy($folders)
+    protected function __createFolderHierarchy($folders, $withArticles = false)
     {
       
     	foreach($folders as $folder){
@@ -15,22 +15,21 @@ trait CreateFolderHierarchy
     		$folder->childFolders = [];
     	}
 
-        $this->convertArticlesToArray($folders);
-        
-        $folders = $this->addChildFolders($folders);
 
-        //dd($folders);
+
+        if($withArticles){
+            $this->convertArticlesToArray($folders);
+        }
+
+        $folders = $this->addChildFolders($folders);
 
         foreach($folders as $folder){
             $this->addDepthValue($folder, 1);    
         }
-        //dd($folders);
 
         foreach($folders as $folder){
             $this->addChildren($folder);
         }
-
-        //dd($folders);
 
  		return $folders;
     }
@@ -54,7 +53,9 @@ trait CreateFolderHierarchy
         foreach($folders as $folder){
 
             foreach($folders as $folder2){
+                //$folder is parent of $folder2 
                 if($folder2->parentId == $folder->id){
+                    //parent $folder is not top level or 
                     if($folder->id !== null || ($folder->name == null && $folder2->name !== null)){
                         $folder->childFolders[] = $folder2;
                     }

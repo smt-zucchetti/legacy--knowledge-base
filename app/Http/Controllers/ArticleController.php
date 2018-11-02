@@ -101,7 +101,7 @@ class ArticleController extends Controller
  	
 
  	public function __getArticleTree(){
- 		
+
  		$first = DB::table('Folders as f')
 		 		->leftJoin('Articles as a', 'f.id', '=', 'a.folderId')
 	            ->select(array(
@@ -126,14 +126,7 @@ class ArticleController extends Controller
 	           	->union($first)
 	           	->get();
 
-	    //dd($second);
-
-	    //dd($results);
-
-	    $results = $this->__createFolderHierarchy($results->toArray());
-	    
-	    //$results = self::__createFolderTreeHierarchy($results);
-	    //dd($results);
+	    $results = $this->__createFolderHierarchy($results->toArray(), true);
 
 	    return $results;
 
@@ -142,8 +135,9 @@ class ArticleController extends Controller
 
 
 	public function readArticleTree($curFolderId = null){
- 	
+
 		$folders = self::__getArticleTree();
+
 
 		return view('readArticlesWrapper')->with(array('folders' => $folders, 'curFolderId' => $curFolderId, 'type' => 'tree') );
  	} 	
@@ -231,39 +225,6 @@ class ArticleController extends Controller
 	    return view('readArticle')->with(array('article' => $article));
  	}
 
- 	/*public function __createFolderTreeHierarchy($folders){
-
- 		
- 		//dd($folders);
- 		foreach($folders as $folder){
- 			$folder->childFolders = array();
- 		}
-
- 		foreach($folders as $childFolder){
- 			if($childFolder->parentId !== null){
- 				foreach($folders as $key => $parentFolder){
- 					if($parentFolder->folderId === $childFolder->parentId){
- 						$parentFolder->childFolders[] = $childFolder;
- 					}
- 				}
- 			}
- 		}
- 		
- 		dd($folders);
- 		foreach($folders as $key => $folder){
- 			if($folder->parentId !== null){
- 				unset($folders[$key]);
- 			}
- 		}
-
- 		//if($folders->count() === 2){
- 		//	$folders = $folders->reverse();
- 		//}
- 		dd($folders);
-
- 		return $folders;
- 	}*/
-
  	public function updateArticle(Request $request, $articleId){
 
  		if(empty($_POST)){
@@ -271,9 +232,7 @@ class ArticleController extends Controller
 	 		$article = self::__getArticle($articleId);
 	        $categories = DB::table('Categories')->where('deleted', 0)->get();
 	        $folders = DB::table('Folders')->orderBy('parentId', 'DESC')->get();
-	        //dd($folders);
 	        $folderHierarchy = $this->__createFolderHierarchy($folders);
-	        //dd($folderHierarchy);
 
 			return view('updateArticle')->with(array('article' => $article, 'categories' => $categories, 'folders' => $folders, 'folderHierarchy' => $folderHierarchy));
 
