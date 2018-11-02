@@ -46,8 +46,8 @@
 				@php($x = 0)
 				@foreach(explode(",",$article->categoryNames) as $categoryName)						 
 					<li class='category'>
-						{{$categoryName}} 
-						{!! count(explode(",",$article->categoryNames)) > 1 && $x == 0?"<a class=\"seeMore\" href=\"#\"></a>":"" !!}
+						{{$categoryName}}
+						{!! count(explode(",",$article->categoryNames)) > 1 && $x == 0?", <a class='seeMore' href='#'>[...]</a>":"" !!}
 					</li>
 					@php($x++)
 				@endforeach
