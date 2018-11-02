@@ -1,9 +1,8 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
     <head>
-       @include('partials/head')
-
-
+        @include('partials/leafo/sassCompiler')
+        @include('partials/head')
     </head>
     <body id="{{!empty($bodyId)?$bodyId:''}}">
         @include('partials/header')
