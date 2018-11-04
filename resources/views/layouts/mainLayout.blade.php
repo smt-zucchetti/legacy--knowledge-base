@@ -1,7 +1,9 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
     <head>
-        @include('partials/leafo/sassCompiler')
+        @if(env("APP_ENV") === "dev")
+          @include('partials/leafo/sassCompiler')
+        @endif
         @include('partials/head')
     </head>
     <body id="{{!empty($bodyId)?$bodyId:''}}">
