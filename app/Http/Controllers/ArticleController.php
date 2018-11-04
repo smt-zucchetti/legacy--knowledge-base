@@ -61,7 +61,7 @@ class ArticleController extends Controller
 
  	public function __getAllArticles(){
 
- 		$results = DB::table('Articles as a')
+ 		$articles = DB::table('Articles as a')
 		 		->leftJoin('Folders as f', 'f.id', '=', 'a.folderId')
 	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
 	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
@@ -77,7 +77,21 @@ class ArticleController extends Controller
 	           	->groupBy('a.ID')
 	            ->get();
 
-	    return $results;
+	    foreach($articles as $key => $article){
+	    	$catNamesArr = !empty($article->categoryNames)?explode(",", $article->categoryNames):[];
+	    	$catIdsArr = !empty($article->categoryIds)?explode(",", $article->categoryIds):[];
+
+	    	$catArr = [];
+	    	for($i=0; $i<count($catNamesArr); $i++){
+	    		$catArr[$catIdsArr[$i]] = $catNamesArr[$i];
+	    	}
+
+	    	$article->categories = $catArr;
+	    	unset($articles[$key]->categoryNames);
+	    	unset($articles[$key]->categoryIds);
+	    }
+
+	    return $articles;
  	}
 
  	public function dashboard(){

@@ -17,8 +17,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
 
-    <link rel="stylesheet" href="resources/styles/css/main.css" />
-    
+    <link rel="stylesheet" href="resources/styles/css/main.css" />   
     
 
     <link href='http://fonts.googleapis.com/css?family=Cabin:100,100italic,400,400italic600,700' rel='stylesheet' type='text/css'>

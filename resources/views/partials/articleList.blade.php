@@ -13,7 +13,7 @@
 
 	@foreach($articles as $article)
 		
-		@php($row = $i % 2 == 0?'oddRow':'')
+		@php($row = $i % 2 == 0?'row odd':'row')
 
 		<div class="{{$row}} titleRow">
 			<a href="{{ url('/readArticle/'.$article->ID) }}">
@@ -41,17 +41,19 @@
 				</a>
 			</div>
 		@endif
-		<div class="{{$row}}">
-			<ul class="categories">
-				@php($x = 0)
-				@foreach(explode(",",$article->categoryNames) as $categoryName)						 
-					<li class='category'>
-						{{$categoryName}}
-						{!! count(explode(",",$article->categoryNames)) > 1 && $x == 0?", <a class='seeMore' href='#'>[...]</a>":"" !!}
-					</li>
-					@php($x++)
-				@endforeach
-			</ul>
+		<div class="{{$row}} cats">
+			<div class="categories">
+				<i class="fas fa-times-circle"></i>
+				<ul>
+					<li></li>
+					@foreach($article->categories as $catName)						 
+						<li class='category'>
+							{!! strlen($catName) > 16?"<span class='partial'>".substr($catName,0,16)."...</span><span class='full'>".$catName."</span>":$catName !!}
+						</li>
+					@endforeach
+				</ul>
+			</div>
+			{!! count($article->categories) > 0?"<span class='seeMore'>More <i class='fas fa-chevron-circle-down'></i></span>":"" !!}
 		</div>
 		<div class="{{$row}} featured">
 			{{ $article->featured == 1?"Yes":"No" }}
@@ -69,8 +71,11 @@
 @include('partials/javaScriptSort', ['type' => 'articles'] )
 
 <script>
-	$('.collatedGrid').on('click', 'a.seeMore', function(e){
-		e.preventDefault();
-		$(this).closest('ul.categories').toggleClass('showAll');
+	$('.collatedGrid').on('click', '.seeMore', function(){
+		$(this).siblings('.categories').toggleClass('showAll');
+	});
+
+	$('.collatedGrid').on('click', '.fas.fa-times-circle', function(){
+		$(this).closest('.categories').toggleClass('showAll');
 	});
 </script>

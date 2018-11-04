@@ -1,5 +1,6 @@
-@import 'colors.scss';
+/* listView.scss */
 
+@import 'colors.scss';
 
 .collatedGridHeader, 
 .collatedGrid{
@@ -76,58 +77,90 @@
         padding: 1em 1em 1em 1.6em;
     }
 
-    .oddRow{
-        background: lightgray;
-    }
+    .row{
 
-    .titleRow a{
-        color: $turquoise;
-        font-size: 1.1em;
-        text-decoration: none;
-
-        &:hover{
-            text-decoration: underline;
+        &.odd{
+            background: lightgray;
         }
-    }
 
-    ul.categories{
-        margin: 0;
-        padding: 0;
+        &.titleRow a{
+            color: $turquoise;
+            font-size: 1.1em;
+            text-decoration: none;
 
-        li{
-            list-style-type: none;
-
-            &:nth-child(n+2){
-                display: none;
-            }
-
-            a.seeMore {
-                color: $blue;
-                margin-left: 8px;
-                font-size: 16px;
+            &:hover{
+                text-decoration: underline;
             }
         }
 
-        &.showAll{
-            position: absolute;
-            background: white;
-            padding: 16px 10px !important;
-            box-shadow: 3px 3px 3px 0px dimgray;
-            margin: -16px 0 0 -10px;
+        &.cats{
+            position: relative;
 
-            li{
+            .categories {
+                transition: background 0s ease-in, border 0s ease-in;
+                height: 20px;
                 display: block;
-                margin-bottom: 10px;
+                overflow: hidden;
+                width: 100%;
 
-                &:last-of-type{
-                    margin-bottom:0;
+                .fas.fa-times-circle{
+                    display: none;
                 }
 
-                a.seeMore::after{
-                    content:"See Less";
+
+                ul{
+                    margin: 0 !important;
+                    padding: 0;
+                    display: inline;
+                    list-style: none;
+
+                    li{
+                        .partial{display: inline}
+                        .full{display: none}
+                    }
+                }
+
+                &.showAll{
+                    height: auto;
+                    position: absolute;
+                    background: white;
+                    border: 1px green solid;
+                    padding: 1em;
+                    z-index: 2;
+                    transition: background .2s ease-in, border .2s ease-in;
+
+                    .fas.fa-times-circle{
+                        display: block;
+                        position: absolute;
+                        right: 10px;
+                        top: 10px;
+
+                        &:hover{
+                            cursor: pointer;
+                        }
+                    }
+
+                    ul{
+                        .partial{display: none}
+                        .full{display: inline}
+
+                        li.category{
+                            margin-bottom: .8em;
+
+                            &:last-child{
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
                 }
             }
-        }
 
+            .seeMore{
+                cursor: pointer;
+                position: absolute;
+                top: 1em;
+                right: 1em;
+            }
+        }
     }
 }

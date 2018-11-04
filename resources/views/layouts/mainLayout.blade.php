@@ -2,7 +2,7 @@
 <html lang="{{ app()->getLocale() }}">
     <head>
         @if(env("APP_ENV") === "dev")
-          @include('partials/leafo/sassCompiler')
+          @include('partials/leafo/scssCompiler')
         @endif
         @include('partials/head')
     </head>

@@ -18,20 +18,6 @@
 	@include('partials/featuredArticles', ['articles' => $articles ] )
 @endif
 
-
-
 @include('partials/articleList', ['articles' => $articles])
 
-
-
-
-<script>
-	$(document).ready(function(){
-
-		$('.collatedGrid').on('click', 'a.seeMore', function(e){
-			e.preventDefault();
-			$(this).closest('ul.categories').toggleClass('showAll');
-		});
-	});	
-</script>
 @stop
