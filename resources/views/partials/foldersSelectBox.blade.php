@@ -1,4 +1,4 @@
-<select id="parentId" name="parentId">
-	<option value="">Knowledge Base (Root):</option>
-	@include('partials/folderTreeOptions', ['folders' => $folderHierarchy])
-</select><br><br>
+<label for="parentFolder">Parent Folder</label>
+<select id="parentFolder" name="parentId">
+	@include('partials/folderTreeOptions')
+</select>

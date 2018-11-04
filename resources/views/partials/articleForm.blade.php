@@ -1,8 +1,6 @@
-
-
-@if($action == "update")
+@if($formType == "updateArticle")
 	@php($url = url('updateArticle/'.$article->ID) )
-@elseif($action == "create")
+@elseif($formType == "createArticle")
 	@php($url = url('createArticle') )
 @endif
 
@@ -34,8 +32,7 @@
 	@endforeach
 	</ul>
 
-	<label for="parentId" class="label">Parent Folder:</label>
-	@include('partials/foldersSelectBox', ['curFolder' => $article->folderId])
+	@include('partials/foldersSelectBox', ['formType' => $formType])
 
     <label for="content"><span class="label">Content:</span> </label>
     {{ Form::textarea('content', !empty($article->Content)?$article->Content:"", array('class' => 'form-control my-editor', 'id' => 'tinyMCE')) }}

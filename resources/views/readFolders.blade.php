@@ -4,17 +4,12 @@
 
 @section('main')
 
-
 @include('partials/actionItems', ['items' => array('addFolder')])
-
-
 @include('partials/listHeader', ['type' => 'folders'])
-
-
 
 @php($i = 0)
 <div class="collatedGrid categories {{ $sorted[0] == true?'sorted':'noSort' }}">
-	@foreach($folders as $folder)
+	@foreach($foldersScalar as $folder)
 		@php($row = ($i % 2 == 0)?"oddRow":"" )
 		<div class="{{$row}} titleRow">
 			{{$folder->name}}
@@ -23,8 +18,8 @@
 			<div style="display: none;" id="updateFolder-{{$folder->id}}">
 				<form method="post" action="{{ url('updateFolder/'.$folder->id) }}">
 					@csrf
-					<h2>Edit Folder Name</h2>
-					@include('partials/foldersSelectBox', ['curFolder' => $folder])
+					<h2>Edit {{$folder->name}}</h2>
+					@include('partials/foldersSelectBox', ['curFolder' => $folder, 'formType' => 'updateFolder'])
 					<label for="name">Name
 						<input type="text" name="name" id="name" value="{{$folder->name}}" />
 					</label>
@@ -41,7 +36,7 @@
 			<div style="display: none;" id="deleteFolder-{{$folder->id}}">
 				<form method="post" action="<?php echo url('/deleteFolder/'.$folder->id);?>">
 					@csrf
-					<p>Are you sure you want to delete this folder? It contains the following folders: <?php print_r($folder->children); ?></p>
+					<p>Are you sure you want to delete this folder? It contains the following folders: <?php //print_r($folder->children); ?></p>
 					<h2>Delete Folder "{{$folder->name}}"?</h2>
 					<input type="submit" value="Delete" />
 					<button class="cancelButton" type="button" data-fancybox-close="" >

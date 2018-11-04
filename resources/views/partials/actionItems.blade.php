@@ -50,7 +50,7 @@
 			<form method="post" action="<?php echo url('createFolder');?>">
 				@csrf
 				<h2>Add New Folder</h2>
-				@include('partials/foldersSelectBox', ['curFolder' => null])
+				@include('partials/foldersSelectBox', ['curFolderId' => null, 'formType' => 'createFolder'])
 				<label for="name">Name
 					<input type="text" name="name" id="name" value="{{!empty($curFolder)?$curFolder->name:''}}" />
 				</label>

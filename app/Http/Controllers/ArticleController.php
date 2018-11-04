@@ -26,9 +26,10 @@ class ArticleController extends Controller
  		if(empty($_POST)){
 	 		$categories = DB::table('Categories')->where('deleted', '=', '0')->get();
 
-	 		$folderHierarchy = $this->__createFolderHierarchy(DB::table('Folders')->get());
+	 		$folders = $this->getFolders();
+	 		$this->__createFolderHierarchy($folders);
 
-	 		return view('createArticle', array('categories' => $categories, 'folderHierarchy' => $folderHierarchy));
+	 		return view('createArticle', array('categories' => $categories, 'folderHierarchy' => $folders));
 	 	}else{
 
 
@@ -39,12 +40,13 @@ class ArticleController extends Controller
 
 			$articleId = DB::table('Articles')->insert(array(
 				'Title' 			=> $_POST['title'], 
+				'featured'			=> !empty($_POST['featured'])?$_POST['featured']:0,
+	 			'folderId'			=> !empty($_POST['parentId'])?$_POST['parentId']:null,
 				'Content' 			=> $_POST['content'], 
 				'textOnlyContent' 	=> $_POST['textOnlyContent'],  
 				'dateCreated'		=> date('Y-m-d: H:i:s'),
 				'createdBy' 		=> Auth::user()->id,
-				'featured'			=> !empty($_POST['featured'])?$_POST['featured']:0
-			) );
+			));
 
 			foreach(!empty($_POST['CategoryIDs'])?$_POST['CategoryIDs']:array() as $categoryId){
 				DB::table('Articles_Categories')->insert(array(
@@ -98,46 +100,11 @@ class ArticleController extends Controller
 		return view('readArticles')->with(array('articles' => $articles, 'featuredArticles' => $featuredArticles, 'sorted' => array(false)));
  	}
 
- 	
-
- 	public function __getArticleTree(){
-
- 		$first = DB::table('Folders as f')
-		 		->leftJoin('Articles as a', 'f.id', '=', 'a.folderId')
-	            ->select(array(
-			            	'f.name', 'f.id', 'f.parentId',       			
-	            			DB::raw('group_concat(a.Title) as articleTitles'), 
-	            			DB::raw('group_concat(a.ID) as articleIds')
-	            		))
-	            ->where('a.deleted', '=', 0)
-	            ->orWhere('a.deleted', '=', null)
-	           	->groupBy('f.name','f.id');
-
-	    $results = DB::table('Folders as f')
-		 		->rightJoin('Articles as a', 'f.id', '=', 'a.folderId')
-	            ->select(array(
-			            	'f.name', 'f.id', 'f.parentId',
-			            	DB::raw('group_concat(a.Title) as articleTitles'), 
-	            			DB::raw('group_concat(a.ID) as articleIds')
-			            ))
-	           	->where('a.deleted', '=', 0)
-	            ->orWhere('a.deleted', '=', null)
-	           	->groupBy('f.name','f.id')
-	           	->union($first)
-	           	->get();
-
-	    $results = $this->__createFolderHierarchy($results->toArray(), true);
-
-	    return $results;
-
- 	}
-
-
-
+ 
 	public function readArticleTree($curFolderId = null){
 
-		$folders = self::__getArticleTree();
-
+		$folders = $this->getFolders();
+	    $this->__createFolderHierarchy($folders, false);
 
 		return view('readArticlesWrapper')->with(array('folders' => $folders, 'curFolderId' => $curFolderId, 'type' => 'tree') );
  	} 	
@@ -230,13 +197,19 @@ class ArticleController extends Controller
  		if(empty($_POST)){
 
 	 		$article = self::__getArticle($articleId);
-	        $categories = DB::table('Categories')->where('deleted', 0)->get();
-	        $folders = DB::table('Folders')->orderBy('parentId', 'DESC')->get();
-	        $folderHierarchy = $this->__createFolderHierarchy($folders);
 
-			return view('updateArticle')->with(array('article' => $article, 'categories' => $categories, 'folders' => $folders, 'folderHierarchy' => $folderHierarchy));
+	        $categories = DB::table('Categories')->where('deleted', 0)->get();
+	        
+	        $folders = $this->getFolders();
+	        $curFolder = $this->getFolderById($folders, $article->folderId);
+	        $this->__createFolderHierarchy($folders);
+
+
+			return view('updateArticle')->with(['article' => $article, 'categories' => $categories, 'folderHierarchy' => $folders,'curFolder' => $curFolder]);
 
 		}else{
+
+			//dd($_POST);
 
 			$validatedData = $request->validate([
 		        'title' => 'required|unique:Articles,ID,$articleId',
@@ -246,7 +219,7 @@ class ArticleController extends Controller
 	 		DB::table('Articles')->where('id', $articleId)->update(array(
 	 			'Title' 			=> $_POST['title'], 
 	 			'featured'			=> !empty($_POST['featured'])?$_POST['featured']:0,
-	 			'folderId'			=> !empty($_POST['folderId'])?$_POST['folderId']:null,
+	 			'folderId'			=> !empty($_POST['parentId'])?$_POST['parentId']:null,
 	 			'Content' 			=> $_POST['content'], 
 	 			'textOnlyContent' 	=> $_POST['textOnlyContent'], 
 	 			'lastUpdated'		=> date('Y-m-d'),

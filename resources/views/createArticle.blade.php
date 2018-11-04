@@ -1,14 +1,12 @@
-@extends('layouts.mainLayout', ['bodyId'=>'createArticle'])
+@extends('layouts.mainLayout')
 
 @section('title', 'New User')
 
 @section('main')
 
 	@include('partials/actionItems', ['items' => array('back')])
-
 	@include('partials/validationErrors')
-
-	@include('partials/articleForm', ['action' => 'create'])
+	@include('partials/articleForm', ['formType' => 'createArticle'])
 
 	<script>
 		$('#kbForm').submit(function() {

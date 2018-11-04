@@ -1,13 +1,65 @@
 <?php
 
 namespace App\Traits;
+use Illuminate\Support\Facades\DB;
 
 trait CreateFolderHierarchy
 {
+    private function getFolders(){
+        $first = DB::table('Folders as f')
+                ->leftJoin('Articles as a', function($leftJoin){
+                    $leftJoin->on('f.id', '=', 'a.folderId');
+                    $leftJoin->where('a.deleted', '=', 0);
+                    $leftJoin->orWhere('a.deleted', '=', null);
+                })
+                ->select(['f.name', 'f.id', 'f.parentId', 'f.dateCreated',                
+                        DB::raw('group_concat(a.Title) as articleTitles'), 
+                        DB::raw('group_concat(a.ID) as articleIds')
+                    ])
+                ->groupBy('f.name','f.id');
 
-    protected function __createFolderHierarchy($folders, $withArticles = false)
+        $folders = DB::table('Folders as f')
+            ->rightJoin('Articles as a', function($rightJoin){
+                $rightJoin->on('f.id', '=', 'a.folderId');
+            })
+            ->select(array(
+                    'f.name', 'f.id', 'f.parentId', 'f.dateCreated',                
+                    DB::raw('group_concat(a.Title) as articleTitles'), 
+                    DB::raw('group_concat(a.ID) as articleIds')
+
+                ))
+            ->where('a.deleted', '=', 0)
+            ->orWhere('a.deleted', '=', null)
+            ->union($first)
+            ->groupBy('f.name','f.id')
+            ->get();
+
+        return $folders;
+    }
+
+    private function getFolderById($folders, $folderId){
+        foreach($folders as $folder){
+            if($folder->id == $folderId){
+                return $folder;
+            }
+        }
+        return null;
+    }
+
+    private function __createFolderHierarchy($folders, $scalar = false)
     {
       
+        if(!$scalar && !$this->hasRoot($folders)){
+            $folder = new \stdClass();
+            $folder->id = null;
+            $folder->name = null;
+            $folder->parentId = null;
+            $folder->articleIds = null;
+            $folder->articleTitles = null;
+
+            $folders[] = $folder;
+        }
+
     	foreach($folders as $folder){
             $folder->depth = null;
             $folder->articlesArr = [];
@@ -15,23 +67,42 @@ trait CreateFolderHierarchy
     		$folder->childFolders = [];
     	}
 
-
-
-        if($withArticles){
-            $this->convertArticlesToArray($folders);
-        }
-
-        $folders = $this->addChildFolders($folders);
-
-        foreach($folders as $folder){
-            $this->addDepthValue($folder, 1);    
-        }
+        $this->convertArticlesToArray($folders);
+        
+        $folders = $this->addChildFolders($folders, $scalar);
 
         foreach($folders as $folder){
             $this->addChildren($folder);
         }
 
+        if($scalar){
+            foreach($folders as $folder){
+                $folder->childFolders = [];
+            }
+        }else{
+            foreach($folders as $key => $folder){
+                if($folder->name !== null){
+                    unset($folders[$key]);
+                }
+            }
+        }
+
+        foreach($folders as $folder){
+            $this->addDepthValue($folder, 1);    
+        }
+
  		return $folders;
+    }
+
+    private function hasRoot($folders){
+        $hasRoot = false;
+        foreach($folders as $key => $folder){
+            if($folder->name === null){
+                $hasRoot = true;
+            }
+        }
+
+        return $hasRoot;
     }
 
     private function convertArticlesToArray($folders){
@@ -51,26 +122,17 @@ trait CreateFolderHierarchy
     private function addChildFolders($folders){
         //dd($folders);
         foreach($folders as $folder){
-
             foreach($folders as $folder2){
                 //$folder is parent of $folder2 
                 if($folder2->parentId == $folder->id){
-                    //parent $folder is not top level or 
+                    //folder is either a child of root or root 
                     if($folder->id !== null || ($folder->name == null && $folder2->name !== null)){
                         $folder->childFolders[] = $folder2;
                     }
                 }
             }
         }
-
-        foreach($folders as $key => $folder){
-            if($folder->name !== null){
-                unset($folders[$key]);
-            }
-        }
-
-        //dd($folders);
-
+        
         return $folders;
     }
 
@@ -79,7 +141,7 @@ trait CreateFolderHierarchy
         $folder->depth = $level;
 
         $level += count($folder->childFolders) > 0 ?1:-1;
-
+  
         foreach($folder->childFolders as $folder){
             $this->addDepthValue($folder, $level);
         }
