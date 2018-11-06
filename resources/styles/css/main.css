@@ -396,36 +396,30 @@ header {
     grid-template-columns: 1fr 1fr 1fr; }
 
 .collatedGridHeader {
-  color: white; }
+  color: white;
+  background: #31b8ef; }
   .collatedGridHeader > div {
-    background-color: #004a5d;
     display: flex;
     align-items: center;
     padding: 0 0.4em; }
     .collatedGridHeader > div .sortArrow {
       margin-right: 0.6em;
       display: grid; }
-      .collatedGridHeader > div .sortArrow .upArrow, .collatedGridHeader > div .sortArrow .downArrow {
+      .collatedGridHeader > div .sortArrow .ASC, .collatedGridHeader > div .sortArrow .DESC {
         border-right-color: transparent;
         border-left-color: transparent;
+        border-bottom-color: transparent;
+        border-top-color: #808080;
         border-style: solid;
         border-width: 9px;
         width: 2px; }
-      .collatedGridHeader > div .sortArrow .upArrow {
-        border-top-color: transparent;
-        border-bottom-color: #808080;
-        margin-bottom: 4px; }
-      .collatedGridHeader > div .sortArrow .downArrow {
-        border-bottom-color: transparent;
-        border-top-color: #808080; }
-      .collatedGridHeader > div .sortArrow.down .upArrow {
-        border-bottom-color: #808080; }
-        .collatedGridHeader > div .sortArrow.down .downArrow {
+        .collatedGridHeader > div .sortArrow .ASC.active, .collatedGridHeader > div .sortArrow .DESC.active {
           border-top-color: lightgray; }
-      .collatedGridHeader > div .sortArrow.up .upArrow {
-        border-bottom-color: lightgray; }
-        .collatedGridHeader > div .sortArrow.up .downArrow {
-          border-top-color: #808080; }
+      .collatedGridHeader > div .sortArrow .ASC {
+        transform: rotate(180deg);
+        margin-bottom: 4px; }
+    .collatedGridHeader > div.categoryMenuItem {
+      padding-left: 1.6em; }
 
 .collatedGrid > div {
   padding: 1em 1em 1em 1.6em; }
@@ -437,53 +431,33 @@ header {
       text-decoration: none; }
       .collatedGrid .row.titleRow a:hover {
         text-decoration: underline; }
-    .collatedGrid .row.cats {
-      position: relative; }
-      .collatedGrid .row.cats .categories {
-        transition: background 0s ease-in, border 0s ease-in;
-        height: 20px;
-        display: block;
-        overflow: hidden;
-        width: 100%; }
-        .collatedGrid .row.cats .categories .fas.fa-times-circle {
-          display: none; }
-        .collatedGrid .row.cats .categories ul {
-          margin: 0 !important;
-          padding: 0;
-          display: inline;
-          list-style: none; }
-          .collatedGrid .row.cats .categories ul li .partial {
-            display: inline; }
-            .collatedGrid .row.cats .categories ul li .full {
-              display: none; }
-        .collatedGrid .row.cats .categories.showAll {
-          height: auto;
-          position: absolute;
-          background: white;
-          border: 1px green solid;
-          padding: 1em;
-          z-index: 2;
-          transition: background 0.2s ease-in, border 0.2s ease-in; }
-          .collatedGrid .row.cats .categories.showAll .fas.fa-times-circle {
-            display: block;
-            position: absolute;
-            right: 10px;
-            top: 10px; }
-            .collatedGrid .row.cats .categories.showAll .fas.fa-times-circle:hover {
-              cursor: pointer; }
-          .collatedGrid .row.cats .categories.showAll ul .partial {
-            display: none; }
-            .collatedGrid .row.cats .categories.showAll ul .full {
-              display: inline; }
-            .collatedGrid .row.cats .categories.showAll ul li.category {
-              margin-bottom: 0.8em; }
-              .collatedGrid .row.cats .categories.showAll ul li.category:last-child {
-                margin-bottom: 0; }
+    .collatedGrid .row.cats .categoryList {
+      opacity: 0;
+      position: absolute;
+      background: white;
+      border: 1px #004a5d solid;
+      padding: 1em;
+      z-index: -1;
+      transition: opacity 0.1s ease-in, z-index 1s linear; }
+      .collatedGrid .row.cats .categoryList.show {
+        opacity: 1;
+        z-index: 2;
+        transition: opacity 0.6s ease-in; }
+      .collatedGrid .row.cats .categoryList ul {
+        margin: 0 !important;
+        padding: 0;
+        list-style: none; }
+        .collatedGrid .row.cats .categoryList ul li {
+          margin-bottom: 0.8em; }
+          .collatedGrid .row.cats .categoryList ul li:last-child {
+            margin-bottom: 0; }
+      .collatedGrid .row.cats .categoryList .fas.fa-times-circle {
+        float: right; }
+        .collatedGrid .row.cats .categoryList .fas.fa-times-circle:hover {
+          cursor: pointer; }
       .collatedGrid .row.cats .seeMore {
-        cursor: pointer;
-        position: absolute;
-        top: 1em;
-        right: 1em; }
+        text-decoration: none;
+        color: #004a5d; }
 .smallSearchForm {
   display: flex;
   width: 50%;

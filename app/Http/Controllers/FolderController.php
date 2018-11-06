@@ -12,12 +12,14 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Folders;
 use App\Traits\CreateFolderHierarchy;
+use App\Traits\SortResults;
 
 class FolderController extends Controller
 {
 
 	use CreateFolderHierarchy;
- 	
+ 	use SortResults;
+
 	public function createFolder(){
 
  		DB::table('Folders')->insert(array(
@@ -30,7 +32,7 @@ class FolderController extends Controller
  		return self::readFolders();
  	}
 
- 	public function readFolders(){
+ 	public function readFolders($param = null, $dir = null){
  		if (Auth::user()){
 
  			$folders = $this->getFolders();
@@ -44,8 +46,9 @@ class FolderController extends Controller
 	        
 	        $foldersScalar = $folders;
 	        $this->__createFolderHierarchy($foldersScalar, true);
-	 
- 			return view('readFolders', array('foldersScalar' => $foldersScalar, 'folderHierarchy' => $folderHierarchy, 'sorted' => array(false)) );
+	 		$foldersScalar = $this->sortResults($foldersScalar, $param, $dir);
+
+ 			return view('readFolders', ['foldersScalar' => $foldersScalar, 'folderHierarchy' => $folderHierarchy, 'sorted' => [$param !== null?true:false]] );
  		}else{
  			return view('home');
  		}

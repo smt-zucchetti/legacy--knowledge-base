@@ -1,4 +1,4 @@
-<form class="smallSearchForm" method="post" action="<?php echo url('/searchArticles') ?>" >
+<form class="smallSearchForm" method="get" action="{{ url('/searchArticles') }}" >
    @csrf
   <input placeholder="Search for article by title or content" type="text" name="search" value="<?php echo !empty($searchTerm)?$searchTerm:''; ?>" />
   <input type="submit" value="Search" />

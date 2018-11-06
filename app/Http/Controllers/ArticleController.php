@@ -16,11 +16,13 @@ use App\Categories;
 use App\Articles_Categories;
 use App\Folders;
 use App\Traits\CreateFolderHierarchy;
+use App\Traits\SortResults;
 
 class ArticleController extends Controller
 {
 
 	use CreateFolderHierarchy;
+	use SortResults;
 
  	public function createArticle(Request $request){
  		if(empty($_POST)){
@@ -59,7 +61,19 @@ class ArticleController extends Controller
 		}
  	}   
 
- 	public function __getAllArticles(){
+ 	public function sortArticles($param, $dir, $srchTrm = null){
+
+ 		if($srchTrm === null){
+	 		$articles = self::__getAllArticles($param, $dir);
+	 	}else{
+	 		$articles = self::__getArticlesWithSearch($srchTrm, $param, $dir);
+	 	}
+
+	 	return view('partials/articleList')->with(['articles' => $articles, 'sorted' => [true]]);
+
+ 	}
+
+ 	public function __getAllArticles($param = null, $dir = null){
 
  		$articles = DB::table('Articles as a')
 		 		->leftJoin('Folders as f', 'f.id', '=', 'a.folderId')
@@ -77,19 +91,21 @@ class ArticleController extends Controller
 	           	->groupBy('a.ID')
 	            ->get();
 
-	    foreach($articles as $key => $article){
+	    $articles = $this->SortResults($articles, $param, $dir);
+
+	    /*foreach($articles as $key => $article){
 	    	$catNamesArr = !empty($article->categoryNames)?explode(",", $article->categoryNames):[];
-	    	$catIdsArr = !empty($article->categoryIds)?explode(",", $article->categoryIds):[];
+	    	//$catIdsArr = !empty($article->categoryIds)?explode(",", $article->categoryIds):[];
 
 	    	$catArr = [];
 	    	for($i=0; $i<count($catNamesArr); $i++){
-	    		$catArr[$catIdsArr[$i]] = $catNamesArr[$i];
+	    		$catArr[] = $catNamesArr[$i];
 	    	}
 
 	    	$article->categories = $catArr;
 	    	unset($articles[$key]->categoryNames);
 	    	unset($articles[$key]->categoryIds);
-	    }
+	    }*/
 
 	    return $articles;
  	}
@@ -111,7 +127,7 @@ class ArticleController extends Controller
 	            ->get();
 	    $featuredArticles->sortBy('dateCreated');
 
-		return view('readArticles')->with(array('articles' => $articles, 'featuredArticles' => $featuredArticles, 'sorted' => array(false)));
+		return view('readArticles')->with(['articles' => $articles, 'featuredArticles' => $featuredArticles, 'sorted' => array(false)]);
  	}
 
  
@@ -176,10 +192,6 @@ class ArticleController extends Controller
 	            ->where('f.parentId', '=', $parentFolderId)
 	           	->orderBy('f.id', 'DESC')
 	           	->get();
-	           	//->toSql();
-
-	           	//dd($first);
-	            //dd($results);
 
 	    return array('articles' => $articles, 'folders' => $folders);
  	}
@@ -222,8 +234,6 @@ class ArticleController extends Controller
 			return view('updateArticle')->with(['article' => $article, 'categories' => $categories, 'folderHierarchy' => $folders,'curFolder' => $curFolder]);
 
 		}else{
-
-			//dd($_POST);
 
 			$validatedData = $request->validate([
 		        'title' => 'required|unique:Articles,ID,$articleId',
@@ -271,6 +281,13 @@ class ArticleController extends Controller
 
  	public function searchArticles(){
 
+ 		$articles = self::__getArticlesWithSearch($_GET['search']);
+
+ 		return view('readArticles')->with(['articles' => $articles, 'srchTrm' => $_GET['search'], 'sorted' => [false]]);
+ 	}
+
+ 	public function __getArticlesWithSearch($srchTrm, $param = null, $dir = null){
+
  		$articles = DB::table('Articles as a')
 	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
 	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
@@ -278,15 +295,18 @@ class ArticleController extends Controller
 	            	DB::raw('group_concat(c.Name) as categoryNames'), 
 	            	DB::raw('group_concat(c.ID) as categoryIds'))
 	            ->where('a.deleted', 0)
-	            ->where(function($query){
-	            	$query->where('a.Title', 'like', '%'.$_POST['search'].'%')
-                	->orWhere('a.textOnlyContent', 'like', '%'.$_POST['search'].'%');	
+	            ->where(function($query) use($srchTrm){
+	            	$query->where('a.Title', 'like', '%'.$srchTrm.'%')
+                	->orWhere('a.textOnlyContent', 'like', '%'.$srchTrm.'%');	
 	            })
 	            ->orderBy('dateCreated', 'DESC')
 	           	->groupBy('a.ID')
 	            ->get();
 
-        return view('readArticles')->with(array('articles' => $articles, 'searchTerm' => $_POST['search'], 'sorted' => array(false)));
+	    $articles = $this->SortResults($articles, $param, $dir);
+
+      	return $articles;
+
  	}
 
 }

@@ -38,22 +38,23 @@ Route::post('/deleteCategory/{categoryID}', 'CategoryController@deleteCategory')
 
 
 
-Route::post('/searchArticles', 'ArticleController@searchArticles');
+Route::get('/searchArticles', 'ArticleController@searchArticles');
 
 Route::get('/search', 'SearchController@search');
 Route::post('/search', 'SearchController@search');
 
 
 
-Route::get('/sortArticles/{param}/{dir}', 'SortController@sortArticles');
-Route::get('/sortArticles/{param}/{dir}/{searchTerm}', 'SortController@sortArticles');
-Route::get('/sortCategories/{param}/{dir}', 'SortController@sortCategories');
-Route::get('/sortFolders/{param}/{dir}', 'SortController@sortFolders');
+Route::get('/sortArticles/{param}/{dir}', 'ArticleController@sortArticles');
+Route::get('/sortArticles/{param}/{dir}/{searchTerm}', 'ArticleController@sortArticles');
+Route::get('/sortCategories/{param}/{dir}', 'CategoryController@readCategories');
+Route::get('/sortFolders/{param}/{dir}', 'FolderController@readFolders');
 
 
 Auth::routes();
+/*
 // Authentication Routes...
-/*$this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
+$this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
 $this->post('login', 'Auth\LoginController@login');
 $this->post('logout', 'Auth\LoginController@logout')->name('logout');
 
@@ -71,12 +72,5 @@ $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
-
-
-
-
-//Route::get('/public/laravel-filemanager', '\UniSharp\LaravelFilemanager\Controllers\LfmController@show');
-
-
 
 

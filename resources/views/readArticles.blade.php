@@ -15,9 +15,9 @@
 @include('partials/searchForm')
 
 @if (!empty($featuredArticles))
-	@include('partials/featuredArticles', ['articles' => $articles ] )
+	@include('partials/featuredArticles' )
 @endif
 
-@include('partials/articleList', ['articles' => $articles])
+@include('partials/articleList')
 
 @stop

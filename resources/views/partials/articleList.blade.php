@@ -5,8 +5,8 @@
 
 
 <div class="collatedGrid {{$sorted[0] == true?'sorted':'noSort'}} {{Auth::check()?'loggedIn':''}}">
-	
-@if(!count($articles))
+
+@if(count($articles) === 0)
 	<h2>No results</h2>
 @else
 	@php($i = 0)
@@ -42,18 +42,15 @@
 			</div>
 		@endif
 		<div class="{{$row}} cats">
-			<div class="categories">
+			<div class="categoryList">
 				<i class="fas fa-times-circle"></i>
 				<ul>
-					<li></li>
-					@foreach($article->categories as $catName)						 
-						<li class='category'>
-							{!! strlen($catName) > 16?"<span class='partial'>".substr($catName,0,16)."...</span><span class='full'>".$catName."</span>":$catName !!}
-						</li>
+					@foreach(explode(",", $article->categoryNames) as $catName)						 
+						<li>{{$catName}}</li>
 					@endforeach
 				</ul>
 			</div>
-			{!! count($article->categories) > 0?"<span class='seeMore'>More <i class='fas fa-chevron-circle-down'></i></span>":"" !!}
+			{!! count(explode(",", $article->categoryNames)) > 1?"<a href='#' class='seeMore'>See More <i class='far fa-eye'></i></a>":"" !!}
 		</div>
 		<div class="{{$row}} featured">
 			{{ $article->featured == 1?"Yes":"No" }}
@@ -65,17 +62,19 @@
 	@endforeach
 @endif
 
+
 </div>
 
 
-@include('partials/javaScriptSort', ['type' => 'articles'] )
+@include('partials/javaScriptSort')
 
 <script>
-	$('.collatedGrid').on('click', '.seeMore', function(){
-		$(this).siblings('.categories').toggleClass('showAll');
+	$('.collatedGrid').on('click', '.seeMore', function(e){
+		e.preventDefault();
+		$(this).siblings('.categoryList').addClass('show');
 	});
 
 	$('.collatedGrid').on('click', '.fas.fa-times-circle', function(){
-		$(this).closest('.categories').toggleClass('showAll');
+		$(this).closest('.categoryList').removeClass('show');
 	});
 </script>

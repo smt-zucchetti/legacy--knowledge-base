@@ -11,54 +11,52 @@
 @include('partials/listHeader', ['type' => 'categories'])
 
 
-<?php $i = 0; ?>
+@php($i = 0)
+@php($sort = $sorted[0] == true?'sorted':'noSort')
 
-<?php 
- 	$sort = $sorted[0] == true?'sorted':'noSort';
- ?>
-<div class="collatedGrid categories <?php echo $sort; ?>">
+<div class="collatedGrid categories {{$sort}}">
 	@foreach($categories as $category)
-	<?php $row = ($i % 2 == 0)?"oddRow":""; ?>
-	<div class="{{$row}} titleRow">
-		{{$category->Name}}
-	</div>
-	<div class="{{$row}} actionItems">
-		<div style="display: none;" id="update-category-{{$category->ID}}">
-			<form method="post" action="<?php echo url('/updateCategory/'.$category->ID);?>">
-				@csrf
-				<h2>Edit Category Name</h2>
-				<input type="text" name="name" value="{{$category->Name}}" />
-				<input type="submit" value="Edit" />
-				<button class="cancelButton" type="button" data-fancybox-close="" >
-					Cancel
-				</button>
-			</form>
+		@php($row = ($i % 2 == 0)?"row odd":"row")
+		<div class="row {{$row}} titleRow">
+			{{$category->Name}}
 		</div>
-		<a data-fancybox data-src="#update-category-{{$category->ID}}" href="javascript:;"  >
-			<i class="fas fa-pencil-alt"></i>
-			Edit
-		</a>
+		<div class="{{$row}} actionItems">
+			<div style="display: none;" id="update-category-{{$category->ID}}">
+				<form method="post" action="<?php echo url('/updateCategory/'.$category->ID);?>">
+					@csrf
+					<h2>Edit Category Name</h2>
+					<input type="text" name="name" value="{{$category->Name}}" />
+					<input type="submit" value="Edit" />
+					<button class="cancelButton" type="button" data-fancybox-close="" >
+						Cancel
+					</button>
+				</form>
+			</div>
+			<a data-fancybox data-src="#update-category-{{$category->ID}}" href="javascript:;"  >
+				<i class="fas fa-pencil-alt"></i>
+				Edit
+			</a>
 
-		<div style="display: none;" id="delete-category-{{$category->ID}}">
-			<form method="post" action="<?php echo url('/deleteCategory/'.$category->ID);?>">
-				@csrf
-				<h2>Delete Category "{{$category->Name}}"?</h2>
-				<input type="submit" value="Delete" />
-				<button class="cancelButton" type="button" data-fancybox-close="" >
-					Cancel
-				</button>
-			</form>
+			<div style="display: none;" id="delete-category-{{$category->ID}}">
+				<form method="post" action="<?php echo url('/deleteCategory/'.$category->ID);?>">
+					@csrf
+					<h2>Delete Category "{{$category->Name}}"?</h2>
+					<input type="submit" value="Delete" />
+					<button class="cancelButton" type="button" data-fancybox-close="" >
+						Cancel
+					</button>
+				</form>
+			</div>
+			<a data-fancybox data-src="#delete-category-{{$category->ID}}" href="javascript:;" >
+				<i class="fas fa-trash-alt"></i>
+				Delete
+			</a>
 		</div>
-		<a data-fancybox data-src="#delete-category-{{$category->ID}}" href="javascript:;" >
-			<i class="fas fa-trash-alt"></i>
-			Delete
-		</a>
-	</div>
-	<div class="{{$row}}">
-		{{$category->dateCreated}}
-	</div>
-	<?php $i++ ?>
-@endforeach
+		<div class="{{$row}}">
+			{{$category->dateCreated}}
+		</div>
+		@php($i++)
+	@endforeach
 </div>
 
 @include('partials/javaScriptSort')

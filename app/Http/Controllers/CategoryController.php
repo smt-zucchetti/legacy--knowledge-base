@@ -13,17 +13,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Articles;
 use App\Categories;
 use App\Articles_Categories;
+use App\Traits\SortResults;
 
 class CategoryController extends Controller
 {
-	/*TODO
 
-		Featured Articles
-	*/
-
-	/* BUG
-		after update, and delete, the view returned is not sortable
-	*/
+	use SortResults;
 
  	
 	public function createCategory(){
@@ -37,17 +32,15 @@ class CategoryController extends Controller
  		return self::readCategories();
  	}
 
- 	public function readCategories(){
+ 	public function readCategories($param = null, $dir = null){
  		if (Auth::user()){
- 			return view('readCategories', 
- 				array(
- 					'categories' => DB::table('Categories')
- 										->where('deleted','=',false)
- 										->orderBy('dateCreated', 'DESC')
- 										->get(), 
- 					'sorted' => array(false)
- 				)
- 			);
+
+ 			$categories = DB::table('Categories')->where('deleted','=',false)->orderBy('dateCreated', 'DESC')->get();
+
+ 			$categories = $this->sortResults($categories, $param, $dir);
+
+ 			return view('readCategories', ['categories' => $categories, 'sorted' => [$param !== null?true:false]]);
+
  		}else{
  			return view('home');
  		}

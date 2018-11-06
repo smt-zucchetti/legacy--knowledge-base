@@ -1,65 +1,44 @@
 
 <script>
 
-	$('.sortArrow').click(function(e){
+	$('.ASC, .DESC').click(function(e){
 		e.preventDefault();
 
-		$('.sortArrow').not(this).each(function(i,e){
-			$(this).removeClass('down');
-			$(this).removeClass('up');
+		$('.ASC, .DESC').each(function(i,e){
+			$(this).removeClass('active');
 		});
 
-		if(e.target.classList[0] == "upArrow"){
-			$(this).removeClass('down');
-			$(this).addClass('up');
-		}else if(e.target.classList[0] == "downArrow"){
-			$(this).removeClass('up');
-			$(this).addClass('down');
-		}
+		$(this).addClass('active');
 
-		var param = $(this)[0].classList[1];
-
-		var dir;
-		if($(this).hasClass('up')){
-			dir = "ASC";
-		}else{
-			dir = "DESC";
-		}
-
-		var uriSegment = $(this).data('method');
-
+	
+		var param = $(this).closest('.sortArrow').data('param');
+		var dir = e.target.classList.item(0);
+		var action = $(this).closest('.collatedGridHeader').data('action');
+		var srchTrm = $(this).closest('.collatedGridHeader').data('srchtrm');
 		
-		var searchTerm;
-		<?php if(!empty($searchTerm)){ ?>
-			searchTerm = "<?php echo $searchTerm ?>";
-		<?php }else{ ?>
-			searchTerm = null;
-		<?php } ?>
-
-
-		var url = uriSegment + "/" + param + "/" + dir;
-
-		if(searchTerm){
-			url += '/' + searchTerm;
-		}
-
+		var url = action + "/" + param + "/" + dir;
+		url +=  srchTrm?"/" + srchTrm:"";
 		console.log(url);
 
 		try{
 			$.ajax({
+				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		     	url : url,
 		      	type : "GET",
-		      	//data: data,
-		      	data : {action: 'refresh'},
+		      	//data : {action: 'refresh'},
 
 		      	failure: function(response){
-		      		console.log('asdasd');
 		      		console.log(response);
 		      	},
 
 		        success: function(response){
 		            $('.collatedGrid.noSort').empty();
-		            $(response).find('.collatedGrid.sorted > *').appendTo('.collatedGrid.noSort');		            
+		            var contents = $(response).filter('.collatedGrid.sorted').html();
+		            if(contents == null){
+		            	contents = $(response).find('.collatedGrid.sorted').html();
+		            }
+		            console.log(contents);
+		            $('.collatedGrid.noSort').append(contents);
 		    	},
 			});
 		}catch(e){
