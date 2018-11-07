@@ -15,13 +15,13 @@ use App\Articles;
 use App\Categories;
 use App\Articles_Categories;
 use App\Folders;
-use App\Traits\CreateFolderHierarchy;
+use App\Traits\RelateFolders;
 use App\Traits\SortResults;
 
 class ArticleController extends Controller
 {
 
-	use CreateFolderHierarchy;
+	use RelateFolders;
 	use SortResults;
 
  	public function createArticle(Request $request){
@@ -29,9 +29,9 @@ class ArticleController extends Controller
 	 		$categories = DB::table('Categories')->where('deleted', '=', '0')->get();
 
 	 		$folders = $this->getFolders();
-	 		$this->__createFolderHierarchy($folders);
+	 		$this->__relateFolders($folders);
 
-	 		return view('createArticle', ['categories' => $categories, 'folderHierarchy' => $folders]);
+	 		return view('createArticle', ['categories' => $categories, 'folderTree' => $folders]);
 	 	}else{
 
 
@@ -133,7 +133,7 @@ class ArticleController extends Controller
 	public function readArticleTree($curFolderId = null){
 
 		$folders = $this->getFolders();
-	    $this->__createFolderHierarchy($folders, false);
+	    $this->__relateFolders($folders, false);
 
 		return view('readArticlesWrapper')->with(['folders' => $folders, 'curFolderId' => $curFolderId, 'type' => 'tree']);
  	} 	
@@ -223,10 +223,10 @@ class ArticleController extends Controller
 	        
 	        $folders = $this->getFolders();
 	        $curFolder = $this->getFolderById($folders, $article->folderId);
-	        $this->__createFolderHierarchy($folders);
+	        $this->__relateFolders($folders);
 
 
-			return view('updateArticle')->with(['article' => $article, 'categories' => $categories, 'folderHierarchy' => $folders,'curFolder' => $curFolder]);
+			return view('updateArticle')->with(['article' => $article, 'categories' => $categories, 'folderTree' => $folders,'curFolder' => $curFolder]);
 
 		}else{
 

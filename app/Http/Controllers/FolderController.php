@@ -11,13 +11,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 use App\Folders;
-use App\Traits\CreateFolderHierarchy;
+use App\Traits\RelateFolders;
 use App\Traits\SortResults;
 
 class FolderController extends Controller
 {
 
-	use CreateFolderHierarchy;
+	use RelateFolders;
  	use SortResults;
 
 	public function createFolder(){
@@ -38,17 +38,18 @@ class FolderController extends Controller
  			$folders = $this->getFolders();
 
 	        //deep clone $folders
- 			$folderHierarchy = clone $folders;
- 			foreach($folderHierarchy as $key => $value){
- 				$folderHierarchy[$key] = clone $value;
+ 			$folderTree = clone $folders;
+ 			foreach($folderTree as $key => $value){
+ 				$folderTree[$key] = clone $value;
  			}
-	        $this->__createFolderHierarchy($folderHierarchy, false);
+	        $this->__relateFolders($folderTree, false);
 	        
 	        $foldersScalar = $folders;
-	        $this->__createFolderHierarchy($foldersScalar, true);
+	        $this->__relateFolders($foldersScalar, true);
 	 		$foldersScalar = $this->sortResults($foldersScalar, $param, $dir);
+			//dd($foldersScalar);
 
- 			return view('readFolders', ['foldersScalar' => $foldersScalar, 'folderHierarchy' => $folderHierarchy] );
+ 			return view('readFolders', ['foldersScalar' => $foldersScalar, 'folderTree' => $folderTree] );
  		}else{
  			return view('home');
  		}

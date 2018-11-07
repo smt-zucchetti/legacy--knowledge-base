@@ -6,6 +6,6 @@
 		{{str_repeat("---", $folder->depth)}} {{$folder->name}}
 	</option>
 
-	@include('partials/printChildFolders', ['folders' => $folder->childFolders])
+	@include('partials/printChildFolders', ['folders' => $folder->childFolderObjsArr])
 		
 @endforeach

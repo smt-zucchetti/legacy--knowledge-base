@@ -1,9 +1,9 @@
 <label for="title">Title:
-	{{ Form::text('title', !empty($article->Title)?$article->Title:'', ['id' => 'title', $readOnly?"readonly":""]) }}
+	{{ Form::text('title', !empty($article)?$article->Title:'', ['id' => 'title', $readOnly?"readonly":""]) }}
 </label>
 
 <label for="featured">Featured:
-	<input type="checkbox" name="featured" {{$article->featured == 1?'checked':''}} id="featured" {!!$readOnly?"onclick='return false;'":""!!} />
+	<input type="checkbox" name="featured" {{!empty($article) && $article->featured == 1?'checked':''}} id="featured" {!!$readOnly?"onclick='return false;'":""!!} />
 </label>
 	
 <label class="detached">Categories: </label>

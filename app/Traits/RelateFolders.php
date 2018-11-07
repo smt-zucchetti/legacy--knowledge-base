@@ -3,9 +3,10 @@
 namespace App\Traits;
 use Illuminate\Support\Facades\DB;
 
-trait CreateFolderHierarchy
+trait RelateFolders
 {
     private function getFolders(){
+
         $first = DB::table('Folders as f')
                 ->leftJoin('Articles as a', function($leftJoin){
                     $leftJoin->on('f.id', '=', 'a.folderId');
@@ -22,12 +23,10 @@ trait CreateFolderHierarchy
             ->rightJoin('Articles as a', function($rightJoin){
                 $rightJoin->on('f.id', '=', 'a.folderId');
             })
-            ->select(array(
-                    'f.name', 'f.id', 'f.parentId', 'f.dateCreated',                
+            ->select('f.name', 'f.id', 'f.parentId', 'f.dateCreated',                
                     DB::raw('group_concat(a.Title) as articleTitles'), 
                     DB::raw('group_concat(a.ID) as articleIds')
-
-                ))
+            )
             ->where('a.deleted', '=', 0)
             ->orWhere('a.deleted', '=', null)
             ->union($first)
@@ -46,9 +45,10 @@ trait CreateFolderHierarchy
         return null;
     }
 
-    private function __createFolderHierarchy($folders, $scalar = false)
+    private function __relateFolders($folders, $scalar = false)
     {
       
+        //add root folder
         if(!$scalar && !$this->hasRoot($folders)){
             $folder = new \stdClass();
             $folder->id = null;
@@ -63,23 +63,25 @@ trait CreateFolderHierarchy
     	foreach($folders as $folder){
             $folder->depth = null;
             $folder->articlesArr = [];
-            $folder->children = [];
-    		$folder->childFolders = [];
+            $folder->descendantFoldersArr = [];
+            $folder->childFolderObjsArr = [];
     	}
 
-        $this->convertArticlesToArray($folders);
+        $this->__populateArticlesArr($folders);
         
-        $folders = $this->addChildFolders($folders, $scalar);
-
+        $folders = $this->__makeTree($folders);
+        
         foreach($folders as $folder){
-            $this->addChildren($folder);
+            $this->__populateDescendantFoldersArr($folder);
         }
 
-        if($scalar){
-            foreach($folders as $folder){
-                $folder->childFolders = [];
-            }
-        }else{
+        //if($scalar){
+        //    foreach($folders as $folder){
+        //        $folder->childFoldersArr = [];
+        //    }
+        //}
+
+        if(!$scalar){
             foreach($folders as $key => $folder){
                 if($folder->name !== null){
                     unset($folders[$key]);
@@ -88,7 +90,7 @@ trait CreateFolderHierarchy
         }
 
         foreach($folders as $folder){
-            $this->addDepthValue($folder, 1);    
+            $this->__addDepthValue($folder, 1);    
         }
 
  		return $folders;
@@ -105,7 +107,7 @@ trait CreateFolderHierarchy
         return $hasRoot;
     }
 
-    private function convertArticlesToArray($folders){
+    private function __populateArticlesArr($folders){
         foreach($folders as $key => $folder){
             $articleIdsTmpArr = $folder->articleIds == null?[]:explode(",",$folder->articleIds);
             $articleTitlesTmpArr = $folder->articleTitles == null?[]:explode(",",$folder->articleTitles);
@@ -119,15 +121,15 @@ trait CreateFolderHierarchy
         }
     }
 
-    private function addChildFolders($folders){
-        //dd($folders);
+    private function __makeTree($folders){
+
         foreach($folders as $folder){
             foreach($folders as $folder2){
                 //$folder is parent of $folder2 
                 if($folder2->parentId == $folder->id){
                     //folder is either a child of root or root 
                     if($folder->id !== null || ($folder->name == null && $folder2->name !== null)){
-                        $folder->childFolders[] = $folder2;
+                        $folder->childFolderObjsArr[] = $folder2;
                     }
                 }
             }
@@ -136,30 +138,30 @@ trait CreateFolderHierarchy
         return $folders;
     }
 
-    private function addDepthValue($folder, $level=1){
+    private function __populateDescendantFoldersArr($curFolder, $childFolders = null){
 
-        $folder->depth = $level;
+        $childFolders = $childFolders == null?$curFolder->childFolderObjsArr:$childFolders;
 
-        $level += count($folder->childFolders) > 0 ?1:-1;
-  
-        foreach($folder->childFolders as $folder){
-            $this->addDepthValue($folder, $level);
+        foreach($childFolders as $childFolder){
+            if(!in_array($childFolder->id, $curFolder->descendantFoldersArr)){
+                $curFolder->descendantFoldersArr[$childFolder->id] = $childFolder->name;        
+            }
+
+            if(count($childFolder->childFolderObjsArr) > 0){
+                $this->__populateDescendantFoldersArr($curFolder, $childFolder->childFolderObjsArr);
+                $this->__populateDescendantFoldersArr($childFolder, $childFolder->childFolderObjsArr);
+            }
         }
     }
 
-    private function addChildren($curFolder, $childFolders = null){
+    private function __addDepthValue($folder, $level=1){
 
-        $childFolders = $childFolders == null?$curFolder->childFolders:$childFolders;
+        $folder->depth = $level;
 
-        foreach($childFolders as $childFolder){
-            if(!in_array($childFolder->id, $curFolder->children)){
-                $curFolder->children[] = $childFolder->id;        
-            }
-
-            if(count($childFolder->childFolders) > 0){
-                $this->addChildren($curFolder, $childFolder->childFolders);
-                $this->addChildren($childFolder, $childFolder->childFolders);
-            }
+        $level += count($folder->childFolderObjsArr) > 0 ?1:-1;
+  
+        foreach($folder->childFolderObjsArr as $folder){
+            $this->__addDepthValue($folder, $level);
         }
     }
 }

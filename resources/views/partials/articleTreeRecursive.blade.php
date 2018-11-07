@@ -12,22 +12,20 @@
 					@include('partials/folder', ['id' => $folder->id, 'name' => $folder->name])					
 				@endif
 
-				@if(!empty($folder->childFolders) && count($folder->childFolders) > 0)
-					@include('partials/articleTreeRecursive', ['folders' => $folder->childFolders, 'type' => 'folders'])
+				@if(count($folder->childFolderObjsArr) > 0)
+					@include('partials/articleTreeRecursive', ['folders' => $folder->childFolderObjsArr, 'type' => 'folders'])
 				@endif			
 			</li>
 		@endforeach
 	</ul>
 @elseif($type == "files")
 	@foreach($folders as $folder)
-		@php($hasContents = false)
 		<li class="contentsList {{$folder->id === null?'shown':''}}" data-id="{{$folder->id === null?'null':$folder->id}}">
 			<ul>
-				@foreach($folder->childFolders as $childFolder)
+				@foreach($folder->childFolderObjsArr as $childFolder)
 					<li>
 						@include('partials/folder', ['id' => $childFolder->id, 'name' => $childFolder->name])
 					</li>
-					@php($hasContents = true)
 				@endforeach
 				@foreach($folder->articlesArr as $articleId => $articleTitle)
 					<li>
@@ -36,15 +34,14 @@
 							<span class="itemTitle">{{$articleTitle}}</span>
 						</a>
 					</li>
-					@php($hasContents = true)
 				@endforeach
-				@if(!$hasContents)
+				@if(count($folder->childFolderObjsArr) === 0 && count($folder->articlesArr) === 0)
 					<li>No Contents</li>
 				@endif
 			</ul>			
 		</li>
-		@if(!empty($folder->childFolders) && count($folder->childFolders) > 0)
-			@include('partials/articleTreeRecursive', ['folders' => $folder->childFolders, 'type' => 'files'])
+		@if(count($folder->childFolderObjsArr) > 0)
+			@include('partials/articleTreeRecursive', ['folders' => $folder->childFolderObjsArr, 'type' => 'files'])
 		@endif
 	@endforeach
 @endif

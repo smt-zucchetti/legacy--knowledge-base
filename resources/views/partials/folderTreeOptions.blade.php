@@ -1,4 +1,4 @@
-@foreach($folderHierarchy as $folder)
+@foreach($folderTree as $folder)
 	<option value="{{$folder->id}}"
 		@if($formType == "createFolder")
 			{{ !empty($curFolder) && $curFolder->parentId === $folder->id?"selected":""}}
@@ -6,7 +6,7 @@
 		@elseif($formType == "updateFolder")
 			{{ !empty($curFolder) && $curFolder->parentId === $folder->id?"selected":""}}
 			{{ !empty($curFolder) && $curFolder->id === $folder->id?"disabled":""}}
-			{{ !empty($curFolder) && in_array($folder->id, $curFolder->children)?"disabled":""}}
+			{{ !empty($curFolder) && in_array($folder->id, array_keys($curFolder->descendantFoldersArr))?"disabled":""}}
 		@elseif($formType == "updateArticle")
 			{{ !empty($curFolder) && $curFolder->id === $folder->id?"selected":""}}
 		@endif
@@ -20,6 +20,6 @@
 		@endif
 	</option>
 
-	@include('partials/folderTreeOptions', ['folderHierarchy' => $folder->childFolders])
+	@include('partials/folderTreeOptions', ['folderTree' => $folder->childFolderObjsArr])
 		
 @endforeach

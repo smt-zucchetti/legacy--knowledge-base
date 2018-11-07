@@ -29,20 +29,14 @@
 					</button>
 				</form>
 			</div>
+			{{--@if($folder->id === 29)
+				@dd($folder)
+			@endif--}}
 			<a data-fancybox data-src="#updateFolder-{{$folder->id}}" href="javascript:;"  >
 				<i class="fas fa-pencil-alt"></i>Edit
 			</a>
-
 			<div style="display: none;" id="deleteFolder-{{$folder->id}}">
-				<form method="post" action="<?php echo url('/deleteFolder/'.$folder->id);?>">
-					@csrf
-					<p>Are you sure you want to delete this folder? It contains the following folders: <?php //print_r($folder->children); ?></p>
-					<h2>Delete Folder "{{$folder->name}}"?</h2>
-					<input type="submit" value="Delete" />
-					<button class="cancelButton" type="button" data-fancybox-close="" >
-						Cancel
-					</button>
-				</form>
+				@include('partials/deleteFolder', ['folder' => $folder])
 			</div>
 			<a data-fancybox data-src="#deleteFolder-{{$folder->id}}" href="javascript:;" >
 				<i class="fas fa-trash-alt"></i>
