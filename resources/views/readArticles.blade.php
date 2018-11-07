@@ -6,7 +6,7 @@
 
 @if (Auth::check())
 	<div class="actionItems">
-		<a class="addArticle" href="<?php echo url('/createArticle') ?>">
+		<a class="addArticle" href="{{ url('/createArticle') }}">
 			<i class="fas fa-plus"></i> Add New 
 		</a>
 	</div>

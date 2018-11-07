@@ -201,7 +201,8 @@ class ArticleController extends Controller
  		$result = DB::table('Articles as a')
 	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
 	            ->leftJoin('Categories as c', 'a_c.categoryId', '=','c.ID')
-	            ->select('a.*', 
+				->join('Folders as f', 'f.id', '=', 'a.folderId')
+	            ->select('a.*', 'f.name as parentFolder',
 	            	DB::raw('group_concat(c.Name) as categoryNames'), 
 	            	DB::raw('group_concat(c.ID) as categoryIds'))
 	            ->where('a.ID', '=', $articleId)
@@ -215,7 +216,7 @@ class ArticleController extends Controller
 
  		$article = self::__getArticle($articleId);
 
-	    return view('readArticle')->with(array('article' => $article));
+	    return view('readArticle')->with(['article' => $article]);
  	}
 
  	public function updateArticle(Request $request, $articleId){
@@ -291,7 +292,7 @@ class ArticleController extends Controller
  		$articles = DB::table('Articles as a')
 	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
 	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
-	            ->select('a.*', 
+	            ->select('a.*',
 	            	DB::raw('group_concat(c.Name) as categoryNames'), 
 	            	DB::raw('group_concat(c.ID) as categoryIds'))
 	            ->where('a.deleted', 0)

@@ -1,3 +1,87 @@
+.articleContainer label, .articleForm label {
+  display: flex;
+  align-items: center;
+  margin: 1.5em 0;
+  font-size: 1.4em; }
+  .articleContainer label.detached, .articleForm label.detached {
+    margin-bottom: 0.5em; }
+  .articleContainer label .value, .articleForm label .value {
+    font-size: 0.85em;
+    margin-left: 1em; }
+  .articleContainer input[type], .articleForm input[type] {
+    margin-left: 2rem; }
+  .articleContainer input[type=checkbox], .articleForm input[type=checkbox], .articleContainer input[type=radio], .articleForm input[type=radio] {
+    transform: scale(1.4); }
+  .articleContainer input[type=text], .articleForm input[type=text] {
+    width: 100%;
+    text-indent: 5px;
+    border-radius: 3px;
+    border: solid 1px gray;
+    font-size: 1.3em; }
+  .articleContainer input#datepicker, .articleForm input#datepicker, .articleContainer select, .articleForm select {
+    font-size: 17px;
+    color: #444; }
+  .articleContainer ul.categoryList, .articleForm ul.categoryList {
+    background: lightgray;
+    padding: 1.4em;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-radius: 3px;
+    border: solid dimgray 1px;
+    margin: 0; }
+  .articleContainer ul.categoryList li, .articleForm ul.categoryList li {
+    list-style-type: none;
+    padding-right: 51px; }
+  .articleContainer textarea#tinyMCE, .articleForm textarea#tinyMCE, .articleContainer .singleArticleBorder, .articleForm .singleArticleBorder {
+    min-height: 60vh; }
+
+.articleContainer .singleArticleBorder {
+  border: solid 1px;
+  padding: 1em 2em;
+  border-radius: 3px; }
+
+.articleForm select {
+  transform: scale(1.2);
+  transform-origin: top left;
+  margin-bottom: 7px; }
+  .articleForm ul.formCheckbox li label {
+    display: flex;
+    align-items: center;
+    margin: 0.4em 0;
+    font-size: 1.2em; }
+    .articleForm ul.formCheckbox li label input {
+      margin-left: auto; }
+  .articleForm textarea#textOnlyContent {
+    display: none; }
+  .articleForm input[type=submit], .articleForm button[type=submit] {
+    background-color: green;
+    border: none !important;
+    color: white !important;
+    margin: 25px 0;
+    float: right;
+    transition: background-color 0.5s;
+    box-sizing: content-box;
+    border-radius: 0;
+    font-size: 24px;
+    padding: 0.5em 1.5em; }
+  .articleForm input[type=submit]:hover, .articleForm button[type=submit]:hover {
+    cursor: pointer;
+    background-color: #26b3ed; }
+  .articleForm .validationAlerts {
+    background: #ff581a;
+    color: white;
+    border-radius: 7px;
+    padding: 1em;
+    clear: both;
+    margin-bottom: 20px; }
+  .articleForm .validationAlerts h3 {
+    margin: 0; }
+  .articleForm .validationAlerts ul {
+    padding: 0;
+    margin: 10px 0 0; }
+    .articleForm .validationAlerts ul li {
+      list-style-type: none;
+      line-height: 2em; }
 .articleGUI .folderPath {
   background: lightgray;
   padding: 0.7em;
@@ -108,7 +192,7 @@ ul.fileManagerView {
     list-style-type: none; }
   ul.fileManagerView li a {
     text-transform: uppercase;
-    color: #004a5d;
+    color: #306a8d;
     padding: 0 1em;
     border-left: solid 2px #dadfe3;
     font-size: 18px;
@@ -190,10 +274,10 @@ header .container, main .container, footer .container {
     .fancybox-content input[type=submit]:hover {
       background-color: #f69c51; }
   .fancybox-content button.cancelButton {
-    background: #31b8ef;
+    background: #1198cf;
     margin-right: 10px; }
     .fancybox-content button.cancelButton:hover {
-      background-color: #60c8f3; }
+      background-color: #26b3ed; }
   .fancybox-content h2 {
     margin-top: 0; }
 .featuredArticlesGrid {
@@ -232,7 +316,7 @@ header .container, main .container, footer .container {
         background: rgba(12, 12, 12, .2); }
 footer {
   color: white;
-  background: #004a5d;
+  background: #306a8d;
   padding: 3em 0;
   margin-top: 4em; }
   footer .footerContainer {
@@ -247,82 +331,6 @@ footer {
     footer .footerContainer .copyright {
       font-size: 14px;
       margin-top: 35px; }
-.validationAlerts {
-  background: #ff581a;
-  color: white;
-  border-radius: 7px;
-  padding: 1em;
-  clear: both;
-  margin-bottom: 20px; }
-  .validationAlerts h3 {
-    margin: 0; }
-  .validationAlerts ul {
-    padding: 0;
-    margin: 10px 0 0; }
-    .validationAlerts ul li {
-      list-style-type: none;
-      line-height: 2em; }
-
-form textarea#textOnlyContent {
-  display: none; }
-  form input[type=text], form input[type=email], form input[type=password], form input#datepicker {
-    height: 27px;
-    width: 100%;
-    text-indent: 5px;
-    border-radius: 3px;
-    border: solid 1px gray; }
-    form input[type=text], form input[type=email], form input[type=password], form input#datepicker, form input[type=text] select, form input[type=email] select, form input[type=password] select, form input#datepicker select {
-      font-size: 17px;
-      color: #444; }
-  form input#datepicker {
-    width: auto; }
-  form select {
-    transform: scale(1.6);
-    transform-origin: top left;
-    margin-bottom: 7px; }
-  form input[type=submit], form button[type=submit] {
-    background-color: #f48120;
-    border: none !important;
-    color: white !important;
-    margin: 25px 0;
-    float: right;
-    transition: background-color 0.5s;
-    box-sizing: content-box;
-    border-radius: 0;
-    font-size: 24px;
-    padding: 0.5em 1.5em; }
-    form input[type=submit]:hover, form button[type=submit]:hover {
-      cursor: pointer;
-      background-color: #60c8f3; }
-  form input[type=checkbox], form input[type=radio] {
-    transform: scale(1.4); }
-  form label {
-    display: flex;
-    align-items: center;
-    margin: 1em 0 1em; }
-  form .label {
-    font-size: 1.4em;
-    margin-right: 2em; }
-  form ul.formCheckbox {
-    background: lightgray;
-    padding: 1.4em;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    border-radius: 3px;
-    border: solid dimgray 1px; }
-    form ul.formCheckbox li {
-      list-style-type: none;
-      padding-right: 51px; }
-      form ul.formCheckbox li label {
-        display: flex;
-        align-items: center;
-        margin: 0.4em 0; }
-        form ul.formCheckbox li label .checkboxLabel {
-          font-size: 1.2em; }
-        form ul.formCheckbox li label input {
-          margin-left: auto; }
-  form textarea#tinyMCE {
-    min-height: 600px; }
 header {
   color: white;
   box-shadow: 2px 6px 11px #aaa;
@@ -350,7 +358,7 @@ header {
           border-bottom: solid 2px transparent;
           padding-bottom: 0.4em;
           text-transform: uppercase;
-          color: #004a5d;
+          color: #306a8d;
           position: relative;
           z-index: 2; }
         header .headerContainer ul.nav li ul {
@@ -367,7 +375,7 @@ header {
               padding: 0;
               margin: 0; }
               header .headerContainer ul.nav li:hover ul li:hover {
-                background: #31b8ef; }
+                background: #1198cf; }
                 header .headerContainer ul.nav li:hover ul li:hover a {
                   color: white; }
               header .headerContainer ul.nav li:hover ul li a {
@@ -375,7 +383,7 @@ header {
                 padding: 1em 2em;
                 display: block; }
     header .headerContainer i {
-      background: #004a5d;
+      background: #306a8d;
       border-radius: 50%;
       color: white;
       display: inline-flex;
@@ -385,7 +393,7 @@ header {
       justify-content: center;
       margin-right: 13px; }
       header .headerContainer i:hover {
-        background: #007390; }
+        background: #3d87b3; }
 /* listView.scss */
 .collatedGridHeader, .collatedGrid {
   display: grid;
@@ -397,7 +405,7 @@ header {
 
 .collatedGridHeader {
   color: white;
-  background: #31b8ef; }
+  background: #1198cf; }
   .collatedGridHeader > div {
     display: flex;
     align-items: center;
@@ -426,7 +434,7 @@ header {
   .collatedGrid .row.odd {
     background: lightgray; }
     .collatedGrid .row.titleRow a {
-      color: #004a5d;
+      color: #306a8d;
       font-size: 1.1em;
       text-decoration: none; }
       .collatedGrid .row.titleRow a:hover {
@@ -435,7 +443,7 @@ header {
       opacity: 0;
       position: absolute;
       background: white;
-      border: 1px #004a5d solid;
+      border: 1px #306a8d solid;
       padding: 1em;
       z-index: -1;
       transition: opacity 0.1s ease-in, z-index 1s linear; }
@@ -457,7 +465,7 @@ header {
           cursor: pointer; }
       .collatedGrid .row.cats .seeMore {
         text-decoration: none;
-        color: #004a5d; }
+        color: #306a8d; }
 .smallSearchForm {
   display: flex;
   width: 50%;
@@ -477,10 +485,3 @@ header {
     clear: right; }
   .smallSearchForm ~ .clear {
     clear: both; }
-.articleContainer h3.title {
-  font-size: 2.4em;
-  margin-bottom: 13px; }
-  .articleContainer .singleArticleBorder {
-    border: solid 1px;
-    padding: 1em 2em;
-    border-radius: 3px; }
