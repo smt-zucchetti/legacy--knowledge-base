@@ -6,10 +6,10 @@
 					<i class="far fa-minus-square"></i>
 					<i class="far fa-plus-square hide"></i>
 				</a>
-				@if($folder->id !== NULL)
-					@include('partials/folder', ['id' => $folder->id, 'name' => $folder->name])
-				@else
+				@if($folder->id === null)
 					@include('partials/folder', ['id' => null, 'name' => 'Knowledge Base'])
+				@else
+					@include('partials/folder', ['id' => $folder->id, 'name' => $folder->name])					
 				@endif
 
 				@if(!empty($folder->childFolders) && count($folder->childFolders) > 0)
@@ -21,7 +21,7 @@
 @elseif($type == "files")
 	@foreach($folders as $folder)
 		@php($hasContents = false)
-		<li class="fileList {{$folder->id == null?'selected':''}}" data-id="{{$folder->id == null?'null':$folder->id}}">
+		<li class="contentsList {{$folder->id === null?'shown':''}}" data-id="{{$folder->id === null?'null':$folder->id}}">
 			<ul>
 				@foreach($folder->childFolders as $childFolder)
 					<li>
@@ -31,7 +31,7 @@
 				@endforeach
 				@foreach($folder->articlesArr as $articleId => $articleTitle)
 					<li>
-						<a href="readArticle/{{$articleId}}">
+						<a href="readArticle/{{$articleId}}" class="file">
 							<i class="far fa-file"></i>
 							<span class="itemTitle">{{$articleTitle}}</span>
 						</a>

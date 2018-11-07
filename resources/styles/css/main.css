@@ -131,56 +131,65 @@
       display: none; }
 
 .articleTree {
-  display: flex; }
+  display: flex;
+  min-height: 400px; }
   .articleTree .foldersWrapper {
     width: 30%;
     overflow-x: scroll; }
   .articleTree .foldersWrapper ul.noFolder {
     padding: 0; }
-  .articleTree .foldersWrapper li.folderList {
-    white-space: nowrap; }
-    .articleTree .foldersWrapper li.folderList a.collapseExpandAnchor {
-      text-decoration: none; }
-      .articleTree .foldersWrapper li.folderList a.collapseExpandAnchor .fa-minus-square, .articleTree .foldersWrapper li.folderList a.collapseExpandAnchor .fa-plus-square {
-        color: dimgray;
-        transition: color 0.5s;
-        display: inline-block; }
-        .articleTree .foldersWrapper li.folderList a.collapseExpandAnchor .fa-minus-square:hover, .articleTree .foldersWrapper li.folderList a.collapseExpandAnchor .fa-plus-square:hover {
-          cursor: pointer;
-          color: black; }
-        .articleTree .foldersWrapper li.folderList a.collapseExpandAnchor .fa-minus-square.hide, .articleTree .foldersWrapper li.folderList a.collapseExpandAnchor .fa-plus-square.hide {
-          display: none; }
-    .articleTree .foldersWrapper li.folderList a.folder {
-      padding: 2px 8px;
-      text-decoration: none;
-      display: inline-block; }
-      .articleTree .foldersWrapper li.folderList a.folder.selected {
-        background: darkblue;
-        color: white; }
-      .articleTree .foldersWrapper li.folderList a.folder .fa-folder {
-        font-size: 30px; }
+  .articleTree .foldersWrapper ul.hide {
+    display: none; }
+    .articleTree .foldersWrapper ul li.folderList {
+      white-space: nowrap; }
+      .articleTree .foldersWrapper ul li.folderList a.collapseExpandAnchor {
+        text-decoration: none; }
+        .articleTree .foldersWrapper ul li.folderList a.collapseExpandAnchor .fa-minus-square, .articleTree .foldersWrapper ul li.folderList a.collapseExpandAnchor .fa-plus-square {
+          color: dimgray;
+          transition: color 0.5s;
+          display: inline-block; }
+          .articleTree .foldersWrapper ul li.folderList a.collapseExpandAnchor .fa-minus-square:hover, .articleTree .foldersWrapper ul li.folderList a.collapseExpandAnchor .fa-plus-square:hover {
+            cursor: pointer;
+            color: black; }
+          .articleTree .foldersWrapper ul li.folderList a.collapseExpandAnchor .fa-minus-square.hide, .articleTree .foldersWrapper ul li.folderList a.collapseExpandAnchor .fa-plus-square.hide {
+            display: none; }
   .articleTree .filesWrapper {
     width: 70%; }
-  .articleTree .filesWrapper li.fileList {
+  .articleTree .filesWrapper li.contentsList {
     display: none; }
-    .articleTree .filesWrapper li.fileList a {
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      color: dimgray; }
-    .articleTree .filesWrapper li.fileList.selected {
+    .articleTree .filesWrapper li.contentsList.shown {
       display: list-item; }
-    .articleTree .filesWrapper li.fileList li {
-      padding-bottom: 1em; }
-      .articleTree .filesWrapper li.fileList li .far.fa-file, .articleTree .filesWrapper li.fileList li .fas.fa-folder {
+    .articleTree .filesWrapper li.contentsList ul {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      padding: 0; }
+      .articleTree .filesWrapper li.contentsList ul li .file, .articleTree .filesWrapper li.contentsList ul li .folder {
         font-size: 2em;
-        margin-right: 8px; }
+        margin-right: 8px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        color: dimgray; }
+        .articleTree .filesWrapper li.contentsList ul li .file.active, .articleTree .filesWrapper li.contentsList ul li .folder.active {
+          background: red; }
+        .articleTree .filesWrapper li.contentsList ul li .file .itemTitle, .articleTree .filesWrapper li.contentsList ul li .folder .itemTitle {
+          font-size: 0.5em;
+          margin-left: 0.5em; }
   .articleTree .foldersWrapper, .articleTree .filesWrapper {
     border: solid 1px black; }
   .articleTree .foldersWrapper > ul, .articleTree .filesWrapper > ul {
     padding-left: 10px; }
     .articleTree .foldersWrapper > ul li, .articleTree .filesWrapper > ul li {
       list-style-type: none; }
+  .articleTree .foldersWrapper li.folderList .file, .articleTree .filesWrapper li.folderList .file, .articleTree .foldersWrapper li.contentsList .file, .articleTree .filesWrapper li.contentsList .file, .articleTree .foldersWrapper li.folderList .folder, .articleTree .filesWrapper li.folderList .folder, .articleTree .foldersWrapper li.contentsList .folder, .articleTree .filesWrapper li.contentsList .folder {
+    padding: 2px 8px;
+    text-decoration: none;
+    display: inline-block; }
+    .articleTree .foldersWrapper li.folderList .file.selected, .articleTree .filesWrapper li.folderList .file.selected, .articleTree .foldersWrapper li.contentsList .file.selected, .articleTree .filesWrapper li.contentsList .file.selected, .articleTree .foldersWrapper li.folderList .folder.selected, .articleTree .filesWrapper li.folderList .folder.selected, .articleTree .foldersWrapper li.contentsList .folder.selected, .articleTree .filesWrapper li.contentsList .folder.selected {
+      background: darkblue;
+      color: white; }
+    .articleTree .foldersWrapper li.folderList .file .fa-folder, .articleTree .filesWrapper li.folderList .file .fa-folder, .articleTree .foldersWrapper li.contentsList .file .fa-folder, .articleTree .filesWrapper li.contentsList .file .fa-folder, .articleTree .foldersWrapper li.folderList .folder .fa-folder, .articleTree .filesWrapper li.folderList .folder .fa-folder, .articleTree .foldersWrapper li.contentsList .folder .fa-folder, .articleTree .filesWrapper li.contentsList .folder .fa-folder {
+      font-size: 30px; }
 
 .articleGUI .fa-folder, .articleTree .fa-folder {
   color: dodgerblue; }
