@@ -63,30 +63,29 @@ class ArticleController extends Controller
 
  	public function sortArticles($param, $dir, $srchTrm = null){
 
- 		if($srchTrm === null){
-	 		$articles = self::__getAllArticles($param, $dir);
-	 	}else{
-	 		$articles = self::__getArticlesWithSearch($srchTrm, $param, $dir);
-	 	}
+	 	$articles = self::__getAllArticles($param, $dir, $srchTrm);
 
 	 	return view('partials/articleList')->with(['articles' => $articles, 'sorted' => [true]]);
 
  	}
 
- 	public function __getAllArticles($param = null, $dir = null){
+ 	public function __getAllArticles($param = null, $dir = null, $srchTrm = null){
 
  		$articles = DB::table('Articles as a')
-		 		->leftJoin('Folders as f', 'f.id', '=', 'a.folderId')
 	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
-	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
-	            ->select(array(
-	            			'a.*', 
-	            			'f.name as folderName',
-	            			'f.id as folderId',
+	            ->leftJoin('Categories as c', function($leftJoin){
+	            	$leftJoin->on('c.ID', '=', 'a_c.categoryId');
+	            	$leftJoin->where('c.deleted', 0);
+	            })
+	            ->select('a.*', 
 	            			DB::raw('group_concat(c.Name) as categoryNames'), 
 	            			DB::raw('group_concat(c.ID) as categoryIds')
-	            	))
-	            ->where('a.deleted', '=', false)
+	            	)
+	            ->where('a.deleted', 0)
+	            ->when($srchTrm !== null, function($query) use($srchTrm){
+		            $query->where('a.Title', 'like', '%'.$srchTrm.'%');
+	                $query->orWhere('a.textOnlyContent', 'like', '%'.$srchTrm.'%');	
+	            })
 	            ->orderBy('dateCreated', 'DESC')
 	           	->groupBy('a.ID')
 	            ->get();
@@ -155,9 +154,6 @@ class ArticleController extends Controller
 		return view('readArticlesWrapper')->with(array('results' => $results, 'curFolderId' => $curFolderId, 'pathArr' => $pathArr, 'type' => 'GUI') );
  	}
 
-
-
-
  	public function __getFolderPath($curFolderId){
  		
  		$pathArr = array();
@@ -176,8 +172,6 @@ class ArticleController extends Controller
 	 	return array_reverse($pathArr);
 
  	}
-
-
 
  	public function __getArticleGUI($parentFolderId = null){
 
@@ -282,32 +276,9 @@ class ArticleController extends Controller
 
  	public function searchArticles(){
 
- 		$articles = self::__getArticlesWithSearch($_GET['search']);
+ 		$articles = self::__getAllArticles(null, null, $_GET['search']);
 
  		return view('readArticles')->with(['articles' => $articles, 'srchTrm' => $_GET['search'], 'sorted' => [false]]);
- 	}
-
- 	public function __getArticlesWithSearch($srchTrm, $param = null, $dir = null){
-
- 		$articles = DB::table('Articles as a')
-	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
-	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
-	            ->select('a.*',
-	            	DB::raw('group_concat(c.Name) as categoryNames'), 
-	            	DB::raw('group_concat(c.ID) as categoryIds'))
-	            ->where('a.deleted', 0)
-	            ->where(function($query) use($srchTrm){
-	            	$query->where('a.Title', 'like', '%'.$srchTrm.'%')
-                	->orWhere('a.textOnlyContent', 'like', '%'.$srchTrm.'%');	
-	            })
-	            ->orderBy('dateCreated', 'DESC')
-	           	->groupBy('a.ID')
-	            ->get();
-
-	    $articles = $this->SortResults($articles, $param, $dir);
-
-      	return $articles;
-
  	}
 
 }
