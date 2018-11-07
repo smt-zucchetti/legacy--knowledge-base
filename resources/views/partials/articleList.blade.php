@@ -4,7 +4,7 @@
 @include('partials/listHeader', ['type' => 'articles'])
 
 
-<div class="collatedGrid {{$sorted[0] == true?'sorted':'noSort'}} {{Auth::check()?'loggedIn':''}}">
+<div class="collatedGrid {{Auth::check()?'loggedIn':''}}">
 
 @if(count($articles) === 0)
 	<h2>No results</h2>

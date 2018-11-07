@@ -403,7 +403,6 @@ header {
       margin-right: 13px; }
       header .headerContainer i:hover {
         background: #3d87b3; }
-/* listView.scss */
 .collatedGridHeader, .collatedGrid {
   display: grid;
   grid-template-columns: 1fr 1fr 0.7fr 1fr; }

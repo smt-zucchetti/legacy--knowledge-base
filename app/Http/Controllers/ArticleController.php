@@ -31,7 +31,7 @@ class ArticleController extends Controller
 	 		$folders = $this->getFolders();
 	 		$this->__createFolderHierarchy($folders);
 
-	 		return view('createArticle', array('categories' => $categories, 'folderHierarchy' => $folders));
+	 		return view('createArticle', ['categories' => $categories, 'folderHierarchy' => $folders]);
 	 	}else{
 
 
@@ -65,7 +65,7 @@ class ArticleController extends Controller
 
 	 	$articles = self::__getAllArticles($param, $dir, $srchTrm);
 
-	 	return view('partials/articleList')->with(['articles' => $articles, 'sorted' => [true]]);
+	 	return view('partials/articleList')->with(['articles' => $articles]);
 
  	}
 
@@ -126,7 +126,7 @@ class ArticleController extends Controller
 	            ->get();
 	    $featuredArticles->sortBy('dateCreated');
 
-		return view('readArticles')->with(['articles' => $articles, 'featuredArticles' => $featuredArticles, 'sorted' => array(false)]);
+		return view('readArticles')->with(['articles' => $articles, 'featuredArticles' => $featuredArticles]);
  	}
 
  
@@ -135,14 +135,14 @@ class ArticleController extends Controller
 		$folders = $this->getFolders();
 	    $this->__createFolderHierarchy($folders, false);
 
-		return view('readArticlesWrapper')->with(array('folders' => $folders, 'curFolderId' => $curFolderId, 'type' => 'tree') );
+		return view('readArticlesWrapper')->with(['folders' => $folders, 'curFolderId' => $curFolderId, 'type' => 'tree']);
  	} 	
 
  	public function articleList(){
 
  		$articles = self::__getAllArticles();
 
-		return view('readArticlesWrapper')->with(array('articles' => $articles, 'sorted' => array(false), 'type' => 'list'));
+		return view('readArticlesWrapper')->with(['articles' => $articles, 'type' => 'list']);
  	}
 
  	public function readArticleGUI($curFolderId = null){
@@ -151,7 +151,7 @@ class ArticleController extends Controller
 
 		$pathArr = self::__getFolderPath($curFolderId);
 
-		return view('readArticlesWrapper')->with(array('results' => $results, 'curFolderId' => $curFolderId, 'pathArr' => $pathArr, 'type' => 'GUI') );
+		return view('readArticlesWrapper')->with(['results' => $results, 'curFolderId' => $curFolderId, 'pathArr' => $pathArr, 'type' => 'GUI']);
  	}
 
  	public function __getFolderPath($curFolderId){
@@ -166,7 +166,7 @@ class ArticleController extends Controller
 	 		
 	 		$curFolderId = $folder->parentId;
 
-	 		$pathArr[] = array('name' => $folder->name, 'id' => $folder->id);
+	 		$pathArr[] = ['name' => $folder->name, 'id' => $folder->id];
 	 	}
 
 	 	return array_reverse($pathArr);
@@ -187,7 +187,7 @@ class ArticleController extends Controller
 	           	->orderBy('f.id', 'DESC')
 	           	->get();
 
-	    return array('articles' => $articles, 'folders' => $folders);
+	    return ['articles' => $articles, 'folders' => $folders];
  	}
 
  	public function __getArticle($articleId){
@@ -278,7 +278,7 @@ class ArticleController extends Controller
 
  		$articles = self::__getAllArticles(null, null, $_GET['search']);
 
- 		return view('readArticles')->with(['articles' => $articles, 'srchTrm' => $_GET['search'], 'sorted' => [false]]);
+ 		return view('readArticles')->with(['articles' => $articles, 'srchTrm' => $_GET['search']]);
  	}
 
 }

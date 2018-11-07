@@ -39,7 +39,7 @@ class CategoryController extends Controller
 
  			$categories = $this->sortResults($categories, $param, $dir);
 
- 			return view('readCategories', ['categories' => $categories, 'sorted' => [$param !== null?true:false]]);
+ 			return view('readCategories', ['categories' => $categories]);
 
  		}else{
  			return view('home');
@@ -65,9 +65,6 @@ class CategoryController extends Controller
 				'deleted'		=> true,	
 	 			'lastUpdatedBy'	=> Auth::user()->id
  		));
-
- 		//Categories::where('ID', $categoryId)->delete();
- 		//Articles_Categories::where('categoryId', $categoryId)->delete();
 
  		return self::readCategories();
  	}

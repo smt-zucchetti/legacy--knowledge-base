@@ -8,7 +8,7 @@
 @include('partials/listHeader', ['type' => 'folders'])
 
 @php($i = 0)
-<div class="collatedGrid categories {{ $sorted[0] == true?'sorted':'noSort' }}">
+<div class="collatedGrid folders">
 	@foreach($foldersScalar as $folder)
 		@php($row = ($i % 2 == 0)?"row odd":"row" )
 		<div class="{{$row}} titleRow">

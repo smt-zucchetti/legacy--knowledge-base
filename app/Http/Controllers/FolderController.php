@@ -22,12 +22,12 @@ class FolderController extends Controller
 
 	public function createFolder(){
 
- 		DB::table('Folders')->insert(array(
+ 		DB::table('Folders')->insert([
  			'Name' 			=> $_POST['name'], 
  			'dateCreated' 	=> date('Y-m-d H:i:s'),
  			'parentId'		=> !empty($_POST['parentId'])?$_POST['parentId']:null,
  			'createdBy'		=> Auth::user()->id
- 		));
+ 		]);
 
  		return self::readFolders();
  	}
@@ -48,7 +48,7 @@ class FolderController extends Controller
 	        $this->__createFolderHierarchy($foldersScalar, true);
 	 		$foldersScalar = $this->sortResults($foldersScalar, $param, $dir);
 
- 			return view('readFolders', ['foldersScalar' => $foldersScalar, 'folderHierarchy' => $folderHierarchy, 'sorted' => [$param !== null?true:false]] );
+ 			return view('readFolders', ['foldersScalar' => $foldersScalar, 'folderHierarchy' => $folderHierarchy] );
  		}else{
  			return view('home');
  		}

@@ -4,17 +4,13 @@
 
 @section('main')
 
-
 @include('partials/actionItems', ['items' => array('addCategory')])
-
 
 @include('partials/listHeader', ['type' => 'categories'])
 
-
 @php($i = 0)
-@php($sort = $sorted[0] == true?'sorted':'noSort')
 
-<div class="collatedGrid categories {{$sort}}">
+<div class="collatedGrid categories">
 	@foreach($categories as $category)
 		@php($row = ($i % 2 == 0)?"row odd":"row")
 		<div class="row {{$row}} titleRow">

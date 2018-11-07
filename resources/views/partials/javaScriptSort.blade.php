@@ -32,13 +32,13 @@
 		      	},
 
 		        success: function(response){
-		            $('.collatedGrid.noSort').empty();
-		            var contents = $(response).filter('.collatedGrid.sorted').html();
+		            $('.collatedGrid').empty();
+		            var contents = $(response).filter('.collatedGrid').html();
 		            if(contents == null){
-		            	contents = $(response).find('.collatedGrid.sorted').html();
+		            	contents = $(response).find('.collatedGrid').html();
 		            }
-		            console.log(contents);
-		            $('.collatedGrid.noSort').append(contents);
+		            //console.log(contents);
+		            $('.collatedGrid').append(contents);
 		    	},
 			});
 		}catch(e){
