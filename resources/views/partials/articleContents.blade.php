@@ -3,7 +3,7 @@
 </label>
 
 <label for="featured">Featured:
-	<input type="checkbox" name="featured" {{!empty($article) && $article->featured == 1?'checked':''}} id="featured" {!!$readOnly?"onclick='return false;'":""!!} />
+	<input type="checkbox" name="featured" value="1" {{!empty($article) && $article->featured == 1?'checked':''}} id="featured" {!!$readOnly?"onclick='return false;'":""!!} />
 </label>
 	
 <label class="detached">Categories: </label>

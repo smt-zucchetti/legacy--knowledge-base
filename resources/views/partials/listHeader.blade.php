@@ -6,14 +6,16 @@
 		@php($name = ($type === "folders")?"name":"Name")
 
 		<div class="collatedGridHeader {{$type}}" data-action="{{$action}}">
-			<div>
+			<div class="row">
 				@include('partials/sortArrows', ['name' => $name])
 				Name
 			</div>
-			<div></div>
-			<div>
+			<div class="row">
 				@include('partials/sortArrows', ['name' => 'dateCreated', 'selected' => true])
 				Date Created
+			</div>
+			<div class="row noSort">
+				Actions
 			</div>
 		</div>
 		@break
@@ -21,22 +23,22 @@
 	@case('articles')
 
 		<div class="collatedGridHeader {{Auth::check()?'loggedIn':''}}" data-action="sortArticles" data-srchTrm="{{!empty($srchTrm)?$srchTrm:''}}">
-			<div>
+			<div class="row">
 				@include('partials/sortArrows', ['name' => 'Title'])
 				Title 
 			</div>
-			{!! Auth::check()?"<div>Actions</div>":"" !!}
-			<div class="categoryMenuItem">
+			<div class="row noSort">
 				Categories
 			</div>
-			<div class="featuredMenuItem">
+			<div class="row featuredMenuItem">
 				@include('partials/sortArrows', ['name' => 'featured'])
 				Featured
 			</div>
-			<div class="dateCreatedMenuItem">
+			<div class="row dateCreatedMenuItem">
 				@include('partials/sortArrows', ['name' => 'dateCreated', 'selected' => true])
 				Date Created
 			</div>
+			{!! Auth::check()?"<div class='row noSort'>Actions</div>":"" !!}
 		</div>
 
 	@endswitch

@@ -12,11 +12,11 @@
 	</div>
 @endif
 
-@include('partials/searchForm')
-
 @if (!empty($featuredArticles))
 	@include('partials/featuredArticles' )
 @endif
+
+@include('partials/searchForm')
 
 @include('partials/articleList')
 

@@ -1,0 +1,120 @@
+@import 'colors.scss';
+
+@mixin buttonColor($color) {
+    background-color: $color;
+    &:hover{
+        background-color: lighten($color, 10%);
+        cursor: pointer;
+    }
+}
+
+form.smallForm{
+    min-width: 450px;
+    font-size: 1rem;
+
+    .validationError{
+        color: orangered; 
+        font-size: 1em;
+        opacity: 0;
+        transition: opacity .3s ease-in;
+        margin: .4em 0;
+
+        &.visible{
+            opacity: 1;
+        }
+    }
+
+     h2{
+        margin-top: 0;
+    }
+
+    input[type=text]{
+        margin-top: 5px;
+        min-height: 36px;
+    }
+
+    label{
+        display: block;
+        font-size: 1.1em;
+        margin-bottom: 24px;
+
+        select{
+            transform: scale(1.5);
+            transform-origin: center left;
+            margin-left: 10px;
+        }
+    }
+
+    button.button{
+        float: right;
+    }
+}
+
+form.smallForm,
+form.smallSearchForm{
+
+    input[type=text]{
+        width: 100%;
+        font-size: 1.2em;
+        border: solid 1px gray;
+        padding-left: 4px;
+        box-sizing: border-box;
+
+        &:focus{
+            outline: none;
+        }
+    }
+
+    button.button{
+        color: white;
+        border: none;
+        font-size: 17px;
+        padding: .5em 2em;
+
+        &:focus{
+            outline: 0;
+        }
+
+        &.updateBtn{
+            @include buttonColor($blue);
+        }
+    
+        &.cancelBtn{
+            @include buttonColor($orange);
+            margin-right:10px;
+        }
+
+        &.deleteBtn{
+            @include buttonColor(red);
+            margin-right: 10px;
+         }
+    }
+}
+
+form.smallSearchForm{
+    display: flex;
+    width: 50%;
+    float: right;
+    align-items: center;
+    max-width: 480px;
+    height: 45px;
+
+    input[type=text]{
+        padding-left: 9px;
+        height: 100%;
+    }
+
+    button.button{
+        height: 100%;
+    }
+
+    & ~ .advSearch{
+        color:$orange;
+        float: right;
+        clear: right;
+    }
+
+    & ~ .clear{
+        clear: both;
+    }
+}

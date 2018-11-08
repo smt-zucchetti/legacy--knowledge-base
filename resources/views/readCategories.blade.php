@@ -16,40 +16,23 @@
 		<div class="row {{$row}} titleRow">
 			{{$category->Name}}
 		</div>
-		<div class="{{$row}} actionItems">
-			<div style="display: none;" id="update-category-{{$category->ID}}">
-				<form method="post" action="<?php echo url('/updateCategory/'.$category->ID);?>">
-					@csrf
-					<h2>Edit Category Name</h2>
-					<input type="text" name="name" value="{{$category->Name}}" />
-					<input type="submit" value="Edit" />
-					<button class="cancelButton" type="button" data-fancybox-close="" >
-						Cancel
-					</button>
-				</form>
-			</div>
-			<a data-fancybox data-src="#update-category-{{$category->ID}}" href="javascript:;"  >
-				<i class="fas fa-pencil-alt"></i>
-				Edit
-			</a>
-
-			<div style="display: none;" id="delete-category-{{$category->ID}}">
-				<form method="post" action="<?php echo url('/deleteCategory/'.$category->ID);?>">
-					@csrf
-					<h2>Delete Category "{{$category->Name}}"?</h2>
-					<input type="submit" value="Delete" />
-					<button class="cancelButton" type="button" data-fancybox-close="" >
-						Cancel
-					</button>
-				</form>
-			</div>
-			<a data-fancybox data-src="#delete-category-{{$category->ID}}" href="javascript:;" >
-				<i class="fas fa-trash-alt"></i>
-				Delete
-			</a>
-		</div>
 		<div class="{{$row}}">
 			{{$category->dateCreated}}
+		</div>
+		<div class="{{$row}} actionItems">
+			<div style="display: none;" id="updateCategory-{{$category->ID}}">
+				@include('partials/smallForms/updateCategory')
+			</div>
+			<a data-fancybox data-src="#updateCategory-{{$category->ID}}" href="javascript:;"  >
+				<i class="fas fa-pencil-alt"></i>
+			</a>
+
+			<div style="display: none;" id="deleteCategory-{{$category->ID}}">
+				@include('partials/smallForms/deleteCategory')
+			</div>
+			<a data-fancybox data-src="#deleteCategory-{{$category->ID}}" href="javascript:;" >
+				<i class="fas fa-trash-alt"></i>
+			</a>
 		</div>
 		@php($i++)
 	@endforeach
@@ -60,9 +43,9 @@
 <script>
 	$(document).ready(function(){
 
-		$('#addCategory > form').submit(function(){
-			if( $(this).find('input[name=name]').val() == ""){
-				$('.validationError').removeClass('hidden');	
+		$('form.updateCategory').submit(function(e){
+			if( $(this).find('input[name=name]').val() === ""){
+				$('.validationError').addClass('visible');	
 
 				return false;
 			}else{

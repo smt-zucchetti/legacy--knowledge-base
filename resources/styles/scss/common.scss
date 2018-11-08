@@ -26,9 +26,11 @@ header, main, footer{
 }
 
 .actionItems{
+    display: inline-block;
+    
     a{
         text-decoration: none;
-        margin-right: 15px;
+        margin-right: 9px;
         color: dimgray;
         transition: color .5s;
         display: inline-block;

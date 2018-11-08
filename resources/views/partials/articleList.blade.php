@@ -20,27 +20,6 @@
 				<i class="far fa-file"></i> {{$article->Title}}
 			</a>
 		</div>
-		@if (Auth::check())
-			<div class="{{$row}} actionItems">
-				<div style="display: none;" id="delete-article-{{$article->ID}}">
-					<form method="post" action="{{ url('/deleteArticle/'.$article->ID) }}">
-						@csrf
-						<h2>Delete Article "{{$article->Title}}"?</h2>
-						<input type="submit" value="Delete" />
-						<button class="cancelButton" type="button" data-fancybox-close="" >
-							Cancel
-						</button>
-					</form>
-				</div>
-				<a data-fancybox data-src="#delete-article-{{$article->ID}}" href="javascript:;">
-					<i class="fas fa-trash-alt"></i> Delete 
-				</a>
-				<a href="{{ url('/updateArticle/'.$article->ID) }}" >
-					<i class="fas fa-pencil-alt"></i>
-					Edit
-				</a>
-			</div>
-		@endif
 		<div class="{{$row}} cats">
 			<div class="categoryList">
 				<i class="fas fa-times-circle"></i>
@@ -58,6 +37,19 @@
 		<div class="{{$row}}">
 			{{$article->dateCreated}}
 		</div>
+		@if (Auth::check())
+			<div class="{{$row}} actionItems">
+				<div style="display: none;" id="delete-article-{{$article->ID}}">
+					@include('partials/smallForms/deleteArticle')
+				</div>
+				<a data-fancybox data-src="#delete-article-{{$article->ID}}" href="javascript:;">
+					<i class="fas fa-trash-alt"></i> 
+				</a>
+				<a href="{{ url('/updateArticle/'.$article->ID) }}" >
+					<i class="fas fa-pencil-alt"></i>
+				</a>
+			</div>
+		@endif
 		@php($i++)
 	@endforeach
 @endif

@@ -3,15 +3,15 @@
 .collatedGridHeader, 
 .collatedGrid{
     display: grid;
-    grid-template-columns: 1fr 1fr .7fr 1fr;
+    grid-template-columns: 1.45fr .9fr .8fr 1.3fr;
 
     &.loggedIn{
-        grid-template-columns: 1fr 1fr 1fr .7fr 1fr;            
+        grid-template-columns:  1.45fr .9fr .8fr 1.3fr .6fr;            
     }
 
     &.categories,
     &.folders{
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 2fr 1fr .6fr;
     }
 }
 
@@ -19,7 +19,7 @@
     color:white;
     background: $blue;
 
-    & > div{
+    & > .row{
         display: flex;
         align-items: center;
         padding:0 0.4em;
@@ -47,7 +47,7 @@
                 margin-bottom: 4px;
             }
         }
-        &.categoryMenuItem{
+        &.noSort{
             padding-left: 1.6em;
         }
     }
@@ -56,12 +56,9 @@
 
 
 .collatedGrid {
-   
-    & > div{
-        padding: 1em 1em 1em 1.6em;
-    }
 
     .row{
+        padding: 1em 1em 1em 1.6em;
 
         &.odd{
             background: lightgray;
@@ -78,6 +75,7 @@
         }
 
         &.cats{
+            position: relative;
 
             .categoryList {
                 opacity: 0;
@@ -88,11 +86,14 @@
                 z-index: -1;
                 transition: opacity .1s ease-in,
                             z-index 1s linear;  
-                
+                left: 50%;
+                transform: translateX(-50%);
+                box-sizing: border-box;
+
                 &.show{
                     opacity: 1;
                     z-index: 2;
-                    transition: opacity .6s ease-in;   
+                    transition: opacity .3s ease-in;   
                 }
 
                 ul{
@@ -102,6 +103,7 @@
 
                     li{
                         margin-bottom: .8em;
+                        white-space: pre;
 
                         &:last-child{
                             margin-bottom: 0;

@@ -1,0 +1,1 @@
+<button class="button deleteBtn" type="submit">Delete</button>
