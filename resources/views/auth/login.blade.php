@@ -1,43 +1,36 @@
 @extends('layouts.mainLayout')
 @section('main')
 
-<div class="authContainer">
+<form method="POST" action="{{ route('login') }}" class="smallForm">
+    <h2>{{ __('Login') }}</h2>
 
-    <form method="POST" action="{{ route('login') }}" class="authForm">
-        <h2>{{ __('Login') }}</h2>
+    @csrf
 
-        @csrf
-
-        <label for="email">{{ __('E-Mail Address') }}</label>      
+    <label for="email">{{ __('E-Mail Address:') }}
         <input id="email" type="email" class="{{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
         @if ($errors->has('email'))
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $errors->first('email') }}</strong>
-            </span>
+            <div class="validationError visible">{{ $errors->first('email') }}</div>
         @endif
-        
-        <label for="password">{{ __('Password') }}</label>
+    </label>      
+    
+    
+    <label for="password">{{ __('Password:') }}
         <input id="password" type="password" class="{{ $errors->has('password') ? 'is-invalid' : '' }}" name="password" required>
-
         @if ($errors->has('Passwordd'))
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $errors->first('password') }}</strong>
-            </span>
+            <div class="validationError visible">{{ $errors->first('password') }}</div>
         @endif
+    </label>
+    
+    <label class="form-check-label" for="remember">
+        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+        {{ __('Remember Me') }}
+    </label>
+            
+    <button type="submit" class="button updateBtn">{{ __('Login') }}</button>
 
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-            <label class="form-check-label" for="remember">{{ __('Remember Me') }}</label>
-        </div>
-                
-        <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
-        <div class="optionLinks">
-            <a class="btn btn-link" href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
-            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-        </div>
+    <a class="link" href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>&nbsp;&nbsp;&nbsp;
+    <a class="link" href="{{ route('register') }}">{{ __('Register') }}</a>
 
-    </form>
-                
-</div>
-
+</form>
+       
 @stop

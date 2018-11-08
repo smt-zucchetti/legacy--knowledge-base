@@ -8,13 +8,16 @@
     }
 }
 
-form.smallForm{
+form.smallForm,
+div.smallForm{
     min-width: 450px;
     font-size: 1rem;
+    max-width: 650px;
+    margin: 0 auto;
 
+    .validationSuccess,
     .validationError{
-        color: orangered; 
-        font-size: 1em;
+        font-size: 1.15rem;
         opacity: 0;
         transition: opacity .3s ease-in;
         margin: .4em 0;
@@ -23,12 +26,18 @@ form.smallForm{
             opacity: 1;
         }
     }
+    .validationError{
+        color: orangered; 
+    }
+    .validationSuccess{
+        color: $green;
+    }
 
      h2{
         margin-top: 0;
     }
 
-    input[type=text]{
+    input:not([type=checkbox]){
         margin-top: 5px;
         min-height: 36px;
     }
@@ -48,12 +57,21 @@ form.smallForm{
     button.button{
         float: right;
     }
+
+    .link{
+        color: $orange;
+
+        &:hover{
+            text-decoration:none;
+        }
+    }
 }
 
 form.smallForm,
+div.smallForm,
 form.smallSearchForm{
 
-    input[type=text]{
+    input:not([type=checkbox]){
         width: 100%;
         font-size: 1.2em;
         border: solid 1px gray;
@@ -99,7 +117,7 @@ form.smallSearchForm{
     max-width: 480px;
     height: 45px;
 
-    input[type=text]{
+    input[type=checkbox]{
         padding-left: 9px;
         height: 100%;
     }

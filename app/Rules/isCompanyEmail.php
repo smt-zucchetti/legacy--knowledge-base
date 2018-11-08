@@ -25,7 +25,8 @@ class isCompanyEmail implements Rule
      */
     public function passes($attribute, $value)
     {
-        return in_array($value, array('stevenmtune@gmail.com','steven@verticalbookingusa.com'));
+        $authEmailArr = explode(",", env('AUTHORIZED_EMAILS'));
+        return in_array($value, $authEmailArr);
     }
 
     /**
@@ -35,6 +36,6 @@ class isCompanyEmail implements Rule
      */
     public function message()
     {
-        return 'Email address was not approved.';
+        return 'Email address was not approved';
     }
 }

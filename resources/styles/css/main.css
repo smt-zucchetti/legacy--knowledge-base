@@ -452,63 +452,72 @@ ul.fileManagerView {
     .articleForm .validationAlerts ul li {
       list-style-type: none;
       line-height: 2em; }
-form.smallForm {
+form.smallForm, div.smallForm {
   min-width: 450px;
-  font-size: 1rem; }
-  form.smallForm .validationError {
-    color: orangered;
-    font-size: 1em;
+  font-size: 1rem;
+  max-width: 650px;
+  margin: 0 auto; }
+  form.smallForm .validationSuccess, div.smallForm .validationSuccess, form.smallForm .validationError, div.smallForm .validationError {
+    font-size: 1.15rem;
     opacity: 0;
     transition: opacity 0.3s ease-in;
     margin: 0.4em 0; }
-    form.smallForm .validationError.visible {
+    form.smallForm .validationSuccess.visible, div.smallForm .validationSuccess.visible, form.smallForm .validationError.visible, div.smallForm .validationError.visible {
       opacity: 1; }
-  form.smallForm h2 {
+  form.smallForm .validationError, div.smallForm .validationError {
+    color: orangered; }
+  form.smallForm .validationSuccess, div.smallForm .validationSuccess {
+    color: #5a5; }
+  form.smallForm h2, div.smallForm h2 {
     margin-top: 0; }
-  form.smallForm input[type=text] {
+  form.smallForm input:not([type=checkbox]), div.smallForm input:not([type=checkbox]) {
     margin-top: 5px;
     min-height: 36px; }
-  form.smallForm label {
+  form.smallForm label, div.smallForm label {
     display: block;
     font-size: 1.1em;
     margin-bottom: 24px; }
-    form.smallForm label select {
+    form.smallForm label select, div.smallForm label select {
       transform: scale(1.5);
       transform-origin: center left;
       margin-left: 10px; }
-  form.smallForm button.button {
+  form.smallForm button.button, div.smallForm button.button {
     float: right; }
+  form.smallForm .link, div.smallForm .link {
+    color: #f48120; }
+    form.smallForm .link:hover, div.smallForm .link:hover {
+      text-decoration: none; }
 
-form.smallForm input[type=text], form.smallSearchForm input[type=text] {
+form.smallForm input:not([type=checkbox]), div.smallForm input:not([type=checkbox]), form.smallSearchForm input:not([type=checkbox]) {
   width: 100%;
   font-size: 1.2em;
   border: solid 1px gray;
   padding-left: 4px;
   box-sizing: border-box; }
-  form.smallForm input[type=text]:focus, form.smallSearchForm input[type=text]:focus {
+  form.smallForm input:not([type=checkbox]):focus, div.smallForm input:not([type=checkbox]):focus, form.smallSearchForm input:not([type=checkbox]):focus {
     outline: none; }
-  form.smallForm button.button, form.smallSearchForm button.button {
+  form.smallForm button.button, div.smallForm button.button, form.smallSearchForm button.button {
     color: white;
     border: none;
     font-size: 17px;
     padding: 0.5em 2em; }
-  form.smallForm button.button:focus, form.smallSearchForm button.button:focus {
+  form.smallForm button.button:focus, div.smallForm button.button:focus, form.smallSearchForm button.button:focus {
     outline: 0; }
-  form.smallForm button.button.updateBtn, form.smallSearchForm button.button.updateBtn {
+  form.smallForm button.button.updateBtn, div.smallForm button.button.updateBtn, form.smallSearchForm button.button.updateBtn {
     background-color: #1198cf; }
-    form.smallForm button.button.updateBtn:hover, form.smallSearchForm button.button.updateBtn:hover {
+    form.smallForm button.button.updateBtn:hover, div.smallForm button.button.updateBtn:hover, form.smallSearchForm button.button.updateBtn:hover {
       background-color: #26b3ed;
       cursor: pointer; }
-  form.smallForm button.button.cancelBtn, form.smallSearchForm button.button.cancelBtn {
+  form.smallForm button.button.cancelBtn, div.smallForm button.button.cancelBtn, form.smallSearchForm button.button.cancelBtn {
     background-color: #f48120;
     margin-right: 10px; }
-    form.smallForm button.button.cancelBtn:hover, form.smallSearchForm button.button.cancelBtn:hover {
+    form.smallForm button.button.cancelBtn:hover, div.smallForm button.button.cancelBtn:hover, form.smallSearchForm button.button.cancelBtn:hover {
       background-color: #f69c51;
       cursor: pointer; }
-  form.smallForm button.button.deleteBtn, form.smallSearchForm button.button.deleteBtn {
+  form.smallForm button.button.deleteBtn, div.smallForm button.button.deleteBtn, form.smallSearchForm button.button.deleteBtn {
     background-color: red;
     margin-right: 10px; }
-    form.smallForm button.button.deleteBtn:hover, form.smallSearchForm button.button.deleteBtn:hover {
+    form.smallForm button.button.deleteBtn:hover, div.smallForm button.button.deleteBtn:hover, form.smallSearchForm button.button.deleteBtn:hover {
       background-color: #f33;
       cursor: pointer; }
 
@@ -519,7 +528,7 @@ form.smallSearchForm {
   align-items: center;
   max-width: 480px;
   height: 45px; }
-  form.smallSearchForm input[type=text] {
+  form.smallSearchForm input[type=checkbox] {
     padding-left: 9px;
     height: 100%; }
   form.smallSearchForm button.button {

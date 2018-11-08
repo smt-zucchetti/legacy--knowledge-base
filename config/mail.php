@@ -4,7 +4,7 @@ return [
     'driver' => env('MAIL_DRIVER', 'smtp'),
     'host' => env('MAIL_HOST', 'smtp.gmail.com'),
     'port' => env('MAIL_PORT', 587),
-    'from' => ['address' => '', 'name' => 'Knowledge Base App'],
+    'from' => ['address' => env('MAIL_FROM'), 'name' => env('MAIL_SUBJECT')],
     'encryption' => env('MAIL_ENCRYPTION', 'tls'),
     'username' => env('MAIL_USERNAME'),
     'password' => env('MAIL_PASSWORD'),
