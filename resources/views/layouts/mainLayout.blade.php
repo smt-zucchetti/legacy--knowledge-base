@@ -1,7 +1,9 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
     <head>
-        @include(env("APP_ENV") === "dev"? "partials/leafo/scssCompiler":"")
+        @if(env("APP_ENV") === "dev")
+            @include("partials/leafo/scssCompiler")
+        @endif
         @include('partials/head')
     </head>
     <body>
