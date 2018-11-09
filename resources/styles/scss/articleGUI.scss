@@ -1,0 +1,64 @@
+@import 'colors.scss';
+
+
+.articleGUI{
+    .folderPath {
+        background: lightgray;
+        padding: 0.7em;
+        display: flex;
+        align-items: center;
+
+        a:hover{
+           text-decoration:none;
+        }
+
+        i{
+            margin: 0 12px;
+        }
+
+        > *{
+            color: $textGrayDark;
+        }
+    }
+    
+    ul{
+        display: flex;
+        align-items: center;
+        padding-left: 1em;
+       
+        li.objectListItem{
+            list-style-type: none;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            margin-right: 3em;
+
+            &:last-of-type{
+                margin-right: 0;
+            }
+            
+            .objectAnchor{
+                text-align: center;
+                padding: 1rem;
+
+                .fileIcon,
+                .folderIcon{
+                    display: flex;
+                    align-items: center;
+                    height: 83px;
+                    padding-bottom: .4rem;
+                }
+
+                .folderIcon{
+                    font-size: 6em; 
+                }
+
+                .fileIcon{
+                    font-size: 5em;
+                    color: $guiIcon;
+                }
+            }
+        }                
+    }
+}
+

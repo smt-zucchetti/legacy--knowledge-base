@@ -1,0 +1,112 @@
+@import 'colors';
+
+.articleTree{
+    display: flex;
+    min-height: 400px;
+
+    .foldersWrapper{
+        width: 30%;
+        overflow-x: scroll;
+
+        .objectListItem{
+            white-space: nowrap;
+
+            .folderList.hide{
+                display: none;
+            }
+
+            .nodeContainer {
+                display: flex;
+                align-items: center;
+
+                a.collapseExpandAnchor{
+                    text-decoration: none;
+
+                    .fa-minus-square,
+                    .fa-plus-square {
+                        color: $guiFile;
+                        transition: color .5s;
+                        display: inline-block;
+
+                        &:hover{
+                            color: black;
+                        }
+
+                        &.hide{
+                            display: none;
+                        }
+                    }
+                }  
+            }
+        }
+    }
+
+    .filesWrapper{
+        width: 70%;
+
+        li.contentsList{
+            display: none;
+
+            .objectListItem{
+
+                a.fileAnchor{
+                    &.selected{
+                        .fa-file{
+                            color: white;
+                        }
+                    }
+                    &:active{
+                        color: $guiFile;
+                    }
+                }
+            }
+
+            &.shown{
+                display: list-item;
+            }
+
+            ul{
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+                padding: 0;
+            
+            }
+        }
+    }
+
+    .foldersWrapper, 
+    .filesWrapper{
+        border: solid 1px black;
+
+        & > ul{
+            padding-left: 10px;
+
+            li{
+                list-style-type: none;
+            }
+            .objectListItem{
+              
+                a.objectAnchor{
+                    padding: 2px 9px 2px 9px;
+                    display: inline-flex;
+                    align-items: center;
+                    margin-left: 2px;
+
+                    .fileIcon,
+                    .folderIcon{
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 30px;
+                        height: 30px;
+                        margin-right: 7px;
+                    }
+
+                    .folderIcon{
+                        width: 28px;
+                    }
+                }
+            }
+            
+        }
+    }
+}

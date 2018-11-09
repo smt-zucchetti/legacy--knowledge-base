@@ -14,43 +14,42 @@
 		$('.collapseExpandAnchor').click(function(e){
 			e.preventDefault();
 
-			$(this).closest('li.folderList').find('ul').toggleClass('hide');
+			$(this).closest('.nodeContainer').next('.folderList').toggleClass('hide');
 			$(this).find('.fa-minus-square, .fa-plus-square').toggleClass('hide');
 			$(this).find('.folder').toggleClass('selected');
 		});
 
-		$('.foldersWrapper .folder').click(function(e){
+		$('.objectAnchor').click(function(e){
 			e.preventDefault();
 
-			$('.folder').removeClass('selected');
-			$(this).addClass('selected');
+			if($(e.target).parents('.foldersWrapper').length > 0){
+				showContentsInFileWrapper($(this).data('id'));
+				$('.objectAnchor').removeClass('selected');
+			}
 
-			$('.contentsList').removeClass('shown');
-			$('.contentsList[data-id='+ $(this).data('id') +']').addClass('shown');
-		});
-
-		$('.filesWrapper .folder, .filesWrapper .file').click(function(e){
-			e.preventDefault();
+			$('.filesWrapper .objectAnchor').removeClass('selected');
 			
-			$('.filesWrapper .folder, .filesWrapper .file').removeClass('selected');
 			$(this).addClass('selected');
-		});
 
-		$('.filesWrapper .folder, .filesWrapper .file').dblclick(function(e){
-			//e.preventDefault();
+		}).dblclick(function(e){
 
-			if($(this).hasClass('folder')){
-				$('.contentsList').removeClass('shown');
-				$('.contentsList[data-id='+ $(this).data('id') +']').addClass('shown');
+			if($(this).parents('.objectListItem.isFolder').length > 0){
+				showContentsInFileWrapper($(this).data('id'));
 
-				$('.folderList .folder.selected ~ ul').removeClass('hide');
-				$('.folderList .folder').removeClass('selected');
-				$('.folderList .folder[data-id='+ $(this).data('id') +']').addClass('selected');
+				$('.foldersWrapper .objectAnchor.selected').closest('.nodeContainer').next('.folderList').removeClass('hide');
+				
+				$('.foldersWrapper .objectAnchor').removeClass('selected');
+				$('.foldersWrapper .objectAnchor[data-id='+ $(this).data('id') +']').addClass('selected');
 
-			}else if($(this).hasClass('file')){
+			}else if($(this).parents('.objectListItem.isFile').length > 0){
 				window.location.href = $(this).attr('href');
 			}
 
 		});		
+
+		function showContentsInFileWrapper(dataId){
+			$('.contentsList').removeClass('shown');
+			$('.contentsList[data-id='+ dataId +']').addClass('shown');
+		}
 	});
 </script>

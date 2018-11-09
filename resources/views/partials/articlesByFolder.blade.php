@@ -18,17 +18,16 @@
 		<h2>No results</h2>
 	@else
 		<ul>
+			{{--@dd($results)--}}
 			@foreach($results['folders'] as $folder)
-				<li class="fileOrFolder" data-id="{{$folder->id}}">
-					<i class="fas fa-folder"></i><br>
-					<span class="itemTitle">{{$folder->name}}</span>
+				<li class="objectListItem isFolder">
+					@include('partials/html/folder', ['id' => $folder->id, 'name' => $folder->name])
 				</li>
 			@endforeach
 
 			@foreach($results['articles'] as $article)
-				<li class="fileOrFolder" data-id="{{$article->ID}}">
-					<i class="far fa-file"></i><br>
-					<span class="itemTitle">{{$article->Title}}</span>
+				<li class="objectListItem isFolder">
+					@include('partials/html/file', ['id' => $article->ID, 'title' => $article->Title ])
 				</li>
 			@endforeach
 		</ul>
@@ -36,24 +35,21 @@
 </div>
 
 <script>
-	$('.fileManager').on('dblclick', '.fa-file', function(){
-		var fileId = $(this).closest('.fileOrFolder').data('id');
-		var url = 'readArticle/' + fileId;
-
-		location.href = url;
-	});
+	
 </script>
 <script>
 	$(document).ready(function(){
 
-		$('body').click(function(evt){
-			$('.fileOrFolder').removeClass('selected');
-
-			if($(evt.target).hasClass('fa-folder') || $(evt.target).hasClass('fa-file')){
-				$(evt.target).closest('.fileOrFolder').addClass('selected');
-			}
+		$('body').click(function(e){
+			$('.objectAnchor').removeClass('selected');
 		});
 
+		$('.articleGUI').on('click', '.objectAnchor', function(e){
+			e.preventDefault();
+			e.stopPropagation();
+			$('.objectAnchor').removeClass('selected');
+			$(this).addClass('selected');
+		})
 
 		$('.articleGUI').on('click', '.folderPath a', function(e){
 			e.preventDefault();
@@ -65,7 +61,7 @@
 
 		$('.articleGUI').on('dblclick', '.fa-folder', function(){
 			
-			var folderId = $(this).closest('.fileOrFolder').data('id');
+			var folderId = $(this).closest('.objectAnchor').data('id');
 			var url = 'articleGUI/' + folderId;			
 
 			__getAjax(url);

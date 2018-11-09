@@ -1,3 +1,95 @@
+.articleGUI .folderPath {
+  background: lightgray;
+  padding: 0.7em;
+  display: flex;
+  align-items: center; }
+  .articleGUI .folderPath a:hover {
+    text-decoration: none; }
+  .articleGUI .folderPath i {
+    margin: 0 12px; }
+  .articleGUI .folderPath > * {
+    color: #333; }
+  .articleGUI ul {
+    display: flex;
+    align-items: center;
+    padding-left: 1em; }
+  .articleGUI ul li.objectListItem {
+    list-style-type: none;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-right: 3em; }
+    .articleGUI ul li.objectListItem:last-of-type {
+      margin-right: 0; }
+    .articleGUI ul li.objectListItem .objectAnchor {
+      text-align: center;
+      padding: 1rem; }
+      .articleGUI ul li.objectListItem .objectAnchor .fileIcon, .articleGUI ul li.objectListItem .objectAnchor .folderIcon {
+        display: flex;
+        align-items: center;
+        height: 83px;
+        padding-bottom: 0.4rem; }
+      .articleGUI ul li.objectListItem .objectAnchor .folderIcon {
+        font-size: 6em; }
+      .articleGUI ul li.objectListItem .objectAnchor .fileIcon {
+        font-size: 5em;
+        color: #555; }
+.articleTree {
+  display: flex;
+  min-height: 400px; }
+  .articleTree .foldersWrapper {
+    width: 30%;
+    overflow-x: scroll; }
+    .articleTree .foldersWrapper .objectListItem {
+      white-space: nowrap; }
+      .articleTree .foldersWrapper .objectListItem .folderList.hide {
+        display: none; }
+      .articleTree .foldersWrapper .objectListItem .nodeContainer {
+        display: flex;
+        align-items: center; }
+        .articleTree .foldersWrapper .objectListItem .nodeContainer a.collapseExpandAnchor {
+          text-decoration: none; }
+          .articleTree .foldersWrapper .objectListItem .nodeContainer a.collapseExpandAnchor .fa-minus-square, .articleTree .foldersWrapper .objectListItem .nodeContainer a.collapseExpandAnchor .fa-plus-square {
+            color: ;
+            transition: color 0.5s;
+            display: inline-block; }
+            .articleTree .foldersWrapper .objectListItem .nodeContainer a.collapseExpandAnchor .fa-minus-square:hover, .articleTree .foldersWrapper .objectListItem .nodeContainer a.collapseExpandAnchor .fa-plus-square:hover {
+              color: black; }
+            .articleTree .foldersWrapper .objectListItem .nodeContainer a.collapseExpandAnchor .fa-minus-square.hide, .articleTree .foldersWrapper .objectListItem .nodeContainer a.collapseExpandAnchor .fa-plus-square.hide {
+              display: none; }
+  .articleTree .filesWrapper {
+    width: 70%; }
+    .articleTree .filesWrapper li.contentsList {
+      display: none; }
+      .articleTree .filesWrapper li.contentsList .objectListItem a.fileAnchor.selected .fa-file {
+        color: white; }
+        .articleTree .filesWrapper li.contentsList .objectListItem a.fileAnchor:active {
+          color: ; }
+      .articleTree .filesWrapper li.contentsList.shown {
+        display: list-item; }
+      .articleTree .filesWrapper li.contentsList ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        padding: 0; }
+  .articleTree .foldersWrapper, .articleTree .filesWrapper {
+    border: solid 1px black; }
+    .articleTree .foldersWrapper > ul, .articleTree .filesWrapper > ul {
+      padding-left: 10px; }
+      .articleTree .foldersWrapper > ul li, .articleTree .filesWrapper > ul li {
+        list-style-type: none; }
+      .articleTree .foldersWrapper > ul .objectListItem a.objectAnchor, .articleTree .filesWrapper > ul .objectListItem a.objectAnchor {
+        padding: 2px 9px 2px 9px;
+        display: inline-flex;
+        align-items: center;
+        margin-left: 2px; }
+        .articleTree .foldersWrapper > ul .objectListItem a.objectAnchor .fileIcon, .articleTree .filesWrapper > ul .objectListItem a.objectAnchor .fileIcon, .articleTree .foldersWrapper > ul .objectListItem a.objectAnchor .folderIcon, .articleTree .filesWrapper > ul .objectListItem a.objectAnchor .folderIcon {
+          align-items: center;
+          justify-content: center;
+          font-size: 30px;
+          height: 30px;
+          margin-right: 7px; }
+        .articleTree .foldersWrapper > ul .objectListItem a.objectAnchor .folderIcon, .articleTree .filesWrapper > ul .objectListItem a.objectAnchor .folderIcon {
+          width: 28px; }
 .authContainer {
   width: 50%;
   min-width: 400px;
@@ -48,6 +140,32 @@ header .container, main .container, footer .container {
       color: black; }
   .actionItems.actionItemsHeader {
     margin-bottom: 30px; }
+
+ul.fileManagerView {
+  display: inline-flex;
+  padding: 0; }
+  ul.fileManagerView li {
+    list-style-type: none; }
+    ul.fileManagerView li a {
+      text-transform: uppercase;
+      color: #306a8d;
+      padding: 0 1em;
+      border-left: solid 2px #dadfe3;
+      font-size: 18px;
+      text-decoration: none; }
+      ul.fileManagerView li a.active {
+        color: #f48120; }
+    ul.fileManagerView li:first-of-type a {
+      padding-left: 0;
+      border-left: none; }
+
+.articleTree a.objectAnchor, .articleGUI a.objectAnchor {
+  text-decoration: none;
+  color: #555; }
+  .articleTree a.objectAnchor.selected, .articleGUI a.objectAnchor.selected {
+    background: #dedede; }
+  .articleTree a.objectAnchor .fa-folder, .articleGUI a.objectAnchor .fa-folder {
+    color: #1198cf; }
 .featuredArticlesGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
@@ -239,135 +357,6 @@ header {
     .collatedGrid .row.cats .seeMore {
       text-decoration: none;
       color: #306a8d; }
-.articleGUI .folderPath {
-  background: lightgray;
-  padding: 0.7em;
-  display: flex;
-  align-items: center; }
-  .articleGUI .folderPath a:hover {
-    text-decoration: none; }
-  .articleGUI .folderPath i {
-    margin: 0 12px; }
-  .articleGUI .folderPath > * {
-    color: #333; }
-  .articleGUI ul {
-    display: flex;
-    align-items: center;
-    padding: 0; }
-  .articleGUI ul li.fileOrFolder {
-    list-style-type: none;
-    display: flex;
-    flex-flow: column;
-    align-items: center; }
-    .articleGUI ul li.fileOrFolder .fa-file, .articleGUI ul li.fileOrFolder .fa-folder {
-      width: 136px;
-      height: 127px;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: center; }
-      .articleGUI ul li.fileOrFolder .fa-file:hover, .articleGUI ul li.fileOrFolder .fa-folder:hover {
-        cursor: pointer; }
-    .articleGUI ul li.fileOrFolder .itemTitle {
-      padding: 5px 9px;
-      border-radius: 5px; }
-    .articleGUI ul li.fileOrFolder .fa-file {
-      color: dimgray;
-      font-size: 6em; }
-      .articleGUI ul li.fileOrFolder .fa-file + .itemTitle {
-        margin-top: 10px; }
-    .articleGUI ul li.fileOrFolder .fa-folder {
-      font-size: 6.5em; }
-    .articleGUI ul li.fileOrFolder.selected .fa-file, .articleGUI ul li.fileOrFolder.selected .fa-folder {
-      background: #ededed; }
-      .articleGUI ul li.fileOrFolder.selected .itemTitle {
-        background: dodgerblue;
-        display: inline-block !important;
-        color: white; }
-    .articleGUI ul li.fileOrFolder ul {
-      display: none; }
-
-.articleTree {
-  display: flex;
-  min-height: 400px; }
-  .articleTree .foldersWrapper {
-    width: 30%;
-    overflow-x: scroll; }
-  .articleTree .foldersWrapper ul.noFolder {
-    padding: 0; }
-  .articleTree .foldersWrapper ul.hide {
-    display: none; }
-    .articleTree .foldersWrapper ul li.folderList {
-      white-space: nowrap; }
-      .articleTree .foldersWrapper ul li.folderList a.collapseExpandAnchor {
-        text-decoration: none; }
-        .articleTree .foldersWrapper ul li.folderList a.collapseExpandAnchor .fa-minus-square, .articleTree .foldersWrapper ul li.folderList a.collapseExpandAnchor .fa-plus-square {
-          color: dimgray;
-          transition: color 0.5s;
-          display: inline-block; }
-          .articleTree .foldersWrapper ul li.folderList a.collapseExpandAnchor .fa-minus-square:hover, .articleTree .foldersWrapper ul li.folderList a.collapseExpandAnchor .fa-plus-square:hover {
-            cursor: pointer;
-            color: black; }
-          .articleTree .foldersWrapper ul li.folderList a.collapseExpandAnchor .fa-minus-square.hide, .articleTree .foldersWrapper ul li.folderList a.collapseExpandAnchor .fa-plus-square.hide {
-            display: none; }
-  .articleTree .filesWrapper {
-    width: 70%; }
-  .articleTree .filesWrapper li.contentsList {
-    display: none; }
-    .articleTree .filesWrapper li.contentsList.shown {
-      display: list-item; }
-    .articleTree .filesWrapper li.contentsList ul {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      padding: 0; }
-      .articleTree .filesWrapper li.contentsList ul li .file, .articleTree .filesWrapper li.contentsList ul li .folder {
-        font-size: 2em;
-        margin-right: 8px;
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        color: dimgray; }
-        .articleTree .filesWrapper li.contentsList ul li .file.active, .articleTree .filesWrapper li.contentsList ul li .folder.active {
-          background: red; }
-        .articleTree .filesWrapper li.contentsList ul li .file .itemTitle, .articleTree .filesWrapper li.contentsList ul li .folder .itemTitle {
-          font-size: 0.5em;
-          margin-left: 0.5em; }
-  .articleTree .foldersWrapper, .articleTree .filesWrapper {
-    border: solid 1px black; }
-  .articleTree .foldersWrapper > ul, .articleTree .filesWrapper > ul {
-    padding-left: 10px; }
-    .articleTree .foldersWrapper > ul li, .articleTree .filesWrapper > ul li {
-      list-style-type: none; }
-  .articleTree .foldersWrapper li.folderList .file, .articleTree .filesWrapper li.folderList .file, .articleTree .foldersWrapper li.contentsList .file, .articleTree .filesWrapper li.contentsList .file, .articleTree .foldersWrapper li.folderList .folder, .articleTree .filesWrapper li.folderList .folder, .articleTree .foldersWrapper li.contentsList .folder, .articleTree .filesWrapper li.contentsList .folder {
-    padding: 2px 8px;
-    text-decoration: none;
-    display: inline-block; }
-    .articleTree .foldersWrapper li.folderList .file.selected, .articleTree .filesWrapper li.folderList .file.selected, .articleTree .foldersWrapper li.contentsList .file.selected, .articleTree .filesWrapper li.contentsList .file.selected, .articleTree .foldersWrapper li.folderList .folder.selected, .articleTree .filesWrapper li.folderList .folder.selected, .articleTree .foldersWrapper li.contentsList .folder.selected, .articleTree .filesWrapper li.contentsList .folder.selected {
-      background: darkblue;
-      color: white; }
-    .articleTree .foldersWrapper li.folderList .file .fa-folder, .articleTree .filesWrapper li.folderList .file .fa-folder, .articleTree .foldersWrapper li.contentsList .file .fa-folder, .articleTree .filesWrapper li.contentsList .file .fa-folder, .articleTree .foldersWrapper li.folderList .folder .fa-folder, .articleTree .filesWrapper li.folderList .folder .fa-folder, .articleTree .foldersWrapper li.contentsList .folder .fa-folder, .articleTree .filesWrapper li.contentsList .folder .fa-folder {
-      font-size: 30px; }
-
-.articleGUI .fa-folder, .articleTree .fa-folder {
-  color: dodgerblue; }
-
-ul.fileManagerView {
-  display: inline-flex;
-  padding: 0; }
-  ul.fileManagerView li {
-    list-style-type: none; }
-  ul.fileManagerView li a {
-    text-transform: uppercase;
-    color: #306a8d;
-    padding: 0 1em;
-    border-left: solid 2px #dadfe3;
-    font-size: 18px;
-    text-decoration: none; }
-    ul.fileManagerView li a.active {
-      color: #f48120; }
-  ul.fileManagerView li:first-of-type a {
-    padding-left: 0;
-    border-left: none; }
 .articleContainer label, .articleForm label {
   display: flex;
   align-items: center;

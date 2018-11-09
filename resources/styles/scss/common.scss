@@ -44,3 +44,50 @@ header, main, footer{
       margin-bottom: 30px;
     }
 }
+
+ul.fileManagerView{
+    display: inline-flex;
+    padding: 0;
+
+    li{
+        list-style-type: none;
+
+        a{
+            text-transform: uppercase;
+            color: $turquoise;
+            padding: 0 1em;
+            border-left: solid 2px $lightGray;
+            font-size: 18px;
+            text-decoration: none;
+
+            &.active{
+                color: $orange;
+            }
+        
+        }
+        &:first-of-type a{
+            padding-left:0;
+            border-left: none;
+        }
+    }
+}
+
+.articleTree,
+.articleGUI{
+    a.objectAnchor{
+        text-decoration: none;
+        color: $textGray;
+
+        &.selected{
+            background: $guiSelect;
+        }
+
+        .fa-folder{
+            color: $guiFolder;
+        }
+    }
+}
+
+
+
+
