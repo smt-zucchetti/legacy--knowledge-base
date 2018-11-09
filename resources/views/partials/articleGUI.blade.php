@@ -18,7 +18,6 @@
 		<h2>No results</h2>
 	@else
 		<ul>
-			{{--@dd($results)--}}
 			@foreach($results['folders'] as $folder)
 				<li class="objectListItem isFolder">
 					@include('partials/html/folder', ['id' => $folder->id, 'name' => $folder->name])
@@ -26,7 +25,7 @@
 			@endforeach
 
 			@foreach($results['articles'] as $article)
-				<li class="objectListItem isFolder">
+				<li class="objectListItem isFile">
 					@include('partials/html/file', ['id' => $article->ID, 'title' => $article->Title ])
 				</li>
 			@endforeach
@@ -59,12 +58,16 @@
 			__getAjax(url);
 		});
 
-		$('.articleGUI').on('dblclick', '.fa-folder', function(){
+		$('.articleGUI').on('dblclick', '.objectAnchor', function(){
 			
-			var folderId = $(this).closest('.objectAnchor').data('id');
-			var url = 'articleGUI/' + folderId;			
+			id = $(this).closest('.objectAnchor').data('id');
+			var route;
 
-			__getAjax(url);
+			if($(this).closest('.objectListItem').hasClass('isFolder')){
+				__getAjax('articleGUI/' + id);	
+			}else if($(this).closest('.objectListItem').hasClass('isFile')){
+				window.location.href = 'readArticle/' + id;
+			}
 		});
 
 		function __getAjax(url){

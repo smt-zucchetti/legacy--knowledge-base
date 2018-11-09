@@ -32,7 +32,7 @@
 	@elseif($type == 'tree')
 		@include('partials/articleTree')
 	@elseif($type == 'GUI')
-		@include('partials/articlesByFolder')
+		@include('partials/articleGUI')
 	@endif
 </div>
 
