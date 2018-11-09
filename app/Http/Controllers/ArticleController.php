@@ -57,7 +57,7 @@ class ArticleController extends Controller
 				));			
 			}
 
-			return self::dashboard();
+			return self::homePage();
 		}
  	}   
 
@@ -109,7 +109,7 @@ class ArticleController extends Controller
 	    return $articles;
  	}
 
- 	public function dashboard(){
+ 	public function homePage(){
 
  		$articles = self::__getAllArticles();
  	
@@ -195,7 +195,7 @@ class ArticleController extends Controller
  		$result = DB::table('Articles as a')
 	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
 	            ->leftJoin('Categories as c', 'a_c.categoryId', '=','c.ID')
-				->join('Folders as f', 'f.id', '=', 'a.folderId')
+				->leftJoin('Folders as f', 'f.id', '=', 'a.folderId')
 	            ->select('a.*', 'f.name as parentFolder',
 	            	DB::raw('group_concat(c.Name) as categoryNames'), 
 	            	DB::raw('group_concat(c.ID) as categoryIds'))
@@ -218,7 +218,6 @@ class ArticleController extends Controller
  		if(empty($_POST)){
 
 	 		$article = self::__getArticle($articleId);
-
 	        $categories = DB::table('Categories')->where('deleted', 0)->get();
 	        
 	        $folders = $this->getFolders();
@@ -252,7 +251,7 @@ class ArticleController extends Controller
 				);
 	 		}
 
-	 		return self::dashboard();
+	 		return self::homePage();
 		}
  	}
 
@@ -265,7 +264,7 @@ class ArticleController extends Controller
 
 		$articles = Articles::all();
 		
-		return self::dashboard();
+		return self::homePage();
  	}
 
  	public function fullPageArticle($articleId){
