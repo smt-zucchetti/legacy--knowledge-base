@@ -5,7 +5,7 @@
 @section('main')
 
 	@include('partials/actionItems', ['items' => array('back')])
-	@include('partials/validationErrors')
+	@include('partials/html/validationErrors')
 	@include('partials/articleForm', ['formType' => 'createArticle'])
 
 	<script>

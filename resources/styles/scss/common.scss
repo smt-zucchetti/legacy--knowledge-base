@@ -18,6 +18,7 @@ body{
     flex-flow: column;
     font-family: Cabin, sans-serif;
     overflow: auto;
+    background: $white;
 }
 main{
 	flex-grow: 1;
@@ -91,6 +92,19 @@ main{
         .fa-folder{
             color: $blue;
         }
+    }
+}
+
+input:not([type='checkbox']):not([type='hidden']){
+    border: solid 1px $darkGray;
+    padding-left: 9px;
+    width: 100%;
+    font-size: 1.2em;
+    padding-left: 4px;
+    box-sizing: border-box;
+
+    &:focus{
+        outline: none;
     }
 }
 

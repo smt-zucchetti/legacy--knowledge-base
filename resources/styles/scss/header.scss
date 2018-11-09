@@ -4,6 +4,10 @@ header{
     color: $white;
     box-shadow: 2px 6px 11px #AAA;
     padding: 1em 0;
+
+    a{
+        text-decoration: none;
+    }
     
     .headerContainer{
         display: flex;

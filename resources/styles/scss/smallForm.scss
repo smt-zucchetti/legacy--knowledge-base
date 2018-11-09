@@ -51,30 +51,22 @@
 .smallForm,
 .basicSearchForm{
 
-    input:not([type=checkbox]){
-        width: 100%;
-        font-size: 1.2em;
-        border: solid 1px $darkGray;
-        padding-left: 4px;
-        box-sizing: border-box;
-
-        &:focus{
-            outline: none;
-        }
+    input:not([type='checkbox']):not([type='hidden']){
+        
     }
 }
 
 form.basicSearchForm{
+    float: right;
+    height: 45px;
     display: flex;
     width: 50%;
-    float: right;
-    align-items: center;
-    max-width: 480px;
-    height: 45px;
+    min-width: 480px;
+    max-width: 550px;
 
     input[type=text]{
-        padding-left: 9px;
         height: 100%;
+        padding-left: 9px;
     }
 
     button.button{
