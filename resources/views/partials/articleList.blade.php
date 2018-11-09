@@ -1,5 +1,5 @@
-<h1>{{ !empty($srchTrm)?'SEARCH RESULTS for "'.$srchTrm.'"':'ALL ARTICLES' }}</h1>
 
+<h1>{{ !empty($srchTrm)?'SEARCH RESULTS for "'.$srchTrm.'"':'ALL ARTICLES' }}</h1>
 
 @include('partials/listHeader', ['type' => 'articles'])
 

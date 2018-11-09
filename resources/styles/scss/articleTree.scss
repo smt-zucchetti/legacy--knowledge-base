@@ -24,12 +24,12 @@
 
                     .fa-minus-square,
                     .fa-plus-square {
-                        color: $guiFile;
+                        color: $medGray;
                         transition: color .5s;
                         display: inline-block;
 
                         &:hover{
-                            color: black;
+                            color: $darkGray;
                         }
 
                         &.hide{
@@ -52,11 +52,11 @@
                 a.fileAnchor{
                     &.selected{
                         .fa-file{
-                            color: white;
+                            color: $white;
                         }
                     }
                     &:active{
-                        color: $guiFile;
+                        color: $medGray;
                     }
                 }
             }
@@ -76,7 +76,7 @@
 
     .foldersWrapper, 
     .filesWrapper{
-        border: solid 1px black;
+        border: solid 1px $darkGray;
 
         & > ul{
             padding-left: 10px;

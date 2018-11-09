@@ -1,4 +1,12 @@
-@import 'colors.scss';
+@import 'colors';
+
+@mixin buttonColor($color) {
+    background-color: $color;
+    &:hover{
+        background-color: lighten($color, 10%);
+        cursor: pointer;
+    }
+}
 
 /* Sticky Footer */
 html,body{
@@ -13,16 +21,14 @@ body{
 }
 main{
 	flex-grow: 1;
-  margin-top: 60px;
+    margin-top: 60px;
 }
 
 
-header, main, footer{ 
-  .container{
-      max-width:1100px;
-      width:80%;
-      margin:0 auto;
-    }
+.container{
+  max-width:1100px;
+  width:80%;
+  margin:0 auto;
 }
 
 .actionItems{
@@ -31,13 +37,13 @@ header, main, footer{
     a{
         text-decoration: none;
         margin-right: 9px;
-        color: dimgray;
+        color: $medGray;
         transition: color .5s;
         display: inline-block;
 
 
         &:hover{
-            color:black;
+            color: $darkGray;
         }
     }
     &.actionItemsHeader{
@@ -45,7 +51,7 @@ header, main, footer{
     }
 }
 
-ul.fileManagerView{
+.fileManagerView{
     display: inline-flex;
     padding: 0;
 
@@ -56,7 +62,7 @@ ul.fileManagerView{
             text-transform: uppercase;
             color: $turquoise;
             padding: 0 1em;
-            border-left: solid 2px $lightGray;
+            border-left: solid 2px $darkGray;
             font-size: 18px;
             text-decoration: none;
 
@@ -76,18 +82,57 @@ ul.fileManagerView{
 .articleGUI{
     a.objectAnchor{
         text-decoration: none;
-        color: $textGray;
+        color: $medGray;
 
         &.selected{
-            background: $guiSelect;
+            background: $lightGray;
         }
 
         .fa-folder{
-            color: $guiFolder;
+            color: $blue;
         }
     }
 }
 
+button.button{
+    color: $white;
+    border: none;
+    font-size: 17px;
+    padding: .5em 2em;
+    float: right;
+
+    &:focus{
+        outline: 0;
+    }
+
+    &.updateBtn{
+        @include buttonColor($blue);
+    }
+
+    &.cancelBtn{
+        @include buttonColor($orange);
+        margin-right:10px;
+    }
+
+    &.deleteBtn{
+        @include buttonColor($red);
+        margin-right: 10px;
+     }
+}
+
+.validationError{
+    color: $red; 
+
+    h3{
+        margin: 0 0 10px;
+    }
+    p{
+        margin: 0 0 5px;
+    }
+}
+.validationSuccess{
+    color: $green;
+}
 
 
 

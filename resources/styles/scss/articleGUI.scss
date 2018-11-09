@@ -1,23 +1,23 @@
-@import 'colors.scss';
+@import 'colors';
 
 
 .articleGUI{
     .folderPath {
-        background: lightgray;
+        background: $lightGray;
         padding: 0.7em;
         display: flex;
         align-items: center;
+        color: $medGray;
 
-        a:hover{
-           text-decoration:none;
+        a{
+            color: $medGray;
+            &:hover{
+               text-decoration:none;
+            }
         }
 
         i{
             margin: 0 12px;
-        }
-
-        > *{
-            color: $textGrayDark;
         }
     }
     
@@ -55,7 +55,7 @@
 
                 .fileIcon{
                     font-size: 5em;
-                    color: $guiIcon;
+                    color: $medGray;
                 }
             }
         }                

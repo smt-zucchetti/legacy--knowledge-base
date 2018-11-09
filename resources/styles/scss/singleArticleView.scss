@@ -1,4 +1,4 @@
-@import 'colors.scss';
+@import 'colors';
 
 .articleContainer, 
 .articleForm{
@@ -36,18 +36,18 @@
         font-size: 1.3em;
     }
 
-    input#datepicker, select{
+    select{
         font-size: 17px;
-        color: #444;
+        color: $medGray;
     }
 
 	ul.categoryList{        
-        background: lightgray;
+        background: $lightGray;
         padding: 1.4em;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         border-radius: 3px;
-        border:solid dimgray 1px;    
+        border:solid $medGray 1px;    
         margin: 0;
 
         li{
@@ -64,7 +64,7 @@
 
 .articleContainer{
 	.singleArticleBorder{
-		border: solid 1px;
+		border: solid $darkGray 1px;
 		padding: 1em 2em;
 		border-radius: 3px;
 	}
@@ -94,47 +94,5 @@
 
     textarea#textOnlyContent{
         display: none;
-    }
-
-    input[type=submit],
-    button[type=submit]{
-        background-color: $blue;
-        border: none !important;
-        color: white !important;
-        margin: 25px 0;
-        float: right;
-        transition: background-color 0.5s;
-        box-sizing: content-box;
-        border-radius: 0;
-        font-size: 24px;
-        padding: .5em 1.5em;
-
-        &:hover{
-            cursor:pointer;
-            background-color:lighten($blue, 10%);
-        }
-    }
-
-    .validationAlerts {
-        background: lighten(orangered,5%);
-        color: white;
-        border-radius: 7px;
-        padding: 1em;
-        clear: both;
-        margin-bottom: 20px;
-
-        h3{
-            margin: 0;
-        }
-
-        ul{
-            padding: 0;
-            margin: 10px 0 0;
-
-            li{
-                list-style-type: none;
-                line-height: 2em;
-            }
-        }
     }
 }

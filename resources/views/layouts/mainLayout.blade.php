@@ -21,27 +21,5 @@
         <footer>
             @include('partials/footer')
         </footer>
-
-
-      <script>
-        $(document).ready(function(){
-
-            $('#youtube-popup').click(function(e){
-                e.preventDefault();
-
-                $.fancybox({
-                    href: "https://www.youtube.com/embed/8Ii61D6g41g?autoplay=1", 
-                    type: "iframe",
-                    padding: 0,
-                    afterClose: function() {
-                        $('#bg').hide();
-                    }
-                });
-            });
-
-          });
-      </script>
-
-
     </body>
 </html>

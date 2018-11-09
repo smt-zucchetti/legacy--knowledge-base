@@ -5,12 +5,12 @@
 @endif
 
 <form id="kbForm" method="post" action="{{$url}}" class="articleForm" >
-	@include('partials/validationErrors')
 	
+	@include('partials/html/validationErrors')
 	@csrf
 
 	@include('partials/articleContents', ['readOnly' => false])
-
-    <input type="submit" value="Save" />
+	<br><br>
+    <button class="button updateBtn" type="submit">Save</button>
 </form>
 

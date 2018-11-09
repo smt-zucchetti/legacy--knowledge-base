@@ -1,10 +1,12 @@
+@import 'colors';
+
 .featuredArticlesGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
     grid-template-rows: auto;
-    background: lightgray;
+    background: $lightGray;
     border-radius: 3px;
-    border: solid 1px dimgray;
+    border: solid 1px $medGray;
     margin-bottom: 4em;
 
     .featuredArticle{
@@ -18,7 +20,7 @@
             text-decoration: none;
             text-align: center;
             margin: 5px 0 5px;
-            color: dimgray;
+            color: $medGray;
             font-size: 16px;
         }
 
@@ -26,7 +28,7 @@
             width: 100%;
             min-height: 210px;
             background: white;
-            border: solid 1px dimgray;
+            border: solid 1px $medGray;
             border-radius: 4px;
         }
 
@@ -38,7 +40,8 @@
             transition: background .5s;
 
             &:hover{
-                background:rgba(12,12,12, .2);
+                background: $darkGray;
+                opacity: 0.2;
             }
         }
     }

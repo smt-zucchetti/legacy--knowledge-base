@@ -1,14 +1,15 @@
 .articleGUI .folderPath {
-  background: lightgray;
+  background: #dedede;
   padding: 0.7em;
   display: flex;
-  align-items: center; }
-  .articleGUI .folderPath a:hover {
-    text-decoration: none; }
+  align-items: center;
+  color: #6a6a6a; }
+  .articleGUI .folderPath a {
+    color: #6a6a6a; }
+    .articleGUI .folderPath a:hover {
+      text-decoration: none; }
   .articleGUI .folderPath i {
     margin: 0 12px; }
-  .articleGUI .folderPath > * {
-    color: #333; }
   .articleGUI ul {
     display: flex;
     align-items: center;
@@ -33,7 +34,7 @@
         font-size: 6em; }
       .articleGUI ul li.objectListItem .objectAnchor .fileIcon {
         font-size: 5em;
-        color: #555; }
+        color: #6a6a6a; }
 .articleTree {
   display: flex;
   min-height: 400px; }
@@ -50,11 +51,11 @@
         .articleTree .foldersWrapper .objectListItem .nodeContainer a.collapseExpandAnchor {
           text-decoration: none; }
           .articleTree .foldersWrapper .objectListItem .nodeContainer a.collapseExpandAnchor .fa-minus-square, .articleTree .foldersWrapper .objectListItem .nodeContainer a.collapseExpandAnchor .fa-plus-square {
-            color: ;
+            color: #6a6a6a;
             transition: color 0.5s;
             display: inline-block; }
             .articleTree .foldersWrapper .objectListItem .nodeContainer a.collapseExpandAnchor .fa-minus-square:hover, .articleTree .foldersWrapper .objectListItem .nodeContainer a.collapseExpandAnchor .fa-plus-square:hover {
-              color: black; }
+              color: #222; }
             .articleTree .foldersWrapper .objectListItem .nodeContainer a.collapseExpandAnchor .fa-minus-square.hide, .articleTree .foldersWrapper .objectListItem .nodeContainer a.collapseExpandAnchor .fa-plus-square.hide {
               display: none; }
   .articleTree .filesWrapper {
@@ -62,9 +63,9 @@
     .articleTree .filesWrapper li.contentsList {
       display: none; }
       .articleTree .filesWrapper li.contentsList .objectListItem a.fileAnchor.selected .fa-file {
-        color: white; }
+        color: #fff; }
         .articleTree .filesWrapper li.contentsList .objectListItem a.fileAnchor:active {
-          color: ; }
+          color: #6a6a6a; }
       .articleTree .filesWrapper li.contentsList.shown {
         display: list-item; }
       .articleTree .filesWrapper li.contentsList ul {
@@ -72,7 +73,7 @@
         grid-template-columns: 1fr 1fr 1fr 1fr;
         padding: 0; }
   .articleTree .foldersWrapper, .articleTree .filesWrapper {
-    border: solid 1px black; }
+    border: solid 1px #222; }
     .articleTree .foldersWrapper > ul, .articleTree .filesWrapper > ul {
       padding-left: 10px; }
       .articleTree .foldersWrapper > ul li, .articleTree .filesWrapper > ul li {
@@ -90,25 +91,7 @@
           margin-right: 7px; }
         .articleTree .foldersWrapper > ul .objectListItem a.objectAnchor .folderIcon, .articleTree .filesWrapper > ul .objectListItem a.objectAnchor .folderIcon {
           width: 28px; }
-.authContainer {
-  width: 50%;
-  min-width: 400px;
-  margin: 0 auto; }
-  .authContainer label {
-    display: inline; }
-  .authContainer input[type=text], .authContainer input[type=email], .authContainer input[type=password] {
-    margin: 0.3em 0 1em; }
-  .authContainer button[type=submit] {
-    font-size: 1em;
-    padding: 0.2em 1em; }
-  .authContainer .form-check {
-    margin: 1em 0; }
-  .authContainer .optionLinks a {
-    display: block;
-    line-height: 27px;
-    color: #f48120; }
 
-/* Sticky Footer */
 html, body {
   height: 100% !important;
   margin: 0; }
@@ -123,7 +106,7 @@ main {
   flex-grow: 1;
   margin-top: 60px; }
 
-header .container, main .container, footer .container {
+.container {
   max-width: 1100px;
   width: 80%;
   margin: 0 auto; }
@@ -133,46 +116,85 @@ header .container, main .container, footer .container {
   .actionItems a {
     text-decoration: none;
     margin-right: 9px;
-    color: dimgray;
+    color: #6a6a6a;
     transition: color 0.5s;
     display: inline-block; }
     .actionItems a:hover {
-      color: black; }
+      color: #222; }
   .actionItems.actionItemsHeader {
     margin-bottom: 30px; }
 
-ul.fileManagerView {
+.fileManagerView {
   display: inline-flex;
   padding: 0; }
-  ul.fileManagerView li {
+  .fileManagerView li {
     list-style-type: none; }
-    ul.fileManagerView li a {
+    .fileManagerView li a {
       text-transform: uppercase;
       color: #306a8d;
       padding: 0 1em;
-      border-left: solid 2px #dadfe3;
+      border-left: solid 2px #222;
       font-size: 18px;
       text-decoration: none; }
-      ul.fileManagerView li a.active {
+      .fileManagerView li a.active {
         color: #f48120; }
-    ul.fileManagerView li:first-of-type a {
+    .fileManagerView li:first-of-type a {
       padding-left: 0;
       border-left: none; }
 
 .articleTree a.objectAnchor, .articleGUI a.objectAnchor {
   text-decoration: none;
-  color: #555; }
+  color: #6a6a6a; }
   .articleTree a.objectAnchor.selected, .articleGUI a.objectAnchor.selected {
     background: #dedede; }
   .articleTree a.objectAnchor .fa-folder, .articleGUI a.objectAnchor .fa-folder {
     color: #1198cf; }
+
+button.button {
+  color: #fff;
+  border: none;
+  font-size: 17px;
+  padding: 0.5em 2em;
+  float: right; }
+  button.button:focus {
+    outline: 0; }
+  button.button.updateBtn {
+    background-color: #1198cf;
+    /* Sticky Footer */ }
+  button.button.updateBtn:hover {
+    background-color: #26b3ed;
+    cursor: pointer; }
+  button.button.cancelBtn {
+    background-color: #f48120;
+    /* Sticky Footer */
+    margin-right: 10px; }
+  button.button.cancelBtn:hover {
+    background-color: #f69c51;
+    cursor: pointer; }
+  button.button.deleteBtn {
+    background-color: #e33;
+    /* Sticky Footer */
+    margin-right: 10px; }
+  button.button.deleteBtn:hover {
+    background-color: #f26262;
+    cursor: pointer; }
+
+.validationError {
+  color: #e33; }
+  .validationError h3 {
+    margin: 0 0 10px; }
+  .validationError p {
+    margin: 0 0 5px; }
+
+.validationSuccess {
+  color: #5a5; }
 .featuredArticlesGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
   grid-template-rows: auto;
-  background: lightgray;
+  background: #dedede;
   border-radius: 3px;
-  border: solid 1px dimgray;
+  border: solid 1px #6a6a6a;
   margin-bottom: 4em; }
   .featuredArticlesGrid .featuredArticle {
     position: relative;
@@ -184,13 +206,13 @@ ul.fileManagerView {
       text-decoration: none;
       text-align: center;
       margin: 5px 0 5px;
-      color: dimgray;
+      color: #6a6a6a;
       font-size: 16px; }
     .featuredArticlesGrid .featuredArticle iframe {
       width: 100%;
       min-height: 210px;
       background: white;
-      border: solid 1px dimgray;
+      border: solid 1px #6a6a6a;
       border-radius: 4px; }
     .featuredArticlesGrid .featuredArticle a.clickableLink {
       position: absolute;
@@ -199,9 +221,10 @@ ul.fileManagerView {
       top: 0;
       transition: background 0.5s; }
       .featuredArticlesGrid .featuredArticle a.clickableLink:hover {
-        background: rgba(12, 12, 12, .2); }
+        background: #222;
+        opacity: 0.2; }
 footer {
-  color: white;
+  color: #fff;
   background: #306a8d;
   padding: 3em 0;
   margin-top: 4em; }
@@ -212,13 +235,13 @@ footer {
     footer .footerContainer h3 {
       margin: 0; }
     footer .footerContainer a {
-      color: white;
+      color: #fff;
       text-decoration: none; }
     footer .footerContainer .copyright {
       font-size: 14px;
       margin-top: 35px; }
 header {
-  color: white;
+  color: #fff;
   box-shadow: 2px 6px 11px #aaa;
   padding: 1em 0; }
   header .headerContainer {
@@ -231,9 +254,9 @@ header {
       margin: 0;
       padding: 0 2em;
       flex-grow: 1;
-      font-weight: 700; }
+      font-weight: 700;
+      list-style: none; }
       header .headerContainer ul.nav li {
-        list-style-type: none;
         font-size: 0.9em;
         margin-right: 30px; }
         header .headerContainer ul.nav li:last-child {
@@ -263,7 +286,7 @@ header {
               header .headerContainer ul.nav li:hover ul li:hover {
                 background: #1198cf; }
                 header .headerContainer ul.nav li:hover ul li:hover a {
-                  color: white; }
+                  color: #fff; }
               header .headerContainer ul.nav li:hover ul li a {
                 border: none;
                 padding: 1em 2em;
@@ -271,7 +294,7 @@ header {
     header .headerContainer i {
       background: #306a8d;
       border-radius: 50%;
-      color: white;
+      color: #fff;
       display: inline-flex;
       height: 30px;
       width: 30px;
@@ -289,7 +312,7 @@ header {
     grid-template-columns: 2fr 1fr 0.6fr; }
 
 .collatedGridHeader {
-  color: white;
+  color: #fff;
   background: #1198cf; }
   .collatedGridHeader > .row {
     display: flex;
@@ -299,64 +322,64 @@ header {
       margin-right: 0.6em;
       display: grid; }
       .collatedGridHeader > .row .sortArrow .ASC, .collatedGridHeader > .row .sortArrow .DESC {
-        border-right-color: transparent;
-        border-left-color: transparent;
-        border-bottom-color: transparent;
-        border-top-color: #808080;
+        border-color: transparent;
+        border-top-color: #6a6a6a;
         border-style: solid;
         border-width: 9px;
         width: 2px; }
         .collatedGridHeader > .row .sortArrow .ASC.active, .collatedGridHeader > .row .sortArrow .DESC.active {
-          border-top-color: lightgray; }
+          border-top-color: #dedede; }
       .collatedGridHeader > .row .sortArrow .ASC {
         transform: rotate(180deg);
         margin-bottom: 4px; }
     .collatedGridHeader > .row.noSort {
       padding-left: 1.6em; }
 
-.collatedGrid .row {
-  padding: 1em 1em 1em 1.6em; }
-  .collatedGrid .row.odd {
-    background: lightgray; }
-  .collatedGrid .row.titleRow a {
-    color: #306a8d;
-    font-size: 1.1em;
-    text-decoration: none; }
-    .collatedGrid .row.titleRow a:hover {
-      text-decoration: underline; }
-  .collatedGrid .row.cats {
-    position: relative; }
-    .collatedGrid .row.cats .categoryList {
-      opacity: 0;
-      position: absolute;
-      background: white;
-      border: 1px #306a8d solid;
-      padding: 1em;
-      z-index: -1;
-      transition: opacity 0.1s ease-in, z-index 1s linear;
-      left: 50%;
-      transform: translateX(-50%);
-      box-sizing: border-box; }
-      .collatedGrid .row.cats .categoryList.show {
-        opacity: 1;
-        z-index: 2;
-        transition: opacity 0.3s ease-in; }
-      .collatedGrid .row.cats .categoryList ul {
-        margin: 0 !important;
-        padding: 0;
-        list-style: none; }
-        .collatedGrid .row.cats .categoryList ul li {
-          margin-bottom: 0.8em;
-          white-space: pre; }
-          .collatedGrid .row.cats .categoryList ul li:last-child {
-            margin-bottom: 0; }
-      .collatedGrid .row.cats .categoryList .fas.fa-times-circle {
-        float: right; }
-        .collatedGrid .row.cats .categoryList .fas.fa-times-circle:hover {
-          cursor: pointer; }
-    .collatedGrid .row.cats .seeMore {
-      text-decoration: none;
-      color: #306a8d; }
+.collatedGrid {
+  color: #6a6a6a; }
+  .collatedGrid .row {
+    padding: 1em 1em 1em 1.6em; }
+    .collatedGrid .row.odd {
+      background: #dedede; }
+    .collatedGrid .row.titleRow a {
+      color: #6a6a6a;
+      font-size: 1.1em;
+      text-decoration: none; }
+      .collatedGrid .row.titleRow a:hover {
+        text-decoration: underline; }
+    .collatedGrid .row.cats {
+      position: relative; }
+      .collatedGrid .row.cats .categoryList {
+        opacity: 0;
+        position: absolute;
+        background: #fff;
+        border: 1px #306a8d solid;
+        padding: 1em;
+        z-index: -1;
+        transition: opacity 0.1s ease-in, z-index 1s linear;
+        left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box; }
+        .collatedGrid .row.cats .categoryList.show {
+          opacity: 1;
+          z-index: 2;
+          transition: opacity 0.3s ease-in; }
+        .collatedGrid .row.cats .categoryList ul {
+          margin: 0 !important;
+          padding: 0;
+          list-style: none; }
+          .collatedGrid .row.cats .categoryList ul li {
+            margin-bottom: 0.8em;
+            white-space: pre; }
+            .collatedGrid .row.cats .categoryList ul li:last-child {
+              margin-bottom: 0; }
+        .collatedGrid .row.cats .categoryList .fas.fa-times-circle {
+          float: right; }
+          .collatedGrid .row.cats .categoryList .fas.fa-times-circle:hover {
+            cursor: pointer; }
+      .collatedGrid .row.cats .seeMore {
+        text-decoration: none;
+        color: #6a6a6a; }
 .articleContainer label, .articleForm label {
   display: flex;
   align-items: center;
@@ -377,16 +400,16 @@ header {
     border-radius: 3px;
     border: solid 1px gray;
     font-size: 1.3em; }
-  .articleContainer input#datepicker, .articleForm input#datepicker, .articleContainer select, .articleForm select {
+  .articleContainer select, .articleForm select {
     font-size: 17px;
-    color: #444; }
+    color: #6a6a6a; }
   .articleContainer ul.categoryList, .articleForm ul.categoryList {
-    background: lightgray;
+    background: #dedede;
     padding: 1.4em;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     border-radius: 3px;
-    border: solid dimgray 1px;
+    border: solid #6a6a6a 1px;
     margin: 0; }
   .articleContainer ul.categoryList li, .articleForm ul.categoryList li {
     list-style-type: none;
@@ -395,7 +418,7 @@ header {
     min-height: 60vh; }
 
 .articleContainer .singleArticleBorder {
-  border: solid 1px;
+  border: solid #222 1px;
   padding: 1em 2em;
   border-radius: 3px; }
 
@@ -412,119 +435,60 @@ header {
       margin-left: auto; }
   .articleForm textarea#textOnlyContent {
     display: none; }
-  .articleForm input[type=submit], .articleForm button[type=submit] {
-    background-color: #1198cf;
-    border: none !important;
-    color: white !important;
-    margin: 25px 0;
-    float: right;
-    transition: background-color 0.5s;
-    box-sizing: content-box;
-    border-radius: 0;
-    font-size: 24px;
-    padding: 0.5em 1.5em; }
-  .articleForm input[type=submit]:hover, .articleForm button[type=submit]:hover {
-    cursor: pointer;
-    background-color: #26b3ed; }
-  .articleForm .validationAlerts {
-    background: #ff581a;
-    color: white;
-    border-radius: 7px;
-    padding: 1em;
-    clear: both;
-    margin-bottom: 20px; }
-  .articleForm .validationAlerts h3 {
-    margin: 0; }
-  .articleForm .validationAlerts ul {
-    padding: 0;
-    margin: 10px 0 0; }
-    .articleForm .validationAlerts ul li {
-      list-style-type: none;
-      line-height: 2em; }
-form.smallForm, div.smallForm {
+.smallForm {
   min-width: 450px;
   font-size: 1rem;
   max-width: 650px;
   margin: 0 auto; }
-  form.smallForm .validationSuccess, div.smallForm .validationSuccess, form.smallForm .validationError, div.smallForm .validationError {
+  .smallForm .validationSuccess, .smallForm .validationError {
     font-size: 1.15rem;
     opacity: 0;
     transition: opacity 0.3s ease-in;
     margin: 0.4em 0; }
-    form.smallForm .validationSuccess.visible, div.smallForm .validationSuccess.visible, form.smallForm .validationError.visible, div.smallForm .validationError.visible {
+    .smallForm .validationSuccess.visible, .smallForm .validationError.visible {
       opacity: 1; }
-  form.smallForm .validationError, div.smallForm .validationError {
-    color: orangered; }
-  form.smallForm .validationSuccess, div.smallForm .validationSuccess {
-    color: #5a5; }
-  form.smallForm h2, div.smallForm h2 {
+  .smallForm h2 {
     margin-top: 0; }
-  form.smallForm input:not([type=checkbox]), div.smallForm input:not([type=checkbox]) {
+  .smallForm input:not([type=checkbox]) {
     margin-top: 5px;
     min-height: 36px; }
-  form.smallForm label, div.smallForm label {
+  .smallForm label {
     display: block;
     font-size: 1.1em;
     margin-bottom: 24px; }
-    form.smallForm label select, div.smallForm label select {
+    .smallForm label select {
       transform: scale(1.5);
       transform-origin: center left;
       margin-left: 10px; }
-  form.smallForm button.button, div.smallForm button.button {
-    float: right; }
-  form.smallForm .link, div.smallForm .link {
+  .smallForm .link {
     color: #f48120; }
-    form.smallForm .link:hover, div.smallForm .link:hover {
+    .smallForm .link:hover {
       text-decoration: none; }
 
-form.smallForm input:not([type=checkbox]), div.smallForm input:not([type=checkbox]), form.smallSearchForm input:not([type=checkbox]) {
+.smallForm input:not([type=checkbox]), .basicSearchForm input:not([type=checkbox]) {
   width: 100%;
   font-size: 1.2em;
-  border: solid 1px gray;
+  border: solid 1px #222;
   padding-left: 4px;
   box-sizing: border-box; }
-  form.smallForm input:not([type=checkbox]):focus, div.smallForm input:not([type=checkbox]):focus, form.smallSearchForm input:not([type=checkbox]):focus {
+  .smallForm input:not([type=checkbox]):focus, .basicSearchForm input:not([type=checkbox]):focus {
     outline: none; }
-  form.smallForm button.button, div.smallForm button.button, form.smallSearchForm button.button {
-    color: white;
-    border: none;
-    font-size: 17px;
-    padding: 0.5em 2em; }
-  form.smallForm button.button:focus, div.smallForm button.button:focus, form.smallSearchForm button.button:focus {
-    outline: 0; }
-  form.smallForm button.button.updateBtn, div.smallForm button.button.updateBtn, form.smallSearchForm button.button.updateBtn {
-    background-color: #1198cf; }
-    form.smallForm button.button.updateBtn:hover, div.smallForm button.button.updateBtn:hover, form.smallSearchForm button.button.updateBtn:hover {
-      background-color: #26b3ed;
-      cursor: pointer; }
-  form.smallForm button.button.cancelBtn, div.smallForm button.button.cancelBtn, form.smallSearchForm button.button.cancelBtn {
-    background-color: #f48120;
-    margin-right: 10px; }
-    form.smallForm button.button.cancelBtn:hover, div.smallForm button.button.cancelBtn:hover, form.smallSearchForm button.button.cancelBtn:hover {
-      background-color: #f69c51;
-      cursor: pointer; }
-  form.smallForm button.button.deleteBtn, div.smallForm button.button.deleteBtn, form.smallSearchForm button.button.deleteBtn {
-    background-color: red;
-    margin-right: 10px; }
-    form.smallForm button.button.deleteBtn:hover, div.smallForm button.button.deleteBtn:hover, form.smallSearchForm button.button.deleteBtn:hover {
-      background-color: #f33;
-      cursor: pointer; }
 
-form.smallSearchForm {
+form.basicSearchForm {
   display: flex;
   width: 50%;
   float: right;
   align-items: center;
   max-width: 480px;
   height: 45px; }
-  form.smallSearchForm input[type=checkbox] {
+  form.basicSearchForm input[type=text] {
     padding-left: 9px;
     height: 100%; }
-  form.smallSearchForm button.button {
+  form.basicSearchForm button.button {
     height: 100%; }
-  form.smallSearchForm ~ .advSearch {
+  form.basicSearchForm ~ .advSearch {
     color: #f48120;
     float: right;
     clear: right; }
-  form.smallSearchForm ~ .clear {
+  form.basicSearchForm ~ .clear {
     clear: both; }

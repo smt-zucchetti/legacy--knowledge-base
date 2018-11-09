@@ -1,4 +1,4 @@
-@extends('layouts.mainLayout',['bodyId'=>'editArticle'])
+@extends('layouts.mainLayout')
 
 @section('title', 'Edit Article')
 

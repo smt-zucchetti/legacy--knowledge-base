@@ -1,7 +1,7 @@
-@import 'colors.scss';
+@import 'colors';
 
 header{
-    color: white;
+    color: $white;
     box-shadow: 2px 6px 11px #AAA;
     padding: 1em 0;
     
@@ -19,9 +19,9 @@ header{
             padding: 0 2em;
             flex-grow: 1;
             font-weight: 700;
+            list-style: none;
 
             li{
-                list-style-type:none;
                 font-size: .9em;
                 margin-right: 30px;
 
@@ -35,7 +35,7 @@ header{
                     border-bottom: solid 2px transparent;
                     padding-bottom: .4em;
                     text-transform: uppercase;
-                    color:$turquoise;
+                    color: $turquoise;
                     position: relative;
                     z-index: 2;
                 }
@@ -60,10 +60,10 @@ header{
                             margin: 0;
 
                             &:hover{
-                                background:$blue;
+                                background: $blue;
 
                                 a{
-                                    color: white;
+                                    color: $white;
                                 }
                             }
 
@@ -81,7 +81,7 @@ header{
         i{
             background: $turquoise;
             border-radius: 50%;
-            color: white;
+            color: $white;
             display: inline-flex;
             height: 30px;
             width: 30px;

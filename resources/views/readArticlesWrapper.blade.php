@@ -12,7 +12,7 @@
 	</div>
 @endif
 
-@include('partials/searchForm')
+@include('partials/smallForms/basicSearchForm')
 
 <ul class="fileManagerView">
 	<li>
