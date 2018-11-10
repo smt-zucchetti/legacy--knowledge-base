@@ -83,8 +83,10 @@ class ArticleController extends Controller
 	            	)
 	            ->where('a.deleted', 0)
 	            ->when($srchTrm !== null, function($query) use($srchTrm){
-		            $query->where('a.Title', 'like', '%'.$srchTrm.'%');
-	                $query->orWhere('a.textOnlyContent', 'like', '%'.$srchTrm.'%');	
+	            	$query->where(function($query2) use($srchTrm){
+	            		$query2->where('a.Title', 'like', '%'.$srchTrm.'%');
+                		$query2->orWhere('a.textOnlyContent', 'like', '%'.$srchTrm.'%');
+	            	});
 	            })
 	            ->orderBy('dateCreated', 'DESC')
 	           	->groupBy('a.ID')
