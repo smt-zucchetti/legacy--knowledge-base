@@ -4,7 +4,9 @@
 
 @section('main')
 
-@include('partials/actionItems', ['items' => array('addCategory')])
+<div class="actionItems actionItemsHeader">
+	@include('partials/actionItems', ['items' => [['createCategory', 'Add New']], 'objId' => null])
+</div>
 
 @include('partials/listHeader', ['type' => 'categories'])
 
@@ -14,25 +16,13 @@
 	@foreach($categories as $category)
 		@php($row = ($i % 2 == 0)?"row odd":"row")
 		<div class="row {{$row}} titleRow">
-			{{$category->Name}}
+			{{$category->name}}
 		</div>
 		<div class="{{$row}}">
 			{{$category->dateCreated}}
 		</div>
 		<div class="{{$row}} actionItems">
-			<div style="display: none;" id="updateCategory-{{$category->ID}}">
-				@include('partials/smallForms/updateCategory')
-			</div>
-			<a data-fancybox data-src="#updateCategory-{{$category->ID}}" href="javascript:;"  >
-				<i class="fas fa-pencil-alt"></i>
-			</a>
-
-			<div style="display: none;" id="deleteCategory-{{$category->ID}}">
-				@include('partials/smallForms/deleteCategory')
-			</div>
-			<a data-fancybox data-src="#deleteCategory-{{$category->ID}}" href="javascript:;" >
-				<i class="fas fa-trash-alt"></i>
-			</a>
+			@include('partials/actionItems', ['items' => [['updateCategory', 'Update'], ['deleteCategory', 'Delete']], 'objId' => $category->id])			
 		</div>
 		@php($i++)
 	@endforeach

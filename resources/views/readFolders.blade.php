@@ -4,9 +4,12 @@
 
 @section('main')
 
-@include('partials/actionItems', ['items' => array('addFolder')])
-@include('partials/listHeader', ['type' => 'folders'])
+<div class="actionItems actionItemsHeader">
+	@include('partials/actionItems', ['items' => [['createFolder', 'Add New']], 'objId' => null])
+</div>
 
+
+@include('partials/listHeader', ['type' => 'folders'])
 @php($i = 0)
 <div class="collatedGrid folders">
 	@foreach($foldersScalar as $folder)
@@ -18,18 +21,7 @@
 			{{$folder->dateCreated}}
 		</div>
 		<div class="{{$row}} actionItems">
-			<div style="display: none;" id="updateFolder-{{$folder->id}}">
-				@include('partials/smallForms/updateFolder')
-			</div>
-			<a data-fancybox data-src="#updateFolder-{{$folder->id}}" href="javascript:;"  >
-				<i class="fas fa-pencil-alt"></i>
-			</a>
-			<div style="display: none;" id="deleteFolder-{{$folder->id}}">
-				@include('partials/smallForms/deleteFolder')
-			</div>
-			<a data-fancybox data-src="#deleteFolder-{{$folder->id}}" href="javascript:;" >
-				<i class="fas fa-trash-alt"></i>
-			</a>
+			@include('partials/actionItems', ['items' => [['updateFolder', 'Update'], ['deleteFolder', 'Delete']], 'objId' => $folder->id])
 		</div>
 		@php($i++)
 	@endforeach

@@ -1,8 +1,11 @@
-@if($formType == "updateArticle")
-	@php($url = url('updateArticle/'.$article->ID) )
-@elseif($formType == "createArticle")
-	@php($url = url('createArticle') )
-@endif
+@switch($formType)
+	@case("updateArticle")
+		@php($url = url('updateArticle/'.$article->id) )
+		@break
+	@case("createArticle")
+		@php($url = url('createArticle') )
+		@break
+@endswitch
 
 <form id="kbForm" method="post" action="{{$url}}" class="articleForm" >
 	

@@ -10,4 +10,4 @@
 	}
 </style>
 
-{!! $article->Content !!}
+{!! $article->content !!}

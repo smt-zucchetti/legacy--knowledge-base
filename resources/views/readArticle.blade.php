@@ -1,12 +1,12 @@
 
-@extends('layouts.mainLayout', ['bodyId'=>'singleArticle'])
+@extends('layouts.mainLayout')
 
 @section('title', 'New User')
 
 @section('main')
-
-	@include('partials/actionItems', ['items' => array('back', 'deleteArticle', 'editArticle')])
-	
+	<div class="actionItems actionItemsHeader">
+		@include('partials/actionItems', ['items' => [['back', 'Back'], ['deleteArticle', 'Delete'], ['updateArticle', 'Update']], 'objId' => $article->id])
+	</div>
 	<div class="articleContainer">
 		@include('partials/articleContents', ['readOnly' => true] )
 	</div>

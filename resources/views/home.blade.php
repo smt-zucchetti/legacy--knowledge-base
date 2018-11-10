@@ -8,7 +8,11 @@
         @if (session('status'))
             <div class="validationSuccess visible">{{ session('status') }}</div>
         @endif
-        <div class="validationSuccess visible">You are logged in!</div>
+        @if (Auth::check())
+	        <div>You are logged in!</div>
+	    @else
+	    	<div>You have been logged out due to inactivity</div>
+	    @endif
     </div>
       
 @endsection

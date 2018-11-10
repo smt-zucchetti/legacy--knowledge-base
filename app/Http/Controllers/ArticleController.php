@@ -126,7 +126,14 @@ class ArticleController extends Controller
 	            ->get();
 	    $featuredArticles->sortBy('dateCreated');
 
-		return view('readArticles')->with(['articles' => $articles, 'featuredArticles' => $featuredArticles]);
+		return view('homePage')->with(['articles' => $articles, 'featuredArticles' => $featuredArticles]);
+ 	}
+
+ 	public function searchArticles(){
+
+ 		$articles = self::__getAllArticles(null, null, $_GET['search']);
+
+ 		return view('homePage')->with(['articles' => $articles, 'srchTrm' => $_GET['search']]);
  	}
 
  
@@ -271,13 +278,6 @@ class ArticleController extends Controller
  		$article = DB::table('Articles')->where('ID', $articleId)->first();
 
  		return view('fullPageArticle')->with(array('article' => $article));
- 	}
-
- 	public function searchArticles(){
-
- 		$articles = self::__getAllArticles(null, null, $_GET['search']);
-
- 		return view('readArticles')->with(['articles' => $articles, 'srchTrm' => $_GET['search']]);
  	}
 
 }

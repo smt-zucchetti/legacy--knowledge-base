@@ -169,10 +169,10 @@ button.button {
   float: right; }
   button.button:focus {
     outline: 0; }
-  button.button.updateBtn {
+  button.button.updateBtn, button.button.createBtn {
     background-color: #1198cf;
     /* Sticky Footer */ }
-  button.button.updateBtn:hover {
+  button.button.updateBtn:hover, button.button.createBtn:hover {
     background-color: #26b3ed;
     cursor: pointer; }
   button.button.cancelBtn {
@@ -332,17 +332,17 @@ header {
     align-items: center;
     padding: 0 0.4em; }
     .collatedGridHeader > .row .sortArrow {
-      margin-right: 0.6em;
-      display: grid; }
-      .collatedGridHeader > .row .sortArrow .ASC, .collatedGridHeader > .row .sortArrow .DESC {
+      margin-right: 0.6em; }
+      .collatedGridHeader > .row .sortArrow a.ASC, .collatedGridHeader > .row .sortArrow a.DESC {
+        display: block;
         border-color: transparent;
         border-top-color: #6a6a6a;
         border-style: solid;
         border-width: 9px;
         width: 2px; }
-        .collatedGridHeader > .row .sortArrow .ASC.active, .collatedGridHeader > .row .sortArrow .DESC.active {
+        .collatedGridHeader > .row .sortArrow a.ASC.active, .collatedGridHeader > .row .sortArrow a.DESC.active {
           border-top-color: #dedede; }
-      .collatedGridHeader > .row .sortArrow .ASC {
+      .collatedGridHeader > .row .sortArrow a.ASC {
         transform: rotate(180deg);
         margin-bottom: 4px; }
     .collatedGridHeader > .row.noSort {
@@ -393,6 +393,8 @@ header {
       .collatedGrid .row.cats .seeMore {
         text-decoration: none;
         color: #6a6a6a; }
+    .collatedGrid .row.actionItems .tag {
+      display: none; }
 .articleContainer label, .articleForm label {
   display: flex;
   align-items: center;

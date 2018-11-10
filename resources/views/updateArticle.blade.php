@@ -4,7 +4,9 @@
 
 @section('main')
 
-	@include('partials/actionItems', ['items' => array('back')])
+	<div class="actionItems actionItemsHeader">
+		@include('partials/actionItems', ['items' => [['back', 'Back']]])
+	</div>
 	
 	@include('partials/articleForm', ['formType' => 'updateArticle'])
 

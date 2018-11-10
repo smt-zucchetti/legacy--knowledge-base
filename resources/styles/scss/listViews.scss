@@ -26,10 +26,10 @@
 
         .sortArrow{
             margin-right: .6em;
-            display: grid;
 
-            .ASC,
-            .DESC{
+            a.ASC,
+            a.DESC{
+                display: block;
                 border-color: transparent;
                 border-top-color: $medGray;
                 border-style: solid;
@@ -40,7 +40,7 @@
                     border-top-color: $lightGray;
                 }
             }
-            .ASC{
+            a.ASC{
                 transform: rotate(180deg);
                 margin-bottom: 4px;
             }
@@ -118,6 +118,12 @@
             .seeMore{
                 text-decoration: none;
                 color: $medGray;
+            }
+        }
+
+        &.actionItems{
+            .tag{
+                display: none;
             }
         }
     }

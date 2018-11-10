@@ -1,4 +1,4 @@
-<form class="smallForm updateFolder" method="post" action="{{ url('updateFolder/'.$folder->id) }}">
+<form class="smallForm" method="post" action="{{ url('updateFolder/'.$folder->id) }}">
 	
 	@csrf
 	<h2>Edit Folder "{{$folder->name}}"</h2>

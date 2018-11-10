@@ -119,7 +119,8 @@ button.button{
         outline: 0;
     }
 
-    &.updateBtn{
+    &.updateBtn,
+    &.createBtn{
         @include buttonColor($blue);
     }
 

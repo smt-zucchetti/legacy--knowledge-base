@@ -16,8 +16,8 @@
 		@php($row = $i % 2 == 0?'row odd':'row')
 
 		<div class="{{$row}} titleRow">
-			<a href="{{ url('/readArticle/'.$article->ID) }}">
-				<i class="far fa-file"></i> {{$article->Title}}
+			<a href="{{ url('/readArticle/'.$article->id) }}">
+				<i class="far fa-file"></i> {{$article->title}}
 			</a>
 		</div>
 		<div class="{{$row}} cats">
@@ -39,15 +39,7 @@
 		</div>
 		@if (Auth::check())
 			<div class="{{$row}} actionItems">
-				<div style="display: none;" id="delete-article-{{$article->ID}}">
-					@include('partials/smallForms/deleteArticle')
-				</div>
-				<a data-fancybox data-src="#delete-article-{{$article->ID}}" href="javascript:;">
-					<i class="fas fa-trash-alt"></i> 
-				</a>
-				<a href="{{ url('/updateArticle/'.$article->ID) }}" >
-					<i class="fas fa-pencil-alt"></i>
-				</a>
+				@include('partials/actionItems', ['items' => [['deleteArticle', 'Delete'], ['updateArticle', 'Update']], 'objId' => $article->id])
 			</div>
 		@endif
 		@php($i++)
