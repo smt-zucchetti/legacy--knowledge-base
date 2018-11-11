@@ -48,10 +48,12 @@ header{
                     display: none;
                 }
 
+                &:hover a, 
+                a.active{
+                    border-bottom:solid 2px $orange; 
+                }
+
                 &:hover{
-                    a{
-                        border-bottom:solid 2px $orange;
-                    }
                     ul{
                         display: block;
                         position: absolute;
@@ -63,12 +65,10 @@ header{
                             padding: 0;
                             margin: 0;
 
-                            &:hover{
+                            &:hover a,
+                            a.active{
                                 background: $blue;
-
-                                a{
-                                    color: $white;
-                                }
+                                color: $white;
                             }
 
                             a{

@@ -4,16 +4,16 @@
 	</a>
 	<ul class="nav">
 	  	<li>
-	  		<a href="{{ url('/') }}">Articles</a>
+	  		<a href="{{ url('/') }}" class="{{Request::is('/', 'article*')?'active':''}}">Articles</a>
 	  		<ul>
-				<li><a href="{{ url('/articleList') }}">Article List</a></li>
-				<li><a href="{{ url('/articleTree') }}">Article Tree</a></li>
-				<li><a href="{{ url('/articleGUI') }}">Article GUI</a></li>
+				<li><a href="{{ url('/articleList') }}" class="{{Request::is('articleList')?'active':''}}">Article List</a></li>
+				<li><a href="{{ url('/articleTree') }}" class="{{Request::is('articleTree')?'active':''}}">Article Tree</a></li>
+				<li><a href="{{ url('/articleGUI') }}" class="{{Request::is('articleGUI')?'active':''}}">Article GUI</a></li>
 			</ul>
 	  	</li>
 	  	@if (Auth::check())
-		  <li><a href="{{ url('/readCategories') }}">Categories</a></li>
-		  <li><a href="{{ url('/readFolders') }}">Folders</a></li>
+		  <li><a href="{{ url('/readCategories') }}" class="{{Request::is('readCategories')?'active':''}}">Categories</a></li>
+		  <li><a href="{{ url('/readFolders') }}" class="{{Request::is('readFolders')?'active':''}}">Folders</a></li>
 	  	@endif
 		<!--<li><a href="{{-- url('/search') --}}">Advanced Search</a></li>-->
 		<li>
@@ -22,7 +22,7 @@
 					Logged in as {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}
 		    	</a>  		
 		  	@else
-		    	<a href="{{ url('/login') }}">Log In</a>
+		    	<a href="{{ url('/login') }}" class="{{Request::is('login')?'active':''}}">Log In</a>
 		  	@endif
 
 		  	@if (Auth::check())
