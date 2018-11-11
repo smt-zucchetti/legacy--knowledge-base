@@ -42,7 +42,7 @@ class CategoryController extends Controller
  			return view('readCategories', ['categories' => $categories]);
 
  		}else{
- 			return view('home');
+ 			return view('authLandingPage');
  		}
  	}
 

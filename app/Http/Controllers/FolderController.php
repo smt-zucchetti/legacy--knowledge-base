@@ -51,7 +51,7 @@ class FolderController extends Controller
 
  			return view('readFolders', ['foldersScalar' => $foldersScalar, 'folderTree' => $folderTree] );
  		}else{
- 			return view('home');
+ 			return view('authLandingPage');
  		}
  	}
 

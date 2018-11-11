@@ -11,7 +11,7 @@
         @if (Auth::check())
 	        <div>You are logged in!</div>
 	    @else
-	    	<div>You have been logged out due to inactivity</div>
+	    	<div>You are not currently logged in</div>
 	    @endif
     </div>
       

@@ -17,7 +17,7 @@
         </button>
 
          @if (session('status'))
-            <div class="validationSucess visible">{{ session('status') }}</div>
+            <div class="validationSuccess visible">{{ session('status') }}</div>
         @endif
     </form>
 
