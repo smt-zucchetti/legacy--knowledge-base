@@ -4,11 +4,11 @@
         @if(env("APP_ENV") === "dev")
             @include("partials/leafo/scssCompiler")
         @endif
-        @include('partials/head')
+        @include('partials/common/head')
     </head>
     <body>
         <header>
-            @include('partials/header')
+            @include('partials/common/header')
         </header>
         <main>
             <div class="container">            
@@ -19,7 +19,7 @@
             @include('partials/tinymceConfigJs')
         </main>
         <footer>
-            @include('partials/footer')
+            @include('partials/common/footer')
         </footer>
     </body>
 </html>
