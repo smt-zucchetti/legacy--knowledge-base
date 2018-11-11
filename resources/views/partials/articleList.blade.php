@@ -29,7 +29,7 @@
 					@endforeach
 				</ul>
 			</div>
-			{!! count(explode(",", $article->categoryNames)) > 1?"<a href='#' class='seeMore'>See More <i class='far fa-eye'></i></a>":"" !!}
+			{!! count(explode(",", $article->categoryNames)) > 1?"<a href='#' class='seeMore'>View <i class='far fa-eye'></i></a>":"" !!}
 		</div>
 		<div class="{{$row}} featured">
 			{{ $article->featured == 1?"Yes":"No" }}

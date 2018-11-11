@@ -118,6 +118,11 @@
             .seeMore{
                 text-decoration: none;
                 color: $medGray;
+                transition: color .5s;
+
+                &:hover{
+                    color: $darkGray;
+                }
             }
         }
 

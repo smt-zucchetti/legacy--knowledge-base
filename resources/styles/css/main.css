@@ -392,7 +392,10 @@ header {
             cursor: pointer; }
       .collatedGrid .row.cats .seeMore {
         text-decoration: none;
-        color: #6a6a6a; }
+        color: #6a6a6a;
+        transition: color 0.5s; }
+        .collatedGrid .row.cats .seeMore:hover {
+          color: #222; }
     .collatedGrid .row.actionItems .tag {
       display: none; }
 .articleContainer label, .articleForm label {
