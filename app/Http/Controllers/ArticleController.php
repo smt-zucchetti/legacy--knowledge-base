@@ -34,13 +34,12 @@ class ArticleController extends Controller
 	 		return view('createArticle', ['categories' => $categories, 'folderTree' => $folders]);
 	 	}else{
 
-
 	 		$validatedData = $request->validate([
 		        'title' => 'required|unique:Articles',
 		        'content' => 'required',
 		    ]);
 
-			$articleId = DB::table('Articles')->insert(array(
+			$articleId = DB::table('Articles')->insertGetId([
 				'Title' 			=> $_POST['title'], 
 				'featured'			=> !empty($_POST['featured'])?$_POST['featured']:0,
 	 			'folderId'			=> !empty($_POST['parentId'])?$_POST['parentId']:null,
@@ -48,13 +47,15 @@ class ArticleController extends Controller
 				'textOnlyContent' 	=> $_POST['textOnlyContent'],  
 				'dateCreated'		=> date('Y-m-d: H:i:s'),
 				'createdBy' 		=> Auth::user()->id,
-			));
+			]);
 
-			foreach(!empty($_POST['CategoryIDs'])?$_POST['CategoryIDs']:array() as $categoryId){
-				DB::table('Articles_Categories')->insert(array(
-					'articleId' => $articleId, 
-					'categoryId' => $categoryId			
-				));			
+			if(isset($_POST['categoryIds'])){
+				foreach($_POST['categoryIds'] as $categoryId){
+					DB::table('Articles_Categories')->insert([
+						'articleId' => $articleId, 
+						'categoryId' => $categoryId			
+					]);			
+				}
 			}
 
 			return self::homePage();
@@ -223,7 +224,6 @@ class ArticleController extends Controller
  	}
 
  	public function updateArticle(Request $request, $articleId){
-
  		if(empty($_POST)){
 
 	 		$article = self::__getArticle($articleId);
@@ -243,7 +243,7 @@ class ArticleController extends Controller
 		        'content' => 'required',
 		    ]);
 
-	 		DB::table('Articles')->where('id', $articleId)->update(array(
+	 		DB::table('Articles')->where('id', $articleId)->update([
 	 			'Title' 			=> $_POST['title'], 
 	 			'featured'			=> !empty($_POST['featured'])?$_POST['featured']:0,
 	 			'folderId'			=> !empty($_POST['parentId'])?$_POST['parentId']:null,
@@ -251,13 +251,15 @@ class ArticleController extends Controller
 	 			'textOnlyContent' 	=> $_POST['textOnlyContent'], 
 	 			'lastUpdated'		=> date('Y-m-d'),
 	 			'lastUpdatedBy' 	=> Auth::user()->id 
-	 		));
+	 		]);
 
 	 		Articles_Categories::where('articleId', $articleId)->delete();
-	 		foreach(!empty($_POST['CategoryIDs'])?$_POST['CategoryIDs']:array() as $categoryId){
-	 			Articles_Categories::insert(
-	 				['articleId' => $articleId, 'categoryId' => $categoryId]
-				);
+	 		if(isset($_POST['categoryIds'])){
+	 			foreach($_POST['categoryIds'] as $categoryId){
+		 			Articles_Categories::insert(
+		 				['articleId' => $articleId, 'categoryId' => $categoryId]
+					);
+		 		}
 	 		}
 
 	 		return self::homePage();
