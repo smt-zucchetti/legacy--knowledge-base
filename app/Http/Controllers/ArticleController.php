@@ -46,7 +46,7 @@ class ArticleController extends Controller
 				'Content' 			=> $_POST['content'], 
 				'textOnlyContent' 	=> $_POST['textOnlyContent'],  
 				'dateCreated'		=> date('Y-m-d: H:i:s'),
-				'createdBy' 		=> Auth::user()->id,
+				'createdBy' 		=> Auth::user()->id
 			]);
 
 			if(isset($_POST['categoryIds'])){
@@ -250,7 +250,7 @@ class ArticleController extends Controller
 	 			'Content' 			=> $_POST['content'], 
 	 			'textOnlyContent' 	=> $_POST['textOnlyContent'], 
 	 			'lastUpdated'		=> date('Y-m-d'),
-	 			'lastUpdatedBy' 	=> Auth::user()->id 
+	 			'lastUpdatedBy' 	=> Auth::user()->id
 	 		]);
 
 	 		Articles_Categories::where('articleId', $articleId)->delete();
@@ -282,6 +282,78 @@ class ArticleController extends Controller
  		$article = DB::table('Articles')->where('ID', $articleId)->first();
 
  		return view('fullPageArticle')->with(array('article' => $article));
+ 	}
+
+ 	public function uploadGDocZip(){
+
+ 		if(!empty($_POST)){
+
+ 			$zip = new \ZipArchive;
+			if ($zip->open($_FILES['zipFile']['tmp_name']) === TRUE) {
+
+			    $zip->extractTo('tmpZipFiles/');			    
+
+			  	$nameArr = explode("/", $zip->filename);
+			  	$code = end($nameArr);
+			  	$base_href = 'public/photos/gdoc_imports/'.$code.'/';
+			  	$dirPath = $base_href."/images/";
+			  	if(!file_exists($dirPath)){
+			  		mkdir($dirPath, 0755, true);
+			  	}
+
+			    foreach(scandir('tmpZipFiles/images') as $entry){
+			    	if(strpos($entry, ".") > 1){
+				    	copy('tmpZipFiles/images/'.$entry, $dirPath.'/'.$entry);
+				    }
+			    }
+			    foreach(scandir('tmpZipFiles') as $file){
+			    	if(!is_dir($file) && strpos($file, ".html")){
+			    		$filename = $file;
+			    	}
+			    }
+			    
+			    $html = file_get_contents('tmpZipFiles/'.$filename);
+			    $doc = new \DOMDocument();
+			    $doc->loadHTML($html);
+			    foreach ($doc->getElementsByTagName('img') as $imgTag) {
+				    $imgTag->setAttribute('src', $code.'/'.$imgTag->getAttribute('src'));
+				}
+
+				$css = $doc->getElementsByTagName('head')[0]->textContent;
+
+				$body = $doc->getElementsByTagName('body')[0];
+				$textOnlyContent = $body->textContent;
+				
+				$regex = '#<\s*?body\b[^>]*>(.*?)</body\b[^>]*>#s';
+				preg_match($regex, $html, $matches);
+				$content = $matches[1];
+
+				//dd([$textOnlyContent, $content]);
+
+				$articleId = DB::table('Articles')->insertGetId([
+					'Title' 			=> explode(".zip", $_FILES['zipFile']['name'])[0], 
+					'content'			=> $content,
+					'textOnlyContent'	=> $textOnlyContent,
+					'dateCreated'		=> date('Y-m-d: H:i:s'),
+					'createdBy' 		=> Auth::user()->id,
+					'gDoc'				=> 1,
+					'styleContent'		=> $css,
+					'imageDir'			=> $code
+				]);
+
+
+
+			    $zip->close();
+
+			    return self::homePage();
+			} else {
+			    echo 'upload failed';
+			}
+
+ 		}else{
+ 			//die('doesn\'t have zip');
+ 			return view('uploadZipFile');
+ 		}
  	}
 
 }

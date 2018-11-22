@@ -6,7 +6,7 @@
 	<div class="actionItems actionItemsHeader">
 		@include('partials/actionItems', ['items' => [['back', 'Back']], 'objId' => null])
 	</div>
-	@include('partials/html/validationErrors')
+
 	@include('partials/articleForm', ['formType' => 'createArticle'])
 
 	<script>
