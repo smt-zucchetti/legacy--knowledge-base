@@ -284,77 +284,156 @@ class ArticleController extends Controller
  		return view('fullPageArticle')->with(array('article' => $article));
  	}
 
- 	public function uploadGDocZip(){
+ 	public function importGDoc(){
 
- 		if(!empty($_POST)){
+ 		if(Auth::check()){
+	 		if(!empty($_POST) && !empty($_POST['fileId'])){
 
- 			$zip = new \ZipArchive;
-			if ($zip->open($_FILES['zipFile']['tmp_name']) === TRUE) {
+	 			$fileId = $_POST['fileId']; 
+	 			$tmpFolder = "tmpZipFolder";
+	 			$tmpZipFile = "zipFile.zip";
+	 			$tmpFilePath = $tmpFolder."/".$tmpZipFile;
 
-			    $zip->extractTo('tmpZipFiles/');			    
+	 			//self::__deleteFolderContents($tmpFolder);
 
-			  	$nameArr = explode("/", $zip->filename);
-			  	$code = end($nameArr);
-			  	$base_href = 'public/photos/gdoc_imports/'.$code.'/';
-			  	$dirPath = $base_href."/images/";
-			  	if(!file_exists($dirPath)){
-			  		mkdir($dirPath, 0755, true);
+	 			if(!file_exists($tmpFolder)){
+			  		mkdir($tmpFolder, 0755, true);
 			  	}
+			  	
+	 			if(self::__curlDownloadZipFile($fileId, $tmpFilePath)){
+	 			
+	 				$zip = new \ZipArchive;
+	 				$res = $zip->open($tmpFilePath);
+		 			if ($res === TRUE) {
 
-			    foreach(scandir('tmpZipFiles/images') as $entry){
-			    	if(strpos($entry, ".") > 1){
-				    	copy('tmpZipFiles/images/'.$entry, $dirPath.'/'.$entry);
-				    }
-			    }
-			    foreach(scandir('tmpZipFiles') as $file){
-			    	if(!is_dir($file) && strpos($file, ".html")){
-			    		$filename = $file;
-			    	}
-			    }
-			    
-			    $html = file_get_contents('tmpZipFiles/'.$filename);
-			    $doc = new \DOMDocument();
-			    $doc->loadHTML($html);
-			    foreach ($doc->getElementsByTagName('img') as $imgTag) {
-				    $imgTag->setAttribute('src', $code.'/'.$imgTag->getAttribute('src'));
-				}
+		 				$zip->extractTo($tmpFolder);
+		 				$hasImages = $zip->numFiles > 1?true:false;
+		 				$zip->close();
 
-				$css = $doc->getElementsByTagName('head')[0]->textContent;
+		 				//get article Title
+		 				$articleTitle = self::__curlGetArticleTitle($fileId);
 
-				$body = $doc->getElementsByTagName('body')[0];
-				$textOnlyContent = $body->textContent;
-				
-				$regex = '#<\s*?body\b[^>]*>(.*?)</body\b[^>]*>#s';
-				preg_match($regex, $html, $matches);
-				$content = $matches[1];
+		 				$articleId = DB::table('Articles')->insertGetId([
+							'Title' => $articleTitle,
+							'dateCreated'		=> date('Y-m-d: H:i:s'),
+							'createdBy' 		=> Auth::user()->id
+						]);
 
-				//dd([$textOnlyContent, $content]);
+		 				try{
+			 				//copy images to folder
+			 				if($hasImages){
+				 				$tmpImgPath = $tmpFolder."/images";
+							  	$newImgPath = "public/photos/gdoc_imports/".$articleId."/images/";
+							  	if(!file_exists($newImgPath)){
+							  		mkdir($newImgPath, 0755, true);
+							  	}
+							    foreach(scandir($tmpImgPath) as $entry){
+							    	if(strpos($entry, ".") > 1){
+								    	copy($tmpImgPath."/".$entry, $newImgPath.'/'.$entry);
+								    }
+							    }
+							}
 
-				$articleId = DB::table('Articles')->insertGetId([
-					'Title' 			=> explode(".zip", $_FILES['zipFile']['name'])[0], 
-					'content'			=> $content,
-					'textOnlyContent'	=> $textOnlyContent,
-					'dateCreated'		=> date('Y-m-d: H:i:s'),
-					'createdBy' 		=> Auth::user()->id,
-					'gDoc'				=> 1,
-					'styleContent'		=> $css,
-					'imageDir'			=> $code
-				]);
+							//load HTML into DOMDocument object
+						    foreach(scandir($tmpFolder) as $file){
+						    	if(!is_dir($file) && strpos($file, ".html")){
+						    		$filename = $file;
+						    	}
+						    }
+						    $html = file_get_contents($tmpFolder."/".$filename);
+						    $doc = new \DOMDocument();
+						    $doc->loadHTML($html);
+						    //update img src attributes
+						    foreach ($doc->getElementsByTagName('img') as $imgTag) {
+						    	$arr = explode("/", $imgTag->getAttribute("src"));
+							    $imgTag->setAttribute('src', $newImgPath."".end($arr));
+							}
+							$css = $doc->getElementsByTagName('head')[0]->textContent;
+							//extract tinyMCE compatible html content
+							$body = $doc->getElementsByTagName('body')[0];
+							$textOnlyContent = $body->textContent;
+							$regex = '#<\s*?body\b[^>]*>(.*?)</body\b[^>]*>#s';
+							preg_match($regex, $doc->saveHTML(), $matches);
+							$content = $matches[1];
 
+							//dd([$textOnlyContent, $content]);
 
+							DB::table('Articles')->where('id', $articleId)
+	            			->update([
+	            				'content'			=> $content,
+								'textOnlyContent'	=> $textOnlyContent,
+								'styleContent'		=> $css
+	            			]);
+	            		}
+	            		catch(\Exception $e){
+	            			Articles::destroy($articleId);
+	            			return $e->getMessage();
+	            		}
+	            		finally{
+	            			self::__deleteFolderContents($tmpFolder);
+	            		}
+						
+					    return self::homePage();
 
-			    $zip->close();
+					} else {
+						$zip->close();
+					    echo 'upload failed, code: '.$res;
+					}
+					
 
-			    return self::homePage();
-			} else {
-			    echo 'upload failed';
-			}
+	 			}else{
+	 				die('didnt work');
+	 			}
 
- 		}else{
- 			//die('doesn\'t have zip');
- 			return view('uploadZipFile');
- 		}
+	 		}else{
+	 			return view('uploadZipFile');
+	 		}
+	 	}else{
+	 		return view("auth/login");
+	 	}
  	}
 
+ 	public function __curlDownloadZipFile($fileId, $filePath){
+
+		$url = "https://docs.google.com/feeds/download/documents/export/Export?id=".$fileId."&exportFormat=zip&key=".env('GDRIVE_API_KEY');
+
+		$ch = curl_init($url);
+	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/zip'));
+     	$raw_file_data = curl_exec($ch);
+
+		if(curl_errno($ch)){
+			echo 'error:' . curl_error($ch);
+		}
+     	curl_close($ch);
+
+     	file_put_contents($filePath, $raw_file_data);
+     	
+     	return (filesize($filePath) > 0)? true : false;
+ 	}
+
+ 	public function __deleteFolderContents($folder){
+ 		$files = glob($folder."/*");
+		foreach($files as $file){ 
+			if(is_file($file)){
+				unlink($file);
+			}
+		}
+ 	}
+
+ 	public function __curlGetArticleTitle($fileId){
+
+ 		$url = "https://www.googleapis.com/drive/v2/files/".$fileId."?key=".env('GDRIVE_API_KEY');
+		$ch = curl_init($url);
+	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+     	$response = json_decode(curl_exec($ch));
+     	
+		if(curl_errno($ch)){
+			echo 'error:' . curl_error($ch);
+		}
+     	curl_close($ch);
+
+     	return $response->title;
+ 	}
 }
 

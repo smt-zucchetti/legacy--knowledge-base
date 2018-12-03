@@ -50,8 +50,8 @@ Route::get('/sortArticles/{param}/{dir}/{searchTerm}', 'ArticleController@sortAr
 Route::get('/sortCategories/{param}/{dir}', 'CategoryController@readCategories');
 Route::get('/sortFolders/{param}/{dir}', 'FolderController@readFolders');
 
-Route::get('/uploadGDocZip', 'ArticleController@uploadGDocZip');
-Route::post('/uploadGDocZip', 'ArticleController@uploadGDocZip');
+Route::get('/uploadGDocZip', 'ArticleController@importGDoc');
+Route::post('/uploadGDocZip', 'ArticleController@importGDoc');
 
 
 Auth::routes();
