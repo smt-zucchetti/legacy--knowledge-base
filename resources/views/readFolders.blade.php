@@ -32,8 +32,9 @@
 <script>
 	$(document).ready(function(){
 
-		$('form.updateFolder').submit(function(e){
+		$('form.smallForm').submit(function(e){
 			if( $(this).find('input[name=name]').val() === ""){
+
 				$('.validationError').addClass('visible');	
 
 				return false;

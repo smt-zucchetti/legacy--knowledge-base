@@ -5,9 +5,36 @@ use Illuminate\Support\Facades\DB;
 
 trait RelateFolders
 {
-    private function getFolders(){
+    private function getFolders($withRoot = true){
 
-        $first = DB::table('Folders as f')
+        if($withRoot){
+            $first = DB::table('Folders as f')
+                    ->leftJoin('Articles as a', function($leftJoin){
+                        $leftJoin->on('f.id', '=', 'a.folderId');
+                        $leftJoin->where('a.deleted', '=', 0);
+                        $leftJoin->orWhere('a.deleted', '=', null);
+                    })
+                    ->select(['f.name', 'f.id', 'f.parentId', 'f.dateCreated',                
+                            DB::raw('group_concat(a.Title) as articleTitles'), 
+                            DB::raw('group_concat(a.ID) as articleIds')
+                        ])
+                    ->groupBy('f.name','f.id');
+
+            $folders = DB::table('Folders as f')
+                ->rightJoin('Articles as a', function($rightJoin){
+                    $rightJoin->on('f.id', '=', 'a.folderId');
+                })
+                ->select('f.name', 'f.id', 'f.parentId', 'f.dateCreated',                
+                        DB::raw('group_concat(a.Title) as articleTitles'), 
+                        DB::raw('group_concat(a.ID) as articleIds')
+                )
+                ->where('a.deleted', '=', 0)
+                ->orWhere('a.deleted', '=', null)
+                ->union($first)
+                ->groupBy('f.name','f.id')
+                ->get();
+        }else{
+            $folders = DB::table('Folders as f')
                 ->leftJoin('Articles as a', function($leftJoin){
                     $leftJoin->on('f.id', '=', 'a.folderId');
                     $leftJoin->where('a.deleted', '=', 0);
@@ -17,21 +44,9 @@ trait RelateFolders
                         DB::raw('group_concat(a.Title) as articleTitles'), 
                         DB::raw('group_concat(a.ID) as articleIds')
                     ])
-                ->groupBy('f.name','f.id');
-
-        $folders = DB::table('Folders as f')
-            ->rightJoin('Articles as a', function($rightJoin){
-                $rightJoin->on('f.id', '=', 'a.folderId');
-            })
-            ->select('f.name', 'f.id', 'f.parentId', 'f.dateCreated',                
-                    DB::raw('group_concat(a.Title) as articleTitles'), 
-                    DB::raw('group_concat(a.ID) as articleIds')
-            )
-            ->where('a.deleted', '=', 0)
-            ->orWhere('a.deleted', '=', null)
-            ->union($first)
-            ->groupBy('f.name','f.id')
-            ->get();
+                ->groupBy('f.name','f.id')
+                ->get();
+        }
 
         return $folders;
     }

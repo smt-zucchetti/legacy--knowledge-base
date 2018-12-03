@@ -6,6 +6,7 @@
 	</label>
 	<label for="name">Name: 
 		<input type="text" name="name" id="name" value="{{!empty($curFolder)?$curFolder->name:''}}" />
+		<div class="validationError">Folder name can not be blank</div>
 	</label>
 	<button class="button createBtn" type="submit">Create</button>
 </form>

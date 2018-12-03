@@ -35,7 +35,7 @@ class FolderController extends Controller
  	public function readFolders($param = null, $dir = null){
  		if (Auth::user()){
 
- 			$folders = $this->getFolders();
+ 			$folders = $this->getFolders(false);
 
 	        //deep clone $folders
  			$folderTree = clone $folders;
@@ -56,6 +56,7 @@ class FolderController extends Controller
  	}
 
  	public function updateFolder($folderID){
+
  		DB::table('Folders')
 	 		->where('id', $folderID)
 	 		->update(array(

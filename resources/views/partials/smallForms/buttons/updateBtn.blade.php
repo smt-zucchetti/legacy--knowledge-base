@@ -1,1 +1,1 @@
-<button class="button updateBtn" type="submit">Edit</button>
+<button class="button updateBtn" type="submit">Update</button>
