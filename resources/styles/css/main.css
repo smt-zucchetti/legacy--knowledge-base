@@ -207,7 +207,10 @@ button.button {
   background: #dedede;
   border-radius: 3px;
   border: solid 1px #6a6a6a;
-  margin-bottom: 4em; }
+  margin-bottom: 4em;
+  padding: 2em; }
+  .featuredArticlesGrid > h2 {
+    margin: 0; }
   .featuredArticlesGrid .featuredArticle {
     position: relative;
     display: flex;
