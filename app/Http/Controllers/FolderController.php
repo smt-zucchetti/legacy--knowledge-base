@@ -22,7 +22,7 @@ class FolderController extends Controller
 
 	public function createFolder(){
 
- 		DB::table('Folders')->insert([
+ 		DB::table('Folder')->insert([
  			'Name' 			=> $_POST['name'], 
  			'dateCreated' 	=> date('Y-m-d H:i:s'),
  			'parentId'		=> !empty($_POST['parentId'])?$_POST['parentId']:null,
@@ -57,7 +57,7 @@ class FolderController extends Controller
 
  	public function updateFolder($folderID){
 
- 		DB::table('Folders')
+ 		DB::table('Folder')
 	 		->where('id', $folderID)
 	 		->update(array(
 	 			'Name' 			=> $_POST['name'],

@@ -8,8 +8,8 @@ trait RelateFolders
     private function getFolders($withRoot = true){
 
         if($withRoot){
-            $first = DB::table('Folders as f')
-                    ->leftJoin('Articles as a', function($leftJoin){
+            $first = DB::table('Folder as f')
+                    ->leftJoin('Article as a', function($leftJoin){
                         $leftJoin->on('f.id', '=', 'a.folderId');
                         $leftJoin->where('a.deleted', '=', 0);
                         $leftJoin->orWhere('a.deleted', '=', null);
@@ -20,8 +20,8 @@ trait RelateFolders
                         ])
                     ->groupBy('f.name','f.id');
 
-            $folders = DB::table('Folders as f')
-                ->rightJoin('Articles as a', function($rightJoin){
+            $folders = DB::table('Folder as f')
+                ->rightJoin('Article as a', function($rightJoin){
                     $rightJoin->on('f.id', '=', 'a.folderId');
                 })
                 ->select('f.name', 'f.id', 'f.parentId', 'f.dateCreated',                
@@ -34,8 +34,8 @@ trait RelateFolders
                 ->groupBy('f.name','f.id')
                 ->get();
         }else{
-            $folders = DB::table('Folders as f')
-                ->leftJoin('Articles as a', function($leftJoin){
+            $folders = DB::table('Folder as f')
+                ->leftJoin('Article as a', function($leftJoin){
                     $leftJoin->on('f.id', '=', 'a.folderId');
                     $leftJoin->where('a.deleted', '=', 0);
                     $leftJoin->orWhere('a.deleted', '=', null);

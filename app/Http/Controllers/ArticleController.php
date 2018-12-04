@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Articles;
-use App\Categories;
-use App\Articles_Categories;
-use App\Folders;
+use App\Article;
+use App\Category;
+use App\Article_Category;
+use App\Folder;
 use App\Traits\RelateFolders;
 use App\Traits\SortResults;
 
@@ -24,9 +24,11 @@ class ArticleController extends Controller
 	use RelateFolders;
 	use SortResults;
 
+	protected $model;
+
  	public function createArticle(Request $request){
  		if(empty($_POST)){
-	 		$categories = DB::table('Categories')->where('deleted', '=', '0')->get();
+	 		$categories = DB::table('Category')->where('deleted', '=', '0')->get();
 
 	 		$folders = $this->getFolders();
 	 		$this->__relateFolders($folders);
@@ -39,7 +41,7 @@ class ArticleController extends Controller
 		        'content' => 'required',
 		    ]);
 
-			$articleId = DB::table('Articles')->insertGetId([
+			$articleId = DB::table('Article')->insertGetId([
 				'Title' 			=> $_POST['title'], 
 				'featured'			=> !empty($_POST['featured'])?$_POST['featured']:0,
 	 			'folderId'			=> !empty($_POST['parentId'])?$_POST['parentId']:null,
@@ -51,7 +53,7 @@ class ArticleController extends Controller
 
 			if(isset($_POST['categoryIds'])){
 				foreach($_POST['categoryIds'] as $categoryId){
-					DB::table('Articles_Categories')->insert([
+					DB::table('Article_Category')->insert([
 						'articleId' => $articleId, 
 						'categoryId' => $categoryId			
 					]);			
@@ -72,9 +74,9 @@ class ArticleController extends Controller
 
  	public function __getAllArticles($param = null, $dir = null, $srchTrm = null){
 
- 		$articles = DB::table('Articles as a')
-	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
-	            ->leftJoin('Categories as c', function($leftJoin){
+ 		$articles = DB::table('Article as a')
+	         	->leftJoin('Article_Category as a_c', 'a.ID', '=', 'a_c.articleId')
+	            ->leftJoin('Category as c', function($leftJoin){
 	            	$leftJoin->on('c.ID', '=', 'a_c.categoryId');
 	            	$leftJoin->where('c.deleted', 0);
 	            })
@@ -116,9 +118,9 @@ class ArticleController extends Controller
 
  		$articles = self::__getAllArticles();
  	
-	    $featuredArticles = DB::table('Articles as a')
-	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
-	            ->leftJoin('Categories as c', 'c.ID', '=', 'a_c.categoryId')
+	    $featuredArticles = DB::table('Article as a')
+	         	->leftJoin('Article_Category as a_c', 'a.ID', '=', 'a_c.articleId')
+	            ->leftJoin('Category as c', 'c.ID', '=', 'a_c.categoryId')
 	            ->select('a.*', 
 	            	DB::raw('group_concat(c.Name) as categoryNames'), 
 	            	DB::raw('group_concat(c.ID) as categoryIds'))
@@ -169,7 +171,7 @@ class ArticleController extends Controller
  		$pathArr = array();
 
  		while($curFolderId !== null){
-	 		$folder = DB::table('Folders as f')
+	 		$folder = DB::table('Folder as f')
 	 				->select('id', 'parentId', 'name')
 	 				->where('id', '=', $curFolderId)
 	 				->first();
@@ -185,14 +187,14 @@ class ArticleController extends Controller
 
  	public function __getArticleGUI($parentFolderId = null){
 
- 		$articles = DB::table('Articles as a')
+ 		$articles = DB::table('Article as a')
 	            ->select('a.Title', 'a.ID')
 	            ->where('a.folderId', '=', $parentFolderId)
 	            ->where('a.deleted', '=', 0)
 	            ->orderBy('a.ID')
 	           	->get();
 	           	
-	    $folders = DB::table('Folders as f')
+	    $folders = DB::table('Folder as f')
 	            ->where('f.parentId', '=', $parentFolderId)
 	           	->orderBy('f.id', 'DESC')
 	           	->get();
@@ -202,10 +204,10 @@ class ArticleController extends Controller
 
  	public function __getArticle($articleId){
 
- 		$result = DB::table('Articles as a')
-	         	->leftJoin('Articles_Categories as a_c', 'a.ID', '=', 'a_c.articleId')
-	            ->leftJoin('Categories as c', 'a_c.categoryId', '=','c.ID')
-				->leftJoin('Folders as f', 'f.id', '=', 'a.folderId')
+ 		$result = DB::table('Article as a')
+	         	->leftJoin('Article_Category as a_c', 'a.ID', '=', 'a_c.articleId')
+	            ->leftJoin('Category as c', 'a_c.categoryId', '=','c.ID')
+				->leftJoin('Folder as f', 'f.id', '=', 'a.folderId')
 	            ->select('a.*', 'f.name as parentFolder',
 	            	DB::raw('group_concat(c.Name) as categoryNames'), 
 	            	DB::raw('group_concat(c.ID) as categoryIds'))
@@ -227,7 +229,7 @@ class ArticleController extends Controller
  		if(empty($_POST)){
 
 	 		$article = self::__getArticle($articleId);
-	        $categories = DB::table('Categories')->where('deleted', 0)->get();
+	        $categories = DB::table('Category')->where('deleted', 0)->get();
 	        
 	        $folders = $this->getFolders();
 	        $curFolder = $this->getFolderById($folders, $article->folderId);
@@ -243,7 +245,7 @@ class ArticleController extends Controller
 		        'content' => 'required',
 		    ]);
 
-	 		DB::table('Articles')->where('id', $articleId)->update([
+	 		DB::table('Article')->where('id', $articleId)->update([
 	 			'Title' 			=> $_POST['title'], 
 	 			'featured'			=> !empty($_POST['featured'])?$_POST['featured']:0,
 	 			'folderId'			=> !empty($_POST['parentId'])?$_POST['parentId']:null,
@@ -268,18 +270,18 @@ class ArticleController extends Controller
 
  	public function deleteArticle($articleId){
 
- 		DB::table('Articles')->where('id', $articleId)->update(array(
+ 		DB::table('Article')->where('id', $articleId)->update(array(
  			'lastUpdatedBy' 	=> Auth::user()->id,
  			'deleted' => true 
  		));
 
-		$articles = Articles::all();
+		$articles = Article::all();
 		
 		return self::homePage();
  	}
 
  	public function fullPageArticle($articleId){
- 		$article = DB::table('Articles')->where('ID', $articleId)->first();
+ 		$article = DB::table('Article')->where('ID', $articleId)->first();
 
  		return view('fullPageArticle')->with(array('article' => $article));
  	}
@@ -313,7 +315,7 @@ class ArticleController extends Controller
 		 				//get article Title
 		 				$articleTitle = self::__curlGetArticleTitle($fileId);
 
-		 				$articleId = DB::table('Articles')->insertGetId([
+		 				$articleId = DB::table('Article')->insertGetId([
 							'Title' => $articleTitle,
 							'dateCreated'		=> date('Y-m-d: H:i:s'),
 							'createdBy' 		=> Auth::user()->id
@@ -358,7 +360,7 @@ class ArticleController extends Controller
 
 							//dd([$textOnlyContent, $content]);
 
-							DB::table('Articles')->where('id', $articleId)
+							DB::table('Article')->where('id', $articleId)
 	            			->update([
 	            				'content'			=> $content,
 								'textOnlyContent'	=> $textOnlyContent,

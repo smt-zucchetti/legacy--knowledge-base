@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'ArticleController@homePage');
+Route::get('/allArticles', 'ArticleController@allArticles');
 Route::get('/articleList', 'ArticleController@articleList');
 Route::get('/articleGUI', 'ArticleController@readArticleGUI');
 Route::get('/articleGUI/{articleId}', 'ArticleController@readArticleGUI');
