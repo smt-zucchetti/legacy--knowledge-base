@@ -13,6 +13,7 @@ class UpdateCategoriesTable extends Migration
      */
     public function up()
     {
+
         Schema::rename('Categories', 'categories');
 
         Schema::table('categories', function (Blueprint $table) {
